@@ -1,8 +1,19 @@
+\section{Prerequisites}
+The present manual provides instructions about using OpenQuake to perform seismic hazard and risk analysis. However, no attempts are made to explain the "science" behind the software. The scientific basis and methodologies adopted in the software are illustrated in a separate document, the 'OpenQuake Book':\\ \\
+\href{http://openquake.org/wp-content/uploads/2011/10/OpenQuake-Book_Version0.1.pdf}
+   {http://openquake.org/wp-content/uploads/2011/10/OpenQuake-Book-Version0.1.pdf}\\ \\
+We refer the reader to the OpenQuake Book for a detailed explanation of the algorithms utilized, and indeed we strongly suggest its reading as a prerequisite for utilizing and understanding the present manual.\\
+OpenQuake currently runs through a Linux command line interface (CLI), so familiarity with Unix/Linux shell base commands (change directory, list files in a directory, move and copy files...) is required. Base instructions about how to use a CLI through a terminal can be found here: \\ \\
+\href{https://help.ubuntu.com/community/UsingTheTerminal}
+   {https://help.ubuntu.com/community/UsingTheTerminal}\\
+
 \section{Installing OpenQuake}
 The OpenQuake installation is currently supported on the Ubuntu Operating System (\href{http://www.ubuntu.com/}
    {http://www.ubuntu.com/}), and installation instructions can be find here:\\ \\
     \href{https://github.com/gem/openquake/wiki/Ubuntu-11.04}
    {https://github.com/gem/openquake/wiki/Ubuntu-11.04}\\ \\
+The installation instructions refer to a single-user/ single-machine scenario. Installation for a multi-user / multi-machine 
+environment is currently not supported.\\
 Installation on Mac OS X and Windows is not supported, however a workaround is possible by using a virtual machine. For instruction see here:\\ \\
 \href{https://github.com/gem/openquake/wiki/Mac-OS-X}
    {https://github.com/gem/openquake/wiki/Mac-OS-X}   for Mac\\ \\
@@ -12,38 +23,87 @@ Installation on Mac OS X and Windows is not supported, however a workaround is p
 As an alternative of locally installing OpenQuake, the GEM-Model Facility has developed the OpenQuake Alpha Testing Service that gives the possibility to access the latest OpenQuake Alpha release on a cloud based server:\\ \\
 \href{http://openquake.org/alpha-testing-services/}
    {http://openquake.org/alpha-testing-services/}
+   
+\section{Running OpenQuake}
+OpenQuake runs through a CLI. The software can be launched by typing the command \Verb+openquake+. Typing the command alone displays a short description of the OpenQuake functionalities and a number of 'flags' for option specifications:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+user@users-desktop:~$ openquake
+OpenQuake: software for seismic hazard and risk assessment
 
-\section{The OpenQuake Book}
-The scientific basis and methodologies adopted in the OpenQuake software are illustrated in the OpenQuake Book:\\
-\href{http://openquake.org/wp-content/uploads/2011/10/OpenQuake-Book_Version0.1.pdf}
-   {http://openquake.org/wp-content/uploads/2011/10/OpenQuake-Book-Version0.1.pdf}\\ \\
-This manual aims at explaining how OpenQuake can be practically used for performing seismic hazard and risk analysis, but not attempts are made to explain the "science" behind the software. We refer the reader to the OpenQuake Book for a detailed explanation of the algorithms utilized, and indeed we strongly suggest the reading of the OpenQuake Book as a prerequisite for utilizing and understanding the present manual.
+It receives its inputs through a configuration file plus input data in .xml
+format and stores the results in .xml format.
 
-\section{OpenQuake Calculators and Input definition}
-OpenQuake offers the possibility to perform different types of analysis/calculations for seismic hazard assessment:
-\begin{itemize}
-\item Classical (Cornell-type) PSHA
-\item Event based PSHA
-\item Disaggregation 
-\item Uniform Hazard Spectra 
-\item Deterministic (single earthquake scenario) SHA
-\end{itemize}
+Available Hazard Analysis
 
-and for seismic risk assessment:
-\begin{itemize}
-\item ...
-\item ...
-\end{itemize}
+  Classical PSHA
+    Input   Source Model Logic Tree
+            GMPE Logic Tree
 
-For each type of analysis, a configuration file (consisting of statements in the format \Verb+KEY=VALUE+) and one or more input data files in nrML format (an XML based format) are required.
+    Output  Hazard maps
+            Hazard curves
 
-The configuration file consists of three sections:
+  Event-Based PSHA
+    Input   Source Model Logic Tree
+            GMPE Logic Tree
+
+    Output  Ground Motion fields
+
+  Deterministic SHA
+    Input   Rupture Model
+
+    Output  Ground Motion fields
+
+Available Risk Analysis
+
+  Classical PSHA-based
+    Input   Exposure (a value per asset)
+            Vulnerability curves (a list of vulnerability functions)
+            Seismic hazard input: hazard curves
+
+    Output  A grid of loss-ratio curves
+            A grid of loss curves
+            A map of losses at each interval
+
+  Probabilistic event-based
+    Input   Exposure (a value per asset)
+            Vulnerability curves (a list of vulnerability functions)
+            Seismic hazard input: sets of ground motion fields
+
+    Output  A grid of loss-ratio curves
+            A grid of loss curves
+            A map of losses at each interval
+            An aggregated loss curve
+
+
+Flags:
+  --config_file: OpenQuake configuration file
+    (default: 'openquake-config.gem')
+  --debug: Turns on debug logging and verbose output. One of debug, info, warn,
+    error, critical.
+    (default: 'warn')
+  --help: Show this help
+    (default: 'false')
+  --output_type: <db|xml>: Computation result output type
+    (default: 'db')
+  --version: Show version information
+    (default: 'false')
+\end{Verbatim}
+OpenQuake is instructed through a configuration file (whose path is provided by the \Verb+--config_file+ flag). The configuration file contains informations about what type of analysis to perform, what input data to use, and associated calculations parameters. Input data must be provided into XML formatted files following the "NRML" schema: \\ \\
+ \href{https://github.com/gem/openquake/tree/master/openquake/nrml/schema}
+{https://github.com/gem/openquake/tree/master/openquake/nrml/schema}\\ \\ 
+By default OpenQuake saves output data into the OpenQuake-Data Base (that is included in the OpenQuake package). To have output data saved into (XML formatted) files the option \Verb+output_type=xml+ must be specified.
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+openquake --\textcolor{red}{config_file}=/PATH/TO/CONFIG/FILE --\textcolor{red}{output_type}=xml
+\end{Verbatim}
+
+\section{Configuring OpenQuake}
+The configuration file follows the INI file format, and consist of statements in the format \Verb+KEY=VALUE+ organized in three main sections:
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 [\textcolor{red}{general}]
 ...
-[\textcolor{green}{HAZARD}]
+[\textcolor{red}{HAZARD}]
 ...
-[\textcolor{blue}{RISK}]
+[\textcolor{red}{RISK}]
 ...
 \end{Verbatim}
  
@@ -58,12 +118,11 @@ CALCULATION_MODE =
 
 Valid values are: 
 \begin{itemize}
-\item \Verb+Classical+ (for Classical PSHA)
-\item \Verb+Event Based+ (for Event Based PSHA)
+\item \Verb+Classical+ (for Classical Probabilistic Seismic Hazard/ Risk Analysis)
+\item \Verb+Event Based+ (for Event Based Probabilistic Seismic Hazard/ Risk Analysis)
 \item \Verb+Disaggregation+ (for Disaggregation analysis)
 \item \Verb+UHS+ (for Uniform Hazard Spectra calculation)
-\item \Verb+Deterministic+ ( for Deterministic SHA)
-\item ...
+\item \Verb+Deterministic+ ( for Deterministic Seismic Hazard/ Risk Analysis)
 \end{itemize}
 
 Each analysis is performed over a set of geographical locations, that can be defined as grid points in a geographical region:
@@ -75,7 +134,7 @@ REGION_VERTEX = LAT_1, LON_1, LAT_2, LON_2, ..., LAT_N, LON_N
 REGION_GRID_SPACING = DELTA_GRID
 \end{Verbatim}
 
-where \Verb+REGION_VERTEX+ is a list of vertices coordinates (latitude, longitude) defining a polygonal region. The list of vertices can be defined in clock or counter-clock wise order. \Verb+REGION_GRID_SPACING+ defines the discretization step utilized for the grid construction. No restrictions are given in the number of vertices in the polygon definition.
+where \Verb+REGION_VERTEX+ is a list of vertices coordinates (latitude, longitude, in decimal degrees) defining a polygonal region. The list of vertices can be defined in clock or counter-clock wise order. \Verb+REGION_GRID_SPACING+ defines the discretization step (in decimal degrees) utilized for the grid construction. No restrictions are given in the number of vertices in the polygon definition.
 
 A second option is to define a list of independent geographical locations:
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
@@ -93,6 +152,6 @@ COMPUTE_HAZARD_AT_ASSETS_LOCATIONS = true
 \end{Verbatim}
 if set to false, the region or sites defined in the \Verb+[general]+ section will be used instead.
 
-Once the \Verb+CALCULATION_MODE+ and the locations of interest have been defined, the user is required to define the input data (in nrML format) and the calculation parameters (in the configuration file) for the requested analysis.
+Once the \Verb+CALCULATION_MODE+ and the locations of interest have been defined, the user is required to define the input data and the calculation parameters (in the configuration file) for the requested analysis.
 
 Chapters \ref{chap:hazinp} and \ref{chap:riskinp} describe the parameters and input data needed to perform all the supported hazard an risk analysis.

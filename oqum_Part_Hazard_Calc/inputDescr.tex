@@ -6,8 +6,34 @@ Input data for probabilistic based seismic hazard analysis (Classical, Event bas
 \end{itemize}
 The paths to the Seismic Source and Ground Motion System files are given in the 
 \Verb+SOURCE_MODEL_LOGIC_TREE_FILE+ and \Verb
-+GMPE_LOGIC_TREE_FILE+ keys, respectively, both defined in the \Verb+[HAZARD]+ section of the configuration file.\\ \\
-The information required to define both the Seismic Source and Ground Motion Systems is stored in a \Verb+logicTree+ element: 
++GMPE_LOGIC_TREE_FILE+ keys, respectively, both defined in the \Verb+[HAZARD]+ section of the configuration file:\\
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+[\textcolor{red}{HAZARD}]
+...
+SOURCE_MODEL_LOGIC_TREE_FILE=/PATH/TO/SEISMIC/SOURCE/SYSTEM/FILE
+GMPE_LOGIC_TREE_FILE=/PATH/TO/GROUND/MOTION/SYSTEM/FILE
+...
+\end{Verbatim}
+Both files are in NRML format and the information content is organized in a logic tree structure. Section \ref{ltd} provides a general
+description about logic tree definition in NRML while sections \ref{sss} and \ref{gms} explain how the NRML logic tree structure is 
+utilized for the seismic source and ground motion system definitions, respectively.
+
+\subsection{Logic Tree definition in NRML}\label{ltd}
+In the NRML schema, a logic tree is defined in terms of three main objects:
+\begin{itemize}
+\item branching level
+\item branch set
+\item individual branch
+\end{itemize}
+A schematic representation of these three objects is provided in Figure \ref{glts}. A branching level identifies the position in a tree where branching occurs while a branch set identifies a collection of branches (i.e. individual branches) whose weights sum to 1.\\
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=15cm]{./oqum_Figures/GenericLogicTreeStructure.eps}
+\caption{Generic Logic Tree structure as described in terms of branching levels, branch sets, and individual branches.}
+\label{glts}
+\end{center}
+\end{figure}
+In the NRML schema, a logic tree structure is defined through the a \Verb+logicTree+ element: 
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 ...
@@ -29,7 +55,7 @@ A \Verb+logicTree+ is defined as a sequence of \Verb+logicTreeBranchingLevel+ el
 </\textcolor{red}{logicTree}>
 \end{Verbatim}
 No restrictions are present on the number of tree levels that can be defined.\\
-A \Verb+logicTreeBranchingLevel+ is defined as a sequence of \Verb+logicTreeBranchSet+ elements. Each \Verb+logicTreeBranchSet+ defines a particular epistemic uncertainty inside a branching level. A branch set has two required attributes (\Verb+branchingLevelID+ and \Verb+uncertaintyType+ (defining the type of epistemic uncertainty the branch set is defining))
+A \Verb+logicTreeBranchingLevel+ is defined as a sequence of \Verb+logicTreeBranchSet+ elements. Each \Verb+logicTreeBranchSet+ defines a particular epistemic uncertainty inside a branching level. A branch set has two required attributes (\Verb+branchSetID+ and \Verb+uncertaintyType+ (defining the type of epistemic uncertainty the branch set is defining))
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 ...
@@ -150,7 +176,7 @@ applyToTectonicRegionType="Active Shallow Crust"
 \end{Verbatim}
 \end{itemize}
 
-\subsection{The Seismic Source System definition}
+\subsection{The Seismic Source System definition}\label{sss}
 The Seismic Source System is defined in a \Verb+logicTreeElement+ with the following constrains:
 \begin{itemize}
 \item The first branching level can contain only one branch set. This branch set must define uncertainties in the source model (that is \Verb+uncertaintyType="sourceModel"+)
@@ -227,7 +253,7 @@ Figure \ref{lt1} shows an example of Seismic Source System consisting of two ini
 \end{center}
 \end{figure}
 
-\subsection{The Ground Motion System definition}
+\subsection{The Ground Motion System definition}\label{gms}
 The Ground Motion System is defined in a \Verb+logicTree+ element with the following constrains:
 \begin{itemize}
 \item Only one branch set can be defined per branching level.
@@ -522,7 +548,7 @@ difference being the absence of the \Verb+areaBoundary+ element, that is replace
 	<\textcolor{orange}{hypocentralDepth}>
 		...	
 	</\textcolor{orange}{hypocentralDepth}>
-</\textcolor{red}{areaSource}>
+</\textcolor{red}{pointSource}>
 \end{Verbatim}
 where the \Verb+location+ element is defined as follows:
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]

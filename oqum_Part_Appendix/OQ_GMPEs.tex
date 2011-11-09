@@ -1,12 +1,14 @@
 \label{app:gmpes}
-The list of currently supported GMPEs is the following:
+This Appendix reports the GMPEs that can be currently utilized for hazard calculation. Each GMPE is identified by a tag (ending with \Verb+_AttenRel+). For each 
+GMPE, references containing details of the model are reported, and also information about the supported intensity measure types, components, standard deviation types, and periods (when available). The independent variables of the functional forms are provided, to let the user better understand which part of source and site models are used by each specific GMPE.
 \begin{itemize}
 
+\newpage
 \item \Verb+AB_2003_AttenRel+:
 \begin{itemize}
 \item \textbf{Description}: implements GMPE described in \cite{ab2003} and \cite{ab2003Erratum}. The GMPE implements the global model but not the corrections for Japan/Cascadia.
 \item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
-\item \textbf{Supported components}: random horizontal, average horizontal (added assuming equivalence to average horizontal - \cite{dEtAl2010})
+\item \textbf{Supported components}: random horizontal, average horizontal
 \item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
 \item \textbf{Supported periods}: 0.0, 0.04, 0.1, 0.2, 0.4, 1.0, 2.0, 3.0
 \item \textbf{Independent variables}:
@@ -25,6 +27,7 @@ The list of currently supported GMPEs is the following:
 \end{itemize}
 \end{itemize}
 
+\newpage
 \item \Verb+AS_1996_AttenRel+: 
 \begin{itemize}
 \item \textbf{Description}: implements GMPE described in \cite{as1996} and reported in \cite{s2001}.
@@ -40,10 +43,11 @@ The list of currently supported GMPEs is the following:
 \item vs30 $>600$ - rock
 \item vs30 $\leq180$ - soil
 \end{itemize}
+\item tectonic region type (active shallow crust)
 \end{itemize}
 \end{itemize}
-
-...
+%
+%...
 % this is commented because takes site class and not vs30. When it will be changed then it will be included.
 %\item \Verb+AS_1997_AttenRel+: 
 %\begin{itemize}
@@ -69,69 +73,525 @@ The list of currently supported GMPEs is the following:
 %\end{itemize}
 
 %\item \Verb+AS_2008_AttenRel+: implements the GMPE described in "Summary of the Abrahamson and Silva NGA Ground-Motion Relations", Abrahamson, N. A., and W. J. Silva, Earthquake Spectra, 24(1), 67-97 (2008).
-%
+\newpage
+\item \Verb+AS_2008_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{abrahamson2008}.
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping), PGV (cm/s)
+\item \textbf{Supported components}: average horizontal, average horizontal (GMRotI50)
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Supported periods}: 0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.075, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 7.5, 10.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $30 <$ rake $\leq 150$ - reverse 
+\item $-150 <$ rake $< -30$ - normal 
+\item $-30 \leq$ rake $\leq 30$ - strike-slip
+\item $-150 \leq$ rake $\leq 150$ - strike-slip
+\end{itemize}
+\item dip
+\item top of rupture depth
+\item rupture width
+\item closest distance to rupture
+\item Joyner-Boore distance
+\item shortest horizontal distance to fault trace (extended to infinity in both directions). Used to determine hanging-wall.
+\item vs30
+\item vs30 type (measured or inferred)
+\item depth to 1.0 km/s interface
+\end{itemize}
+\end{itemize}
+
+% currenly not accepted because uses intensity. To be described.
 %\item \Verb+AW_2010_AttenRel+: implements the IPE (intensity prediction equation) from T. Allen and D. Wald described in '"Best Practices" for using Macro-seismic Intensity and Ground Motion-Intensity Conversion Equations for Hazard and Loss Models in GEM1', G. Cua et. al.,GEM Technical Report 2010-4, GEM Foundation, Pavia, Italy (2010).
-%
+
+% not usable by OQ because uses site types, needs to be converted. To be described.
 %\item \Verb+Abrahamson_2000_AttenRel+: implements the GMPE described in: "Effects of rupture directivity on probabilistic seismic hazard analysis", Abrahamson, N. A., Proceedings of the 6th International Conference on Seismic Zonation, Palm Springs, CA, Earthquake Engineering Research Institute (EERI) (2000).
-%
+
 %\item \Verb+AkB_2010_AttenRel+: implements the GMPE described in: "Empirical Equations for the Prediction of PGA , PGV, and Spectral Accelerations in Europe, the Mediterranean Region, and the Middle East", Sinnan Akkar, Julian J. Bommer, Seismological Research Letters Vol. 81, No 2,  pp 195-206, March-April (2010).
-%
+\newpage
+\item \Verb+AkB_2010_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{ab2010}.
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping), PGV (cm/s)
+\item \textbf{Supported components}:  average horizontal, average horizontal (GMRotI50)
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Supported periods}: 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.15, 0.2, 
+		0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 
+		0.75, 0.8, 0.85, 0.9, 0.95, 1.0, 1.05, 1.1, 1.15, 1.2, 
+		1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7, 
+		1.75, 1.8, 1.85, 1.9, 1.95, 2.0, 2.05, 2.1, 2.15, 2.2, 
+		2.25, 2.3, 2.35, 2.4, 2.45, 2.5, 2.55, 2.6, 2.65, 2.7, 
+		2.75, 2.8, 2.85, 2.9, 2.95, 3.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $30 <$ rake $\leq 150$ - reverse 
+\item $-150 <$ rake $< -30$ - normal 
+\item $-30 \leq$ rake $\leq 30$ - strike-slip
+\item $-150 \leq$ rake $\leq 150$ - strike-slip
+\end{itemize}
+\item vs30 (the model assumes the following classification):
+\begin{itemize}
+\item vs30 $<360$ - soft soil
+\item $360 \leq$ vs30 $\leq 750$ - stiff soil
+\item vs30 $>750$ - rock
+\end{itemize}
+\item Joyner-Boore distance
+\end{itemize}
+\end{itemize}
+
 %\item \Verb+BA_2008_AttenRel+: implements the GMPE described in: "Ground-Motion Prediction Equations for the Average Horizontal Component of PGA, PGV, and 5\%-Damped PSA at Spectral Periods between 0.01 s and 10.0 s",  Boore, D. M. and Atkinson, G. M, Earthquake Spectra, Volume 24, Number 1, pp. 99-138 (2008).
-%
-%\item \Verb+BC_2004_AttenRel+: implements the site effect model described in "Ground-Motion Amplification in Nonlinear Soil Sites with Uncertain Properties", P. Bazzurro and C. A. Cornell, v. 94; no. 6; p. 2090-2109 (2004). The model is applied to the Abrahamson and Silva 1997 (\Verb+AS_1997_AttenRel+) rock site prediction.
-%
+\newpage
+\item \Verb+BA_2008_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{boore2008}.
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping), PGV (cm/s)
+\item \textbf{Supported components}:  average horizontal, average horizontal (GMRotI50)
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Supported periods}: 0.01, 0.02, 0.03, 0.05, 0.075, 0.1, 0.15,
+            0.2, 0.25, 0.3, 0.4, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 7.5, 10.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $30 <$ rake $\leq 150$ - reverse 
+\item $-150 <$ rake $< -30$ - normal 
+\item $-30 \leq$ rake $\leq 30$ - strike-slip
+\item $-150 \leq$ rake $\leq 150$ - strike-slip
+\end{itemize}
+\item vs30
+\item Joyner-Boore distance
+\end{itemize}
+\end{itemize}
+
+% currently not accepted because OQ does not allow definition of site amplification models per site.
+%%\item \Verb+BC_2004_AttenRel+: implements the site effect model described in "Ground-Motion Amplification in Nonlinear Soil Sites with Uncertain Properties", P. Bazzurro and C. A. Cornell, v. 94; no. 6; p. 2090-2109 (2004). The model is applied to the Abrahamson and Silva 1997 (\Verb+AS_1997_AttenRel+) rock site prediction.
+
 %\item \Verb+BJF_1997_AttenRel+: implements the GMPE described in "Equations for estimating horizontal response spectra and peak acceleration from western North American earthquakes: A summary of recent work",  Boore, D. M., W. B. Joyner, and T. E. Fumal, Seismological Research Letters, 68(1), 128-153 (1997).
-%
+\newpage
+\item \Verb+BJF_1997_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{boore1997}.
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
+\item \textbf{Supported components}:  average horizontal, random horizontal
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Supported periods}: 0.1, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.2, 0.22, 0.24, 0.26,
+0.28, 0.3, 0.32, 0.34, 0.36, 0.38, 0.40, 0.42, 0.44, 0.46, 0.48, 0.50, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95,
+1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $30 <$ rake $\leq 150$ - reverse 
+\item $-150 <$ rake $< -30$ - normal (treated as unknown)
+\item $-30 \leq$ rake $\leq 30$ - strike-slip
+\item $-150 \leq$ rake $\leq 150$ - strike-slip
+\end{itemize}
+\item vs30
+\item Joyner-Boore distance
+\end{itemize}
+\end{itemize}
+
+% currently not accepted because OQ does not allow definition of site amplification models per site.
 %\item \Verb+BS_2003_AttenRel+: implements the site effect model described in "Uncertainty and bias in ground motion estimates from ground response analyses",  Baturay, M. B., and J. P. Stewart, Bull. Seism. Soc. Am.93 , no. 5,2025 Ð2042 (2003). The model is applied to the Abrahamson and Silva 1997 (\Verb+AS_1997_AttenRel+) rock site prediction.
-%
+
+% currenly not accepted because uses intensity. To be described.
 %\item \Verb+BW_1997_AttenRel+: implements the IPE described in: "Estimating earthquake location and magnitude from seismic intensity data", Bakun, W. H. and C. M. Wentworth, Bull. Seism. Soc. Am. 87, 1502-1521(1997).
-%
+
 %\item \Verb+BommerEtAl_2009_AttenRel+: implements the GMPE described in: "Empirical equations for the prediction of the significant, bracketed, and uniform duration of earthquake ground motion", Bommer, J. J., Stafford, P. J. and Alarcon, J. E, Bulletin of the Seismological Society of America, 99(6),3217-3233 (2009).
-%
+\newpage
+\item \Verb+BommerEtAl_2009_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{bEtAl2009}
+\item \textbf{Supported intensity measure parameters}: relative significan duration (s)
+\item \textbf{Supported components}:  average horizontal
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item top of rupture depth
+\item vs30
+\item closest distance to rupture
+\end{itemize}
+\end{itemize}
+
+% currently not accepted because uses site types. Need to be converted first.
 %\item \Verb+CB_2003_AttenRel+: implements the GMPE described in: "Updated near-source ground motion (attenuation) relations for the horizontal and vertical components of peak ground acceleration and acceleration response spectra", Campbell, K. W. and Y. Bozorgnia, Bulletin of the Seismological Society of America, 93(1), 314 -331 (2003).
-%
+
+
 %\item \Verb+CB_2008_AttenRel+: implements the GMPE described in: "NGA Ground Motion Model for the Geometric Mean Horizontal Component of PGA, PGV, PGD and 5\% Damped Linear Elastic Response Spectra for Periods Ranging from 0.01 to 10 s", Campbell, K. W. and Y. Bozorgnia, Earthquake Spectra, Volume 24, Number 1, pp. 139-171(2008).
-%
+\newpage
+\item \Verb+CB_2008_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{campbell2008}
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping), PGV (cm/s), PGD (cm)
+\item \textbf{Supported components}:  average horizontal, average horizontal (GMRotI50), random horizontal
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Supported periods}: 0.01, 0.02, 0.03, 0.05, 0.075, 0.1, 0.15,
+            0.2, 0.25, 0.3, 0.4, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 7.5, 10.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $30 <$ rake $\leq 150$ - reverse 
+\item $-150 <$ rake $< -30$ - normal 
+\item $-30 \leq$ rake $\leq 30$ - strike-slip
+\item $-150 \leq$ rake $\leq 150$ - strike-slip
+\end{itemize}
+\item top of rupture depth
+\item dip
+\item vs30
+\item depth to 2.5 km/s interface
+\item closest distance to rupture
+\item Joyner-Boore distance
+\end{itemize}
+\end{itemize}
+
 %\item \Verb+CF_2008_AttenRel+: implements the GMPE described in: "Broadband (0.05 to 20s) prediction of displacement response spectra based on worldwide digital records", Cauzzi, C. and Faccioli, E., Journal of Seismology, Volume 12,pp. 453-475 (2008).
-%
+\newpage
+\item \Verb+CF_2008_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{cf2008}
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping), PGV (cm/s)
+\item \textbf{Supported components}:  average horizontal
+\item \textbf{Supported standard deviation types}: total, none
+\item \textbf{Supported periods}: 0.050,0.10,0.150,0.20,0.250,0.30,0.350,0.40,\\
+				0.450,0.50,0.550,0.60,0.650,0.70,0.750,0.80,0.850,0.90,\\
+		    0.950, 1.00,1.050,1.10,1.150,1.20,1.250,1.30,1.350,1.40,\\
+		    1.450,1.50,1.550,1.60,1.650,1.70,1.750,1.80,1.850,1.90,\\
+		    1.950, 2.00,2.050,2.10,2.150,2.20,2.250,2.30,2.350,2.40,\\
+		    2.450,2.50,2.550,2.60,2.650,2.70,2.750,2.80,2.850,2.90,\\
+		    2.950, 3.00,3.050,3.10,3.150,3.20,3.250,3.30,3.350,3.40,\\
+		    3.450,3.50,3.550,3.60,3.650,3.70,3.750,3.80,3.850,3.90,\\
+		    3.950, 4.00,4.050,4.10,4.150,4.20,4.250,4.30,4.350,4.40,\\
+		    4.450,4.50,4.550,4.60,4.650,4.70,4.750,4.80,4.850,4.90,\\
+		    4.950, 5.00,5.050,5.10,5.150,5.20,5.250,5.30,5.350,5.40,\\
+		    5.450,5.50,5.550,5.60,5.650,5.70,5.750,5.80,5.850,5.90,\\
+		    5.950, 6.00,6.050,6.10,6.150,6.20,6.250,6.30,6.350,6.40,\\
+		    6.450,6.50,6.550,6.60,6.650,6.70,6.750,6.80,6.850,6.90,\\
+		    6.950, 7.00,7.050,7.10,7.150,7.20,7.250,7.30,7.350,7.40,\\
+		    7.450,7.50,7.550,7.60,7.650,7.70,7.750,7.80,7.850,7.90,\\
+		    7.950, 8.00,8.050,8.10,8.150,8.20,8.250,8.30,8.350,8.40,\\
+		    8.450,8.50,8.550,8.60,8.650,8.70,8.750,8.80,8.850,8.90,\\
+		    8.950, 9.00,9.050,9.10,9.150,9.20,9.250,9.30,9.350,9.40,\\
+		    9.450,9.50,9.550,9.60,9.650,9.70,9.750,9.80,9.850,9.90,\\
+		    9.950,10.00,10.050,10.10,10.150,10.20,10.250,10.30,\\
+		    10.350,10.40,10.450,10.50,10.550,10.60,10.650,10.70,\\
+		    10.750,10.80,10.850,10.90,	10.950,11.00,11.050,11.10,\\
+		    11.150,11.20,11.250,11.30,11.350, 11.40,11.450,11.50,\\
+		    11.550,11.60,11.650,11.70,11.750,11.80,11.850,11.90,\\
+		    11.950,12.00,12.050,12.10,12.150,12.20,12.250,12.30,\\
+		    12.350,12.40,12.450,12.50,12.550,12.60,12.650,12.70,\\
+		    12.750,12.80,12.850,12.90,12.950,13.00,13.050,13.10,\\
+		    13.150,13.20,13.250,13.30,13.350,13.40,13.450,13.50,\\
+		    13.550,13.60,13.650,13.70,13.750,13.80,13.850,13.90,\\
+		    13.950,14.00,14.050,14.10,14.150,14.20,14.250,14.30,\\
+		    14.350,14.40,14.450,14.50,14.550,14.60,14.650,14.70,\\
+		    14.750,14.80,14.850,14.90,14.950,15.00,15.050,15.10,\\
+		    15.150,15.20,15.250,15.30,15.350,15.40,15.450,15.50,\\
+		    15.550,15.60,15.650,15.70,15.750,15.80,15.850,15.90,\\
+		    15.950,16.00,16.050,16.10,16.150,16.20,16.250,16.30,\\
+		    16.350,16.40,16.450,16.50,16.550,16.60,16.650,16.70,\\
+		    16.750,16.80,16.850,16.90,16.950,17.00,17.050,17.10,\\
+		    17.150,17.20,17.250,17.30,17.350,17.40,17.450,17.50,\\
+		    17.550,17.60,17.650,17.70,17.750,17.80,17.850,17.90,\\
+		    17.950,18.00,18.050,18.10,18.150,18.20,18.250,18.30,\\
+		    18.350,18.40,18.450,18.50,18.550,18.60,18.650,18.70,\\
+		    18.750,18.80,18.850,18.90,18.950,19.00,19.050,19.10,\\
+		    19.150,19.20,19.250,19.30,19.350,19.40,19.450,19.50,\\
+		    19.550,19.60,19.650,19.70,19.750,19.80,19.850,19.90,\\
+		    19.950,20.00
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $-120 <$ rake $\leq -60$ - normal 
+\item $30 <$ rake $\leq 150$ - reverse 
+\item $-60 <$ rake $\leq 30$ - strike-slip
+\item $-120 \leq$ rake $< 150$ - strike-slip
+\end{itemize}
+\item vs30 (the model assumes the following classification):
+\begin{itemize}
+\item vs30 $<180$ - soft soil
+\item $180 \leq$ vs30 $< 360$ - soil
+\item $360 \leq$ vs30 $< 800$ - stiff soil
+\item vs30 $>800$ - rock
+\end{itemize}
+\item hypocentral distance
+\end{itemize}
+\end{itemize}
+
+% not described because takes intensity
 %\item \Verb+CL_2002_AttenRel+: implements the IPE described in:"Intensity attenuation relationship for the South China region and comparison with the component attenuation model", Chandler, A. M. and Lam, N. T. K., Journal of Asian Earth Sciences, Volume 20, Issue 7, Pages 775-790 (2002).
-%
+
+% not described because require site amplication model not currently supported by OQ
 %\item \Verb+CS_2005_AttenRel+: implements the site effect model described in: "Nonlinear Site Amplification as a Function of 30 m Shear Wave Velocity", Choi, Y. and Stewart, J. P., Earthquake Spectra, 21 (1), 1-30 (2005). The model is applied to the Abrahamson and Silva 1997 (\Verb+AS_1997_AttenRel+) rock site prediction.
-%
+
 %\item \Verb+CY_2008_AttenRel+: implements the GMPE described in: "An NGA Model for the Average Horizontal Component of Peak Ground Motion and Response Spectra", Chiou, B. S.-J. and Youngs, R. R., Earthquake Spectra, Volume 24, No. 1, pages 173Ð215, (2008).
-%
+\newpage
+\item \Verb+CY_2008_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{chiou2008}
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping), PGV (cm/s)
+\item \textbf{Supported components}:  average horizontal, average horizontal (GMRotI50)
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Supported periods}: 0.01, 0.02, 0.03, 0.05, 0.075, 0.1, 0.15,
+            0.2, 0.25, 0.3, 0.4, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 7.5, 10.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $-120 \leq$ rake $\leq -60$ - normal 
+\item $30 \leq$ rake $\leq 150$ - reverse 
+\item $-60 <$ rake $< 30$ - strike-slip
+\item $-120 <$ rake $< 150$ - strike-slip
+\end{itemize}
+\item dip
+\item top of rupture depth
+\item vs30
+\item vs30 (measured or inferred)
+\item depth to 1.0 km/s interface
+\end{itemize}
+\end{itemize}
+
+% not described because requires site class defintion
 %\item \Verb+Campbell_1997_AttenRel+: implements the GMPE described in: "Empirical near-source attenuation relationships for horizontal and vertical components of peak ground acceleration, peak ground velocity, and pseudo-absolute acceleration response spectra", Campbell, K. W., Seismological Research Letters, 68(1), 154 -179 (1997). It implements also the Erratum: Campbell, K. W., Seismological Research Letters, 71(3), 352-354. (2000).
-%
+
 %\item \Verb+Campbell_2003_AttenRel+: implements the GMPE described in: "Prediction of Strong Ground Motion Using the Hybrid Empirical Method and Its Use in the Development of Ground-Motion (Attenuation) Relations in Eastern North America", Campbell, K. W., BSSA, vol 93, no 3, pp 1012-1033 (2003).
-%
+\newpage
+\item \Verb+Campbell_2003_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{campbell2003SCR}
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
+\item \textbf{Supported components}:  average horizontal, average horizontal (GMRotI50)
+\item \textbf{Supported standard deviation types}: total, none
+\item \textbf{Supported periods}: 0.02, 0.03, 0.05, 0.075, 0.10, 0.15, 0.20, 0.30, 0.50, 
+		0.75, 1.00, 1.50, 2.00, 3.00, 4.00
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item closest distance to rupture
+\end{itemize}
+\end{itemize}
+
 %\item \Verb+Campbell_2003_SHARE_AttenRel+: implements the Campbell 2003 GMPE (\Verb+Campbell_2003_AttenRel+), but adjusted for a reference $vs_{30}=800 m/s$ and for style of faulting as requested by the SHARE project.
-%
+\item \Verb+Campbell_2003_SHARE_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{campbell2003SCR}, but adjusted for a reference $vs_{30}=800 m/s$ and for style of faulting as requested by the SHARE project.
+\end{itemize}
+
+% not described because uses site class defintion
 %\item \Verb+DahleEtAl_1995_AttenRel+: implements the GMPE developed by Dahle et al.: Proc. 5th Int. Conf. on Seismic Zonation, Oct 17-19, Nice, France, p 1005-1012 (1995).
-%
+
 %\item \Verb+FS_2011_AttenRel+: implements the GMPE described in: "A predictive model for Arias intensity at multiple sites and consideration of spatial correlations", Foulser-Piggott, R. and Stafford, P. J.  Earthquake Engineering and Structural Dynamics (2011).
-%
+\newpage
+\item \Verb+FS_2011_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{fps2011}
+\item \textbf{Supported intensity measure parameters}: Arias intensity (m/s)
+\item \textbf{Supported components}: average horizontal
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $22.5 <$ rake $<112.5$ - reverse 
+\end{itemize}
+\item vs30
+\item closest distance to rupture
+\end{itemize}
+\end{itemize}
+
+% I described it but it cannot be used by OQ because the 'basin depth' param which cannot be set currently.
 %\item \Verb+Field_2000_AttenRel+: implements the GMPE described in: "A modified ground motion attenuation relationship for Southern California that accounts for detailed site classification and a basin-depth effect.", Field, E. H,  Bull. Seism. Soc. Amer., 90, 209-221(2000).
-%
+%\item \Verb+Field_2000_AttenRel+:
+%\begin{itemize}
+%\item \textbf{Description}: implements GMPE described in \cite{field2000}
+%\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping), PGV (cm/s)
+%\item \textbf{Supported components}: average horizontal
+%\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none, total (magnitude dependent), intra-event (magnitude dependent)
+%\item \textbf{Supported periods}: 0.3, 1.0, 3.0
+%\item \textbf{Independent variables}:
+%\begin{itemize}
+%\item moment magnitude
+%\item rake (the model assumes the following classification):
+%\begin{itemize}
+%\item $45 \leq$ rake $\leq 135$ - reverse 
+%\end{itemize}
+%\item vs30
+%\item basin depth
+%\end{itemize}
+%\end{itemize}
+
 %\item \Verb+KS_2006_AttenRel+: implements the GMPE described in: "Prediction equations for significant duration of earthquake ground motions considering site and near-source effects", Kempton, J. J. and Stewart, J. P. Earthquake Spectra, 22(4), 985-1013 (2006).
-%
+\newpage
+\item \Verb+KS_2006_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{ks2006}
+\item \textbf{Supported intensity measure parameters}: relative significant duration (s)
+\item \textbf{Supported components}: average horizontal
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item vs30
+\item closest distance to rupture
+\end{itemize}
+\end{itemize}
+
 %\item \Verb+LL_2008_AttenRel+: implements the GMPE described in: "Ground-Motion Attenuation Relationships for Subduction-Zone Earthquakes in Northeastern Taiwan", Po-Shen Lin and Chyi-Tyi Lee, Bulletin of the Seismological Society of America, Vol. 98, No. 1, pp 220-240, (2008).
-%
+\newpage
+\item \Verb+LL_2008_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{ll2008}
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
+\item \textbf{Supported components}: average horizontal
+\item \textbf{Supported standard deviation types}: total, none
+\item \textbf{Supported periods}: 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.09, 0.10, 0.12,
+         0.15, 0.17, 0.20, 0.24, 0.30, 0.36, 0.40, 0.46, 0.50, 0.60,
+         0.75, 0.85, 1.00, 1.50, 2.00, 3.00, 4.00, 5.00
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item tectonic region type (subduction interface, subduction intraslab)
+\item focal depth
+\item vs30
+\item hypocentral distance
+\end{itemize}
+\end{itemize}
+
+% not described because requires site type defintion not supported by OQ
 %\item \Verb+McVerryetal_2000_AttenRel+: implements the GMPE described in: "Crustal and subduction zone attenuation relations for New Zealand Earthquakes", Proc. 12th World Conference on Earthquake Engineering (2000). 
-%
+
+% not described because requires site type defintion not supported by OQ
 %\item \Verb+SEA_1999_AttenRel+: implements the GMPE described in: "SEA99: a revised ground motion prediction relation for use in extensional tectonic regimes", Spudich et. al., Bull. Seism. Soc. Am. 89, no. 1, 1156Ð1170 (1999).
-%
+
+% not described because requires site type defintion not supported by OQ
 %\item \Verb+SadighEtAl_1997_AttenRel+: implements the GMPE described in: "Attenuation relationships for shallow crustal earthquakes based on California strong motion data", Sadigh, K., C. -Y. Chang, J. A. Egan, F. Makdisi, and R. R. Youngs, Seismological Research Letters, 68(1), 180-189 (1997).
-%
+
 %\item \Verb+StaffordEtAl_2009_AttenRel+: implements the GMPE described in: "New predictive equations for Arias intensity from crustal earthquakes in New Zealand",  Stafford, P. J., Berrill, J. B. and Pettinga, J. R., Journal of Seismology, Vol. 13, no. 1, pp 31-52 (2009).
-%
+\newpage
+\item \Verb+StaffordEtAl_2009_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{sEtAl2009}
+\item \textbf{Supported intensity measure parameters}: arias intensity (m/s)
+\item \textbf{Supported components}: average horizontal
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $22.5 <$ rake $<112.5$ - reverse 
+\end{itemize}
+\item focal depth
+\item vs30
+\item closest distance to rupture
+\end{itemize}
+\end{itemize}
+
 %\item \Verb+ToroEtAl_2002_AttenRel+: implements the GMPE descrived in: "Modification of the Toro Et Al. (1997) Attenuation Equations for Large Magnitudes and Short Distances", Toro, G. R. (2002).
-%
+\newpage
+\item \Verb+ToroEtAl_2002_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{t2002}
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
+\item \textbf{Supported components}:  average horizontal, average horizontal (GMRotI50)
+\item \textbf{Supported standard deviation types}: total, none
+\item \textbf{Supported periods}: 0.029,  0.040, 0.10, 0.20, 0.40, 0.50, 
+		1.0, 2.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item Joyner-Boore distance
+\end{itemize}
+\end{itemize}
+
 %\item \Verb+ToroEtAl_2002_SHARE_AttenRel+: implements the Toro et. al. 2002 GMPE (\Verb+ToroEtAl_2002_AttenRel+), but adjusted for a reference $vs_{30}=800 m/s$ and for style of faulting as requested by the SHARE project.
-%
+\item \Verb+ToroEtAl_2002_SHARE_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{t2002}, but adjusted for a reference $vs_{30}=800 m/s$ and for style of faulting as requested by the SHARE project.
+\end{itemize}
+
 %\item \Verb+TravasarouEtAl_2003_AttenRel+: implements the GMPE described in: "Empirical attenuation relationship for Arias intensity", Travasarou, T., Bray, J. D. and Abrahamson, N. A., Earthquake Engineering and Structural Dynamics, Vol. 32, pp 1133-1155, (2003).
-%
+\newpage
+\item \Verb+TravasarouEtAl_2003_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{tEtAl2003}
+\item \textbf{Supported intensity measure parameters}: arias intensity (m/s)
+\item \textbf{Supported components}:  average horizontal
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item rake (the model assumes the following classification):
+\begin{itemize}
+\item $22.5 <$ rake $<112.5$ - reverse 
+\item $-122.5 <$ rake $<-67.5$ - normal 
+\end{itemize}
+\item vs30 (the model assumes the following classification):
+\begin{itemize}
+\item vs30 $<360$ - soft soil
+\item $350 \leq$ vs30 $\leq 760$ - stiff soil
+\item vs30 $>760$ - rock
+\end{itemize}
+\item closest distance to rupture
+\end{itemize}
+\end{itemize}
+
 %\item \Verb+YoungsEtAl_1997_AttenRel+: implements the GMPE described in: "Strong Ground Motion Attenuation Relationships for Subduction Zone Earthquakes", R.R.Youngs, S.J. Chiou, W.J. Silva, J. R. Humphrey, Seismological Research Letters, Volume 68, Number 1 (1997).
-%
+\newpage
+\item \Verb+YoungsEtAl_1997_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{y1997}
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
+\item \textbf{Supported components}: average horizontal
+\item \textbf{Supported standard deviation types}: total, none
+\item \textbf{Supported periods}: 0.075, 0.10, 0.20, 0.30, 0.40, 0.50, 0.75, 1.00, 1.50, 
+		    2.00, 3.00, 4.00
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item tectonic region type (subduction interface, subduction intraslab)
+\item focal depth
+\item vs30 (the model assumes the following classification):
+\begin{itemize}
+\item vs30 $\leq760$ - soil
+\item vs30 $>760$ - rock
+\end{itemize}
+\item closest distance to rupture
+\end{itemize}
+\end{itemize}
+
 %\item \Verb+ZhaoEtAl_2006_AttenRel+: implements the GMPE described in: "Attenuation Relations of Strong Ground Motion in Japan Using Site Classification Based on Predominant Period", John X. Zhao et al, Bulletin of the Seismological Society of America, Vol. 96, No. 3, pp 898-913 (2006).
+\newpage
+\item \Verb+ZhaoEtAl_2006_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{zhao2006}
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
+\item \textbf{Supported components}: average horizontal, average horizontal (GMRotI50)
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Supported periods}: 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 
+		    0.70, 0.80, 0.90, 1.00, 1.25, 1.50, 2.00, 2.50, 3.00, 4.00,
+		    5.00 
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item tectonic region type (active shallow crust, subduction interface, subduction intraslab)
+\item focal depth
+\item vs30
+\item closest distance to rupture
+\end{itemize}
+\end{itemize}
 
 \end{itemize}
