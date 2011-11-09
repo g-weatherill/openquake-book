@@ -91,7 +91,7 @@ Flags:
 OpenQuake is instructed through a configuration file (whose path is provided by the \Verb+--config_file+ flag). The configuration file contains informations about what type of analysis to perform, what input data to use, and associated calculations parameters. Input data must be provided into XML formatted files following the "NRML" schema: \\ \\
  \href{https://github.com/gem/openquake/tree/master/openquake/nrml/schema}
 {https://github.com/gem/openquake/tree/master/openquake/nrml/schema}\\ \\ 
-By default OpenQuake saves output data into the OpenQuake-Data Base (that is included in the OpenQuake package). To have output data saved into (XML formatted) files the option \Verb+output_type=xml+ must be specified.
+By default OpenQuake saves output data into the OpenQuake-Data Base (that is included in the OpenQuake package). To have output data saved into (XML formatted) files the option \Verb+output_type=xml+ must be specified. The complete command to run OpenQuake is therefore:
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 openquake --\textcolor{red}{config_file}=/PATH/TO/CONFIG/FILE --\textcolor{red}{output_type}=xml
 \end{Verbatim}

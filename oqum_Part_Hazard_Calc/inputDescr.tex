@@ -33,7 +33,7 @@ A schematic representation of these three objects is provided in Figure \ref{glt
 \label{glts}
 \end{center}
 \end{figure}
-In the NRML schema, a logic tree structure is defined through the a \Verb+logicTree+ element: 
+In the NRML schema, a logic tree structure is defined through the \Verb+logicTree+ element: 
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 ...
@@ -186,7 +186,15 @@ The Seismic Source System is defined in a \Verb+logicTreeElement+ with the follo
 \item If in a branching level, more than one branch sets are defined, the attribute \Verb+applyToBranches+ must contain one or more branch IDs referring to branches that are only in the previous branching level and that are not already linked to other branch sets (in other words there cannot be two branch sets that link to the same branch).
 \item In all branch sets, branch weights must sum to 1.
 \end{itemize}
-Figure \ref{lt1} shows an example of Seismic Source System consisting of two initial source models defined in the first branching level. In the second branching level, absolute uncertainties on Gutenberg-Richter a and b values are defined for source model 1 (\Verb+applyToBranches="_11"+). These uncertainties apply only to \Verb+area+ sources (applyToSourceType="area"). Same type of uncertainties are defined also for source model 2 (\Verb+applyToBranches="_12"+) but apply only to sources with IDs equal to \Verb+"_2"+ and \Verb+"_3"+ (\Verb+applyToSources="_2 _3"+). In the third branching level, absolute uncertainties on Gutenberg-Richter maximum magnitude are defined. These uncertainties apply to all source models in the previous branching level (the attribute \Verb+applyToBranches+ is absent, the default value \Verb+"ALL"+ is therefore assumed) but only to those sources that belongs to active shallow crust\\ (\Verb+applyToTectonicRegionType="Active Shallow Crust"+).
+A pictorial representation of a generic Seismic Source System as defined in a logic tree structure is given in Figure \ref{sssLT}.
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=15cm]{./oqum_Figures/SeismicSourceSystem.eps}
+\caption{Schematic representation of a Seismic Source System. The information defining a Seismic Source System can be placed in an arbitrarily complex logic tree structure, with the constrain that the first branching level is utilized only for the definition of the 'initial' seismic source models and the subsequent branching levels are used for epistemic uncertainties definition on source models' parameters}
+\label{sssLT}
+\end{center}
+\end{figure}
+Figure \ref{lt1} shows instead an example of Seismic Source System, in NRML format, consisting of two initial source models defined in the first branching level. In the second branching level, absolute uncertainties on Gutenberg-Richter a and b values are defined for source model 1 (\Verb+applyToBranches="_11"+). These uncertainties apply only to \Verb+area+ sources (applyToSourceType="area"). Same type of uncertainties are defined also for source model 2 (\Verb+applyToBranches="_12"+) but apply only to sources with IDs equal to \Verb+"_2"+ and \Verb+"_3"+ (\Verb+applyToSources="_2 _3"+). In the third branching level, absolute uncertainties on Gutenberg-Richter maximum magnitude are defined. These uncertainties apply to all source models in the previous branching level (the attribute \Verb+applyToBranches+ is absent, the default value \Verb+"ALL"+ is therefore assumed) but only to those sources that belongs to active shallow crust\\ (\Verb+applyToTectonicRegionType="Active Shallow Crust"+).
 \begin{figure}[htbp]
 \begin{center}
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\scriptsize, samepage=true]
@@ -262,7 +270,15 @@ The Ground Motion System is defined in a \Verb+logicTree+ element with the follo
 \item Each branch set must refer to a different tectonic region type.
 \item In all branch sets, branch weights must sum to 1.
 \end{itemize}
-Figure \ref{lt2} shows an example of Ground Motion System as defined in a \Verb+logicTreeElement+. Each branching level contains only one \Verb+branchSet+, each referring to a different tectonic region type. Each branch set can contain a variable number of GMPEs.
+A schematic representation of a Ground Motion System as defined in a tree structure is given in Figure \ref{gmpeLT}.
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=15cm]{./oqum_Figures/GroundMotionSystem.eps}
+\caption{Schematic representation of a Ground Motion System. The information defining a Ground Motion System is placed in a logic tree structure, where each branching level refers to a specific tectonic region type. The number of GMPEs per branching level (that is per tectonic region type) can vary. Each branch set at level $n$ is linked to all branches in the level $n-1$, so the resulting tree structure is symmetric}
+\label{gmpeLT}
+\end{center}
+\end{figure}
+Figure \ref{lt2} shows instead an example of Ground Motion System as defined in a \Verb+logicTreeElement+. Each branching level contains only one \Verb+branchSet+, each referring to a different tectonic region type. Each branch set can contain a variable number of GMPEs.
 \begin{figure}[htbp]
 \begin{center}
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\scriptsize, samepage=true]
@@ -656,6 +672,7 @@ The geometry is specified by the fault's top and bottom edge coordinates (in the
 </\textcolor{red}{complexFaultGeometry}>
 \end{Verbatim}
 
+\newpage
 \section{Configuration Parameters for Classical and Event Based PSHA, Disaggregation and UHS}
 Configuration parameters can be broadly divided into five main groups:
 \begin{itemize}
