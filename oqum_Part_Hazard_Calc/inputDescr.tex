@@ -696,9 +696,46 @@ Each source typology has its own set of parameters. For area sources, the follow
 \item \Verb+Cross Hair Line Sources+
 \item \Verb+16 Spoked Line Sources+
 \end{itemize}
-\item \Verb+AREA_SOURCE_DISCRETIZATION+: defines area source region discretization step (in decimal degrees).
+\item \Verb+AREA_SOURCE_DISCRETIZATION+: defines area source region discretization step (in decimal degrees). Minimum value is 0.01. Typical value is 0.1.
 \item \Verb+AREA_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
 \end{itemize}
+Figure \ref{areaSrcGridSpacing} shows the effect of the area source discretization parameter. Given the area boundary (white polygon), ruptures' hypocenters are placed inside the area on a regular grid of nodes (red dots), whose spacing is determined by the \Verb+AREA_SOURCE_DISCRETIZATION+ value. Smaller is the grid spacing better the earthquake ruptures will cover the area polygon, however higher will be the number of ruptures to be considered in the ERF (hence higher will be the computation time).\\
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/areaSrcGrid01.eps}}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/areaSrcGrid005.eps}}\\
+\caption{Area source discretization. Decreasing discretization step [from (a) to (b)] improves rupture distribution on the area polygon.}
+\label{areaSrcGridSpacing}
+\end{center}
+\end{figure}
+Two main options are available for modeling earthquake ruptures inside area sources: point or line. Figure \ref{areaSrcPointVersusLine} depicts the two approaches. If the point rupture option is chosen, earthquake ruptures (independently of their magnitude values) are modeled as points (red dots) located at a depth specified by the \Verb+<hypocentralDepth>+ element (a). If the line rupture option is chosen, ruptures' hypocenters are modeled as points (red dots) (again at a depth specified by the \Verb+<hypocentralDepth>+ element). However, for ruptures with magnitudes in the range specified by the \Verb+<ruptureDepthDistribution>+ element,  the rupture's top edge is modeled as a line placed at a depth associated to the rupture's magnitude (green and yellow lines represent ruptures' top edges for two magnitude bins in the rupture depth distribution) (b). The finite rupture option allows to model the rupture's hypocenter and top edge, and therefore to honor those GMPEs that make use of both these two pieces of information [for instance focal depth and distance to the rupture (closest distance or JB distance)]. The distance to the rupture is correctly computed for vertical ruptures (dip = 90\degree), however for dipping ruptures (dip < 90\degree) the distance calculation is based only on the rupture top edge and ignore the rupture extension along dip.\\
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=12cm]{./oqum_Figures/areaSrcPointRupture.eps}}
+\subfigure[]{
+\includegraphics[width=12cm]{./oqum_Figures/areaSrcFiniteRuptureGivenStrike.eps}}
+\caption{Point (a) and finite ruptures (b) in area source. }
+\label{areaSrcPointVersusLine}
+\end{center}
+\end{figure}
+If the line rupture option is chosen, multiple strategies are available to take into account the rupture orientation. If a strike value is provided, ruptures can be aligned according to it, if it is not  a random strike is generated (option \Verb+Line Sources (random or given strike)+, (a) and (b)). Possible alternatives are also distributing ruptures along two perpendicular directions (NS-EW, option \Verb+Cross Hair Line Sources+, (c)), and spin the ruptures over 360\degree (every 22.5 \degree, option \Verb+16 Spoked Line Sources+, (d)). 
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureGivenStrike2.eps}}
+\subfigure[]{
+\includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureRandom.eps}}
+\subfigure[]{
+\includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureCross.eps}}
+\subfigure[]{
+\includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureSpoked.eps}}
+\caption{Different options for modeling rupture orientation in area source. Along given strike (a), random strike (b), along two perpendicular directions (c), along multiple orientations (d).}
+\label{areaSrcLineRuptures}
+\end{center}
+\end{figure}
 
 \subsubsection{Point source parameters}
 Point sources require similar parameters:
