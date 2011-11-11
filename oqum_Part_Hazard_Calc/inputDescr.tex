@@ -768,7 +768,7 @@ Simple fault sources require the following parameters:
 \item \Verb+Along strike & centered down dip+
 \end{itemize}
 \end{itemize}
-The surface of a simple fault is modeled through a regular mesh, whose spacing is given by the fault discretization parameter. Ruptures are modeled as portions of the fault surface mesh (see Figure \ref{faultSurface}). Smaller is the surface discretization step more accurate is the modeling of fault surface geometry and fault ruptures, and also the calculation of the site-to-rupture distance. Ruptures with dimensions smaller then the discretization length are treated as points. Ruptures with dimensions equal or greater then fault surface dimensions occupy the entire fault surface. The rupture hypocenter is set in the middle point of the rupture surface.
+The surface of a simple fault is modeled through a regular mesh, whose spacing is given by the fault discretization parameter. Ruptures are modeled as portions of the fault surface mesh (see Figure \ref{faultSurface}). Smaller is the surface discretization step more accurate is the modeling of fault surface geometry and fault ruptures, and also the calculation of the site-to-rupture distance. Ruptures with dimensions smaller then the discretization length are treated as points. Ruptures with dimensions equal or greater then fault surface dimensions occupy the entire fault surface. The rupture hypocenter is set in the middle point of the rupture surface.\\
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
@@ -777,13 +777,36 @@ The surface of a simple fault is modeled through a regular mesh, whose spacing i
 \includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag5.eps}}
 \subfigure[]{
 \includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6.eps}}
-\subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag7.eps}}
-\caption{Fault rupture modeling. The fault surface is modeled by a regular mesh (a). Ruptures are modeled as portions of the fault surface mesh. Rupture dimensions (derived from magnitude using scaling relationship and aspect ratio) determine how many grid points are included in each rupture. For a fault (associated to a maximum magnitude equal to 7), examples of magnitude 5 (b), 6 (c), and 7 (d) ruptures are shown. The red dot represent the hypocenter location.}
+\caption{Fault rupture modeling. The fault surface is modeled by a regular mesh (a). Ruptures are modeled as portions of the fault surface mesh. Rupture dimensions (derived from magnitude using scaling relationship and aspect ratio) determine how many grid points are included in each rupture. Examples of ruptures of magnitude 5 (b) and 6 (c) are shown (assuming an aspect ration equal to 1). The red dot represent the hypocenter location.}
 \label{faultSurface}
 \end{center}
 \end{figure}
-Rupture dimensions are derived by using a magnitude scaling relationship and the aspect ratio (rupture length/ rupture width).
+Rupture dimensions are derived by using a magnitude scaling relationship and a aspect ratio (rupture length/ rupture width). The scaling relationship can be both a magnitude-area or magnitude-length relationship. If a magnitude-area is chosen, for the same magnitude, different aspect ratios produce different rupture lengths/ widths
+but always giving the same area (see Figure \ref{aspectRationMagArea}). Moreover, in case the rupture width implied for a given magnitude exceeds the down-dip width of the fault surface, then the rupture length is increased accordingly and the rupture width is set as the down dip width. If a magnitude-length relationship is considered instead, for the same magnitude, different aspect ratios produce ruptures with the same length, but with different widths (see Figure \ref{aspectRationMagLength}). If the rupture width implied by the aspect ratio exceeds the fault width, everything below the bottom edge of the fault is ignored.
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6.eps}}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6AR2.eps}}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6AR4.eps}}
+\caption{Rupture modeling with magnitude-area scaling relationship. For the same magnitude (6 in this case), different aspect ratios [1 (a), 2, (b), 4 (c)]  produce ruptures with different lengths/widths but having the same area.}
+\label{aspectRationMagArea}
+\end{center}
+\end{figure}
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6MagLengthRel.eps}}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6AR2MagLengthRel.eps}}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6AR4MagLengthRel.eps}}
+\caption{Rupture modeling with magnitude-length scaling relationship. For the same magnitude (6 in this case), different aspect ratios [1 (a), 2, (b), 4 (c)]  produce ruptures with same lengths, but different widths, associated therefore to different areas.}
+\label{aspectRationMagLength}
+\end{center}
+\end{figure}
 
 \subsubsection{Complex Fault source parameters}
 Complex fault sources require the same set of parameters:
