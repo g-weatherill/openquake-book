@@ -2,7 +2,7 @@
 
 \section{Introduction}
 \index{Deterministic Risk}
-The deterministic event-based risk calculator is capable of computing losses and loss statistics from a single event for a collection of assets, given a set of ground motion fields. A set of ground motion fields is required to represent the aleatory variability (both inter- and intra-event) in the ground motion prediction equation. The input ground motion fields are currently calculated following the deterministic event-based workflow that has been presented in Figure \ref{fig:Scheme_detrisk_calc}.
+The scenario risk calculator is capable of computing losses and loss statistics from a single event for a collection of assets, given a set of ground motion fields. A set of ground motion fields is required to represent the aleatory variability (both inter- and intra-event) in the ground motion prediction equation. The input ground motion fields are currently calculated following the scenario risk workflow that has been presented in Figure \ref{fig:Scheme_detrisk_calc}.
 
 For each ground motion field, the intensity measure level at a given site is combined with a vulnerability function, from which a loss ratio is randomly sampled, for each asset contained in the exposure model. The loss ratios that are sampled for assets of a given taxonomy classification at different locations are considered to be either independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. Using these results, the mean and standard deviation of the loss ratios across all ground motion fields can be calculated. Loss ratios are converted into losses by multiplying by the value of the asset given in the exposure model. It is furthermore possible to sum the losses throughout the region and to compute the mean and standard deviation of the total loss. 
 
@@ -63,7 +63,7 @@ Where $E[LR]$ stands for the mean loss ratio computed previously.
 \end{enumerate}
 
 \section{Calculator Output}
-The output of the Deterministic Event-Based Risk Calculator currently comprises loss statistics (mean total loss and standard deviation of total loss) and loss maps. Loss maps are comprised by a set of “loss nodes”, which are associated with a pair of coordinates. For each node, one or more loss values might exist, due to the fact that several different assets can be located at the same location.  Figure \ref{fig:detlosses} presents an example of a loss map containing the expected economic losses for reinforced concrete buildings located in the metropolitan area of Istanbul, considering a rupture of magnitude 7.5Mw under the Sea of Marmara.
+The output of the Scenario Risk Calculator currently comprises loss statistics (mean total loss and standard deviation of total loss) and loss maps. Loss maps are comprised by a set of “loss nodes”, which are associated with a pair of coordinates. For each node, one or more loss values might exist, due to the fact that several different assets can be located at the same location.  Figure \ref{fig:detlosses} presents an example of a loss map containing the expected economic losses for reinforced concrete buildings located in the metropolitan area of Istanbul, considering a rupture of magnitude 7.5Mw under the Sea of Marmara.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=12cm,height=9cm]{./Figures/Part_Risk/LossesDetIstanbul.eps}
