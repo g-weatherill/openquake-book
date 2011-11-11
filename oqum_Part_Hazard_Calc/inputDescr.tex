@@ -750,13 +750,14 @@ Point sources require similar parameters:
 \end{itemize}
 \item \Verb+GRID_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
 \end{itemize}
+Rupture modeling options for a point source are the same of the ones for an area source, the only difference being that ruptures are modeled on a single geographical location rather then distributed over a regular grid of points inside a polygonal region. 
 
 \subsubsection{Simple Fault source parameters}
 Simple fault sources require the following parameters:
 \begin{itemize}
 \item \Verb+INCLUDE_FAULT_SOURCE+: if \Verb+true+ all simple fault sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
-\item \Verb+FAULT_RUPTURE_OFFSET+: specifies the amount by which ruptures are offset on the fault (in km)
-\item \Verb+FAULT_SURFACE_DISCRETIZATION+: specifies the fault surface discretization step (in km).
+\item \Verb+FAULT_SURFACE_DISCRETIZATION+: specifies the fault surface discretization step (in km). Minimum value is 1 km (which can be considered a typical value too).
+\item \Verb+FAULT_RUPTURE_OFFSET+: specifies the amount by which ruptures are offset on the fault (in km). It must be greater or equal to the fault surface discretization.
 \item \Verb+FAULT_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
 \item \Verb+FAULT_MAGNITUDE_SCALING_SIGMA+: the standard deviation of log(Length) or log(Area)
 \item \Verb+RUPTURE_ASPECT_RATIO+: rupture aspect ratio (rupture length / rupture width)
@@ -767,6 +768,22 @@ Simple fault sources require the following parameters:
 \item \Verb+Along strike & centered down dip+
 \end{itemize}
 \end{itemize}
+The surface of a simple fault is modeled through a regular mesh, whose spacing is given by the fault discretization parameter. Ruptures are modeled as portions of the fault surface mesh (see Figure \ref{faultSurface}). Smaller is the surface discretization step more accurate is the modeling of fault surface geometry and fault ruptures, and also the calculation of the site-to-rupture distance. Ruptures with dimensions smaller then the discretization length are treated as points. Ruptures with dimensions equal or greater then fault surface dimensions occupy the entire fault surface. The rupture hypocenter is set in the middle point of the rupture surface.
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMesh.eps}}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag5.eps}}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6.eps}}
+\subfigure[]{
+\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag7.eps}}
+\caption{Fault rupture modeling. The fault surface is modeled by a regular mesh (a). Ruptures are modeled as portions of the fault surface mesh. Rupture dimensions (derived from magnitude using scaling relationship and aspect ratio) determine how many grid points are included in each rupture. For a fault (associated to a maximum magnitude equal to 7), examples of magnitude 5 (b), 6 (c), and 7 (d) ruptures are shown. The red dot represent the hypocenter location.}
+\label{faultSurface}
+\end{center}
+\end{figure}
+Rupture dimensions are derived by using a magnitude scaling relationship and the aspect ratio (rupture length/ rupture width).
 
 \subsubsection{Complex Fault source parameters}
 Complex fault sources require the same set of parameters:
