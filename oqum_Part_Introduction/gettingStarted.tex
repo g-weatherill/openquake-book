@@ -88,13 +88,14 @@ Flags:
   --version: Show version information
     (default: 'false')
 \end{Verbatim}
-OpenQuake is instructed through a configuration file (whose path is provided by the \Verb+--config_file+ flag). The configuration file contains informations about what type of analysis to perform, what input data to use, and associated calculations parameters. Input data must be provided into XML formatted files following the "NRML" schema: \\ \\
- \href{https://github.com/gem/openquake/tree/master/openquake/nrml/schema}
-{https://github.com/gem/openquake/tree/master/openquake/nrml/schema}\\ \\ 
-By default OpenQuake saves output data into the OpenQuake-Data Base (that is included in the OpenQuake package). To have output data saved into (XML formatted) files the option \Verb+output_type=xml+ must be specified. The complete command to run OpenQuake is therefore:
+OpenQuake is instructed through a configuration file (whose path is provided by the \Verb+--config_file+ flag). The configuration file contains informations about what type of analysis to perform, what input data to use, and associated calculations parameters. Output data are saved by default into the OpenQuake-Data Base (that is included in the OpenQuake package). To save output data into (XML formatted) files the option \Verb+output_type=xml+ must be specified. The complete command to run OpenQuake is therefore:
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 openquake --\textcolor{red}{config_file}=/PATH/TO/CONFIG/FILE --\textcolor{red}{output_type}=xml
 \end{Verbatim}
+Both input and output data are saved as XML formatted files that follow the "NRML" schema. "NRML" stands for 'Natural hazard' Risk Markup Language and is an XML dialect specialized in the description of seismic hazard and risk data structures. The schema can be accessed at the following link: \\ \\
+ \href{https://github.com/gem/openquake/tree/master/openquake/nrml/schema}
+{https://github.com/gem/openquake/tree/master/openquake/nrml/schema}\\ \\ 
+
 
 \section{Configuring OpenQuake}
 The configuration file follows the INI file format, and consist of statements in the format \Verb+KEY=VALUE+ organized in three main sections:

@@ -757,10 +757,10 @@ Simple fault sources require the following parameters:
 \begin{itemize}
 \item \Verb+INCLUDE_FAULT_SOURCE+: if \Verb+true+ all simple fault sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
 \item \Verb+FAULT_SURFACE_DISCRETIZATION+: specifies the fault surface discretization step (in km). Minimum value is 1 km (which can be considered a typical value too).
-\item \Verb+FAULT_RUPTURE_OFFSET+: specifies the amount by which ruptures are offset on the fault (in km). It must be greater or equal to the fault surface discretization.
-\item \Verb+FAULT_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
-\item \Verb+FAULT_MAGNITUDE_SCALING_SIGMA+: the standard deviation of log(Length) or log(Area)
-\item \Verb+RUPTURE_ASPECT_RATIO+: rupture aspect ratio (rupture length / rupture width)
+\item \Verb+FAULT_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures. It can be a magnitude-area or a magnitude-length relationship (list of available scaling relationships are given in Appendix B).
+\item \Verb+FAULT_MAGNITUDE_SCALING_SIGMA+: the standard deviation of log(Length) or log(Area). 0 if no uncertainties are considered.
+\item \Verb+RUPTURE_ASPECT_RATIO+: rupture aspect ratio (rupture length / rupture width). Determines the rupture shape (square if 1, rectangle elongated along strike if$ > 1$, or along dip if $< 1$).
+\item \Verb+FAULT_RUPTURE_OFFSET+: specifies the amount by which ruptures are offset on the fault (in km). It must be greater or equal to the fault surface discretization step. The rupture offset should be close to the dimensions of the minimum magnitude modeled on the fault to guarantee that the rupture distribution on the fault surface has no empty spaces.
 \item \Verb+RUPTURE_FLOATING_TYPE+: rupture floating algorithm. Allowed values are:
 \begin{itemize}
 \item \Verb+Only along strike ( rupture full DDW)+
@@ -768,29 +768,32 @@ Simple fault sources require the following parameters:
 \item \Verb+Along strike & centered down dip+
 \end{itemize}
 \end{itemize}
-The surface of a simple fault is modeled through a regular mesh, whose spacing is given by the fault discretization parameter. Ruptures are modeled as portions of the fault surface mesh (see Figure \ref{faultSurface}). Smaller is the surface discretization step more accurate is the modeling of fault surface geometry and fault ruptures, and also the calculation of the site-to-rupture distance. Ruptures with dimensions smaller then the discretization length are treated as points. Ruptures with dimensions equal or greater then fault surface dimensions occupy the entire fault surface. The rupture hypocenter is set in the middle point of the rupture surface.\\
+The surface of a simple fault is modeled through a regular mesh, whose spacing is given by the fault discretization parameter. Ruptures are modeled as portions of the fault surface mesh (see Figure \ref{faultSurface}). Smaller is the surface discretization step more accurate is the modeling of fault surface geometry and fault ruptures, and therefore also the calculation of the site-to-rupture distance. Ruptures with dimensions (length and width) smaller then the discretization length are treated as points. Ruptures with dimensions equal or greater then fault surface dimensions occupy the entire fault surface. The rupture hypocenter is set in the middle point of the rupture surface.\\
+Rupture dimensions are derived by using a magnitude scaling relationship and a aspect ratio (rupture length/ rupture width). The scaling relationship can be both a magnitude-area or magnitude-length relationship. If a magnitude-area is chosen, for the same magnitude, different aspect ratios produce different rupture lengths/ widths
+but always giving the same area (see Figure \ref{aspectRationMagArea}). Moreover, in case the rupture width implied for a given magnitude exceeds the down-dip width of the fault surface, then the rupture length is increased accordingly and the rupture width is set as the down dip width. If a magnitude-length relationship is considered instead, for the same magnitude, different aspect ratios produce ruptures with the same length, but with different widths (see Figure \ref{aspectRationMagLength}). If the rupture width implied by the aspect ratio exceeds the fault width, everything below the bottom edge of the fault is ignored.\\
+Uncertainties on rupture dimensions can be taken into account by specifying a non-zero standard deviation for the scaling relationship. In this case, rupture dimension uncertainties are treated as aleatory and the scaling relationship is truncated at 3 sigma. Consequently, the ERF size increases significantly because for each position on the fault, and for each magnitude value, an ensemble of ruptures is generated that is consistent with the area/length distribution as prescribed by the scaling relationship (see Figure \ref{scalingSigma}).\\
+Ruptures' distribution on the fault surface is governed by the rupture offset parameter and by the rupture floating algorithm. The rupture offset specify the the amount by which ruptures are moved on the fault. Smaller is the offset better the earthquake ruptures cover the fault surface (see Figure \ref{ruptureOffSet}). The rupture offset should be chosen so that all the fault surface is covered by at least a single rupture. The rupture offset is therefore linked to the dimensions of the minimum magnitude that the fault models.\\
+Three options are available for floating ruptures (Figure \ref{ruptureFloating}). The more general approach (and the one suggested for accurate calculations) is to float rupture both along strike and dip. Two alternative approaches are offered to reduce the size of the ERF (by reducing the number of ruptures on the fault) and therefore reducing the computation time. One option consists of floating ruptures only along strike and centered downdip and a second prescribe ruptures to float only along strike but covering the entire fault along dip. Floating ruptures only in the middle of the seismogenic layer can be useful for computing an average shaking between shallower and deeper ruptures. Extending ruptures until the bottom edge of the fault can be useful if vertical faults are considered and the GMPEs utilize the Joyner-Boore distance. In this case only the surface projection of the rupture is considered, and rupture extension along dip has no influence.\\
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMesh.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMesh.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag5.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag5.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6.eps}}
 \caption{Fault rupture modeling. The fault surface is modeled by a regular mesh (a). Ruptures are modeled as portions of the fault surface mesh. Rupture dimensions (derived from magnitude using scaling relationship and aspect ratio) determine how many grid points are included in each rupture. Examples of ruptures of magnitude 5 (b) and 6 (c) are shown (assuming an aspect ration equal to 1). The red dot represent the hypocenter location.}
 \label{faultSurface}
 \end{center}
 \end{figure}
-Rupture dimensions are derived by using a magnitude scaling relationship and a aspect ratio (rupture length/ rupture width). The scaling relationship can be both a magnitude-area or magnitude-length relationship. If a magnitude-area is chosen, for the same magnitude, different aspect ratios produce different rupture lengths/ widths
-but always giving the same area (see Figure \ref{aspectRationMagArea}). Moreover, in case the rupture width implied for a given magnitude exceeds the down-dip width of the fault surface, then the rupture length is increased accordingly and the rupture width is set as the down dip width. If a magnitude-length relationship is considered instead, for the same magnitude, different aspect ratios produce ruptures with the same length, but with different widths (see Figure \ref{aspectRationMagLength}). If the rupture width implied by the aspect ratio exceeds the fault width, everything below the bottom edge of the fault is ignored.
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6AR2.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6AR2.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6AR4.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6AR4.eps}}
 \caption{Rupture modeling with magnitude-area scaling relationship. For the same magnitude (6 in this case), different aspect ratios [1 (a), 2, (b), 4 (c)]  produce ruptures with different lengths/widths but having the same area.}
 \label{aspectRationMagArea}
 \end{center}
@@ -798,13 +801,79 @@ but always giving the same area (see Figure \ref{aspectRationMagArea}). Moreover
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6MagLengthRel.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6MagLengthRel.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6AR2MagLengthRel.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6AR2MagLengthRel.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/simpleFaultMag6AR4MagLengthRel.eps}}
+\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6AR4MagLengthRel.eps}}
 \caption{Rupture modeling with magnitude-length scaling relationship. For the same magnitude (6 in this case), different aspect ratios [1 (a), 2, (b), 4 (c)]  produce ruptures with same lengths, but different widths, associated therefore to different areas.}
 \label{aspectRationMagLength}
+\end{center}
+\end{figure}
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_1.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_2.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_3.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_4.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_5.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_6.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_7.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_8.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_9.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_10.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_11.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_12.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_13.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_14.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_15.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_16.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_17.eps}}
+\subfigure[]{
+\includegraphics[width=4cm]{./oqum_Figures/mag6_18.eps}}
+\caption{Uncertainties in scaling relationship. For the same position on the fault (fault's upper left corner), for the same magnitude (in this case 6), multiple ruptures are generated but with different areas (in this examples ruptures are generate using a magnitude area scaling relationship with standard deviation set to 0.25).}
+\label{scalingSigma}
+\end{center}
+\end{figure}
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingMag5OffSet10km.eps}}
+\subfigure[]{
+\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingMag5OffSet5km.eps}}
+\subfigure[]{
+\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingMag5OffSet1km.eps}}
+\caption{The rupture offset. By decreasing the rupture offset (10 km (a), 5 km (b), 1 km (c)), earthquake ruptures can better cover the fault surface.}
+\label{ruptureOffSet}
+\end{center}
+\end{figure}
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingCentered.eps}}
+\subfigure[]{
+\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingFullDDW.eps}}
+\subfigure[]{
+\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingMag5OffSet1km.eps}}
+\caption{Options for rupture floating. Rupture floating only along strike but centered along dip (a) or along strike and extending ruptures fully along dip (b), or along strike and along dip (c).}
+\label{ruptureFloating}
 \end{center}
 \end{figure}
 
