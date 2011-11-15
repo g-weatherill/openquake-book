@@ -686,7 +686,7 @@ Configuration parameters can be broadly divided into five main groups:
 \subsection{Source Model parameters}
 Source Model parameters define how seismic sources are modeled by the engine in order to create the earthquake rupture forecast (ERF).\\
 \subsubsection{Area source parameters}
-Each source typology has its own set of parameters. For area sources, the following keys must be set:
+Each source typology has its own set of parameters. For area sources, the following parameters must be set:
 \begin{itemize}
 \item \Verb+INCLUDE_AREA_SOURCES+: if \Verb+true+ all area sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
 \item \Verb+TREAT_AREA_SOURCE_AS+: specifies how ruptures in area sources must be modeled. Allowed values are:
@@ -697,9 +697,9 @@ Each source typology has its own set of parameters. For area sources, the follow
 \item \Verb+16 Spoked Line Sources+
 \end{itemize}
 \item \Verb+AREA_SOURCE_DISCRETIZATION+: defines area source region discretization step (in decimal degrees). Minimum value is 0.01. Typical value is 0.1.
-\item \Verb+AREA_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
+\item \Verb+AREA_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures. It can be only a magnitude-length relationship (list of available scaling relationships are given in Appendix B).
 \end{itemize}
-Figure \ref{areaSrcGridSpacing} shows the effect of the area source discretization parameter. Given the area boundary (white polygon), ruptures' hypocenters are placed inside the area on a regular grid of nodes (red dots), whose spacing is determined by the \Verb+AREA_SOURCE_DISCRETIZATION+ value. Smaller is the grid spacing better the earthquake ruptures will cover the area polygon, however higher will be the number of ruptures to be considered in the ERF (hence higher will be the computation time).\\
+Figure \ref{areaSrcGridSpacing} shows the effect of the area source discretization parameter. Given the area boundary (white polygon), ruptures' hypocenters are placed inside the area on a regular grid of nodes (red dots), whose spacing is determined by the area discretization value. Smaller is the grid spacing better the earthquake ruptures cover the area polygon, however higher is the number of ruptures to be considered in the ERF (hence higher is the computation time).\\
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
@@ -710,7 +710,7 @@ Figure \ref{areaSrcGridSpacing} shows the effect of the area source discretizati
 \label{areaSrcGridSpacing}
 \end{center}
 \end{figure}
-Two main options are available for modeling earthquake ruptures inside area sources: point or line. Figure \ref{areaSrcPointVersusLine} depicts the two approaches. If the point rupture option is chosen, earthquake ruptures (independently of their magnitude values) are modeled as points (red dots) located at a depth specified by the \Verb+<hypocentralDepth>+ element (a). If the line rupture option is chosen, ruptures' hypocenters are modeled as points (red dots) (again at a depth specified by the \Verb+<hypocentralDepth>+ element). However, for ruptures with magnitudes in the range specified by the \Verb+<ruptureDepthDistribution>+ element,  the rupture's top edge is modeled as a line placed at a depth associated to the rupture's magnitude (green and yellow lines represent ruptures' top edges for two magnitude bins in the rupture depth distribution) (b). The finite rupture option allows to model the rupture's hypocenter and top edge, and therefore to honor those GMPEs that make use of both these two pieces of information [for instance focal depth and distance to the rupture (closest distance or JB distance)]. The distance to the rupture is correctly computed for vertical ruptures (dip = 90\degree), however for dipping ruptures (dip < 90\degree) the distance calculation is based only on the rupture top edge and ignore the rupture extension along dip.\\
+Two main options are available for modeling earthquake ruptures inside area sources: point or line. Figure \ref{areaSrcPointVersusLine} depicts the two approaches. If the point rupture option is chosen, earthquake ruptures (independently of their magnitude values) are modeled as points (red dots) located at a depth equal to the hypocentral depth (a). If the line rupture option is chosen, ruptures' hypocenters are modeled as points (red dots) (again at a depth equal to the hypocentral depth). However, for ruptures with magnitudes in the range specified by the rupture depth distribution,  the rupture's top edge is modeled as a line placed at a depth associated to the rupture's magnitude (green and yellow lines represent ruptures' top edges for two magnitude bins in the rupture depth distribution) (b). The finite rupture option allows to model the rupture's hypocenter and top edge, and therefore to honor those GMPEs that make use of both these two pieces of information [for instance focal depth and distance to the rupture (closest distance or JB distance)]. The distance to the rupture is correctly computed for vertical ruptures (dip = 90\degree), however for dipping ruptures (dip $< 90$\degree) the distance calculation is based only on the rupture top edge and ignore the rupture extension along dip.\\
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
@@ -721,7 +721,7 @@ Two main options are available for modeling earthquake ruptures inside area sour
 \label{areaSrcPointVersusLine}
 \end{center}
 \end{figure}
-If the line rupture option is chosen, multiple strategies are available to take into account the rupture orientation. If a strike value is provided, ruptures can be aligned according to it, if it is not  a random strike is generated (option \Verb+Line Sources (random or given strike)+, (a) and (b)). Possible alternatives are also distributing ruptures along two perpendicular directions (NS-EW, option \Verb+Cross Hair Line Sources+, (c)), and spin the ruptures over 360\degree (every 22.5 \degree, option \Verb+16 Spoked Line Sources+, (d)). 
+If the line rupture option is chosen, multiple strategies are available to take into account the rupture orientation. If a strike value is provided, ruptures can be aligned according to it, if it is not a random strike is generated [Figure \ref{areaSrcLineRuptures} (a) and (b)]. Possible alternatives are also distributing ruptures along two perpendicular directions [NS-EW, Figure \ref{areaSrcLineRuptures} (c)], and spin the ruptures over 360\degree [every 22.5 \degree, Figure \ref{areaSrcLineRuptures} (d)]. 
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
@@ -732,13 +732,13 @@ If the line rupture option is chosen, multiple strategies are available to take 
 \includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureCross.eps}}
 \subfigure[]{
 \includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureSpoked.eps}}
-\caption{Different options for modeling rupture orientation in area source. Along given strike (a), random strike (b), along two perpendicular directions (c), along multiple orientations (d).}
+\caption{Different options for modeling rupture orientation in area source. Along given strike (a), random strike (b), along two perpendicular directions (c), along multiple strikes in the range 0 to 360 \degree (d).}
 \label{areaSrcLineRuptures}
 \end{center}
 \end{figure}
 
 \subsubsection{Point source parameters}
-Point sources require similar parameters:
+Point sources require similar parameters as area sources:
 \begin{itemize}
 \item \Verb+INCLUDE_GRID_SOURCES+: if \Verb+true+ all point sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
 \item \Verb+TREAT_GRID_SOURCE_AS+: specifies how ruptures in point sources must be modeled. Allowed values are:
@@ -748,7 +748,7 @@ Point sources require similar parameters:
 \item \Verb+Cross Hair Line Sources+
 \item \Verb+16 Spoked Line Sources+
 \end{itemize}
-\item \Verb+GRID_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
+\item \Verb+GRID_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures. It can be only a magnitude-length relationship (list of available scaling relationships are given in Appendix B).
 \end{itemize}
 Rupture modeling options for a point source are the same of the ones for an area source, the only difference being that ruptures are modeled on a single geographical location rather then distributed over a regular grid of points inside a polygonal region. 
 
@@ -878,14 +878,14 @@ Three options are available for floating ruptures (Figure \ref{ruptureFloating})
 \end{figure}
 
 \subsubsection{Complex Fault source parameters}
-Complex fault sources require the same set of parameters:
+Complex fault sources require the same set of parameters of simple fault sources:
 \begin{itemize}
 \item \Verb+INCLUDE_SUBDUCTION_FAULT_SOURCE+: if \Verb+true+ all complex fault sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
-\item \Verb+SUBDUCTION_FAULT_RUPTURE_OFFSET+: specifies the amount by which ruptures are offset on the fault (in km)
-\item \Verb+SUBDUCTION_FAULT_SURFACE_DISCRETIZATION+: specifies the fault surface discretization step (in km).
-\item \Verb+SUBDUCTION_FAULT_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
-\item \Verb+SUBDUCTION_FAULT_MAGNITUDE_SCALING_SIGMA+: the standard deviation of log(Length) or log(Area)
-\item \Verb+SUBDUCTION_RUPTURE_ASPECT_RATIO+: rupture aspect ratio (rupture length / rupture width)
+\item \Verb+SUBDUCTION_FAULT_SURFACE_DISCRETIZATION+:  specifies the fault surface discretization step (in km). Minimum value is 1 km (which can be considered a typical value too).
+\item \Verb+SUBDUCTION_FAULT_MAGNITUDE_SCALING_RELATIONSHIP+:  specifies the magnitude scaling relationship used for modeling finite ruptures. It can be a magnitude-area or a magnitude-length relationship (list of available scaling relationships are given in Appendix B).
+\item \Verb+SUBDUCTION_FAULT_MAGNITUDE_SCALING_SIGMA+: the standard deviation of log(Length) or log(Area). 0 if no uncertainties are considered.
+\item \Verb+SUBDUCTION_RUPTURE_ASPECT_RATIO+: rupture aspect ratio (rupture length / rupture width). Determines the rupture shape (square if 1, rectangle elongated along strike if$ > 1$, or along dip if $< 1$).
+\item \Verb+SUBDUCTION_FAULT_RUPTURE_OFFSET+: specifies the amount by which ruptures are offset on the fault (in km). It must be greater or equal to the fault surface discretization step. The rupture offset should be close to the dimensions of the minimum magnitude modeled on the fault to guarantee that the rupture distribution on the fault surface has no empty spaces.
 \item \Verb+SUBDUCTION_RUPTURE_FLOATING_TYPE+: rupture floating algorithm. Allowed values are:
 \begin{itemize}
 \item \Verb+Only along strike ( rupture full DDW)+
@@ -893,6 +893,17 @@ Complex fault sources require the same set of parameters:
 \item \Verb+Along strike & centered down dip+
 \end{itemize}
 \end{itemize}
+A complex fault surface is modeled through a pseudo-regular mesh (Figure \ref{complexFault} (a)), that is mesh with a grid spacing that is not uniform but vary depending on the position on the surface. The actual surface discretization is 'approximately' equal to the specified surface discretization. In other words, the grid spacing in the actual mesh fluctuates around the specified surface discretization value. The intensity of these fluctuations depends on the degree of complexity of the surface geometry. Higher is the geometrical complexity, larger is the difference between the actual and specified grid spacing. As in a simple fault, ruptures are defined (by using scaling relationship and aspect ratio) as portions of the fault surface mesh (Figure \ref{complexFault} (b)). Rupture dimensions are computed with respect to the specified discretization step. If the difference between specified and actual grid spacing is large, the rupture dimensions, as modeled on the mesh, may not be exactly the same of the dimensions predicted by the scaling relationship. However, apart from the modeling of the fault surface mesh, rupture creation and floating is governed exactly in the same way as for simple faults and have the same options.\\
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=5cm]{./oqum_Figures/complexFaultMesh.eps}}
+\subfigure[]{
+\includegraphics[width=5cm]{./oqum_Figures/complexFaultRupMag6.eps}}
+\caption{Complex fault modeling. From the top and bottom fault edges, a pseudo-regular mesh is created (a). Ruptures' shape accommodate the fault surface irregularity (b).}
+\label{complexFault}
+\end{center}
+\end{figure}
 
 \subsection{GMPE parameters}
 The GMPE parameters configures the GMPEs chosen for calculation. The currently supported parameters are:
