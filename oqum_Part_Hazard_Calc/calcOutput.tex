@@ -1,0 +1,140 @@
+Each hazard calculator produces specific results. If the option \Verb+--output_type=xml+ is chosen, results are stored in XML files (following NRML schema) in a folder whose path is specified in the hazard section of the configuration file:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+[\textcolor{red}{HAZARD}]
+...
+OUTPUT_DIR = /PATH/TO/OUTPUT/FOLDER
+...
+\end{Verbatim}
+Calculators having a logic tree structure defined in input (Classical PSHA, Event Based PSHA, Disaggregation, UHS) produce a 'distribution' of results (hazard curves, ground motion fields, disaggregation matrices, UHS) which reflect the input epistemic uncertainties. That is,  for each logic tree sample, results are computed and stored. Calculation of results statistics (mean, standard deviation, quantiles) is not included in the OpenQuake Hazard calculators (the only exception being the Classical PSHA that provides options for computing mean and quantile hazard curves).\\
+All hazard results are defined inside a generic \Verb+hazardResult+ element:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+<\textcolor{red}{hazardResult}>
+	<\textcolor{green}{config}>
+		...
+	</\textcolor{green}{config}>
+	...
+</\textcolor{red}{hazardResult}>
+\end{Verbatim}
+which contains a \Verb+config+ element that provides general information about the calculation process. Depending on the calculation mode, different type of data are placed inside the \Verb+hazardResult+ element.
+
+\section{Output from Classical PSHA}
+By default, the classical PSHA calculator compute and stores hazard curves for each logic tree sample. If \Verb+NUMBER_OF_LOGIC_TREE_SAMPLES=N+, then N hazard curves files are generated:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+hazardcurve-0.xml
+hazardcurve-1.xml
+...
+hazardcurve-(N-1).xml
+\end{Verbatim}
+each hazard curve file corresponds to a logic tree sample (specified by the number in the file name).
+Each hazard curve file contains a \Verb+hazardCurveField+ element:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+<\textcolor{red}{hazardResult}>
+	<\textcolor{green}{config}>
+		...
+	</\textcolor{green}{config}>
+	<\textcolor{blue}{hazardCurveField} \textcolor{magenta}{endBranchLabel}=LOGIC_TREE_SAMPLE_NUMBER>
+		...
+	</\textcolor{blue}{hazardCurveField}>
+</\textcolor{red}{hazardResult}>
+\end{Verbatim}
+containing as attribute the \Verb+endBranchLabel+ which reports the logic tree sample number (that is the logic tree sample from which hazard curves have been computed).\\
+The \Verb+hazardCurveField+ element contains the hazard curves (probabilities of exceedance for the chosen intensity measure levels) for all the sites of interest:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+<\textcolor{red}{hazardCurveField} endBranchLabel=LOGIC_TREE_SAMPLE_NUMBER>
+	<\textcolor{green}{IML} IMT=INTENSITY_MEASURE_TYPE>
+		VALUE_1 VALUE_2 ... VALUE_N
+	</\textcolor{green}{IML}>
+	<\textcolor{blue}{HCNode}>
+		<\textcolor{magenta}{site}>
+			<gml:Point>
+				<gml:pos>LON LAT</gml:pos>
+			</gml:Point>
+		</\textcolor{magenta}{site}>
+		<\textcolor{orange}{hazardCurve}>
+			<poE>POE_1 POE_2 ... POE_N</poE>
+		</\textcolor{orange}{hazardCurve}>
+	</\textcolor{blue}{HCNode}>
+	<\textcolor{blue}{HCNode}>
+		...
+	</\textcolor{blue}{HCNode}>
+	...
+	<\textcolor{blue}{HCNode}>
+		...
+	</\textcolor{blue}{HCNode}>
+</\textcolor{red}{hazardCurveField}>
+\end{Verbatim}
+Probabilities of exceedance refer to the intensity measure levels as specified in the \Verb+IML+ element (which report also the intensity measure type). Each hazard curve is then reported inside a \Verb+HCNode+ element, which contains a \Verb+site+ element (providing the geographic coordinates of the site the hazard curve refer to) and a \Verb+poE+ element containing the probabilities of exceedance.\\
+If mean hazard curves are requested, then these are stored in a separate file (\Verb+hazardcurve-mean.xml+) which follow the same format:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+<\textcolor{red}{hazardResult}>
+	<\textcolor{green}{config}>
+		...
+	</\textcolor{green}{config}>
+	<\textcolor{blue}{hazardCurveField} \textcolor{magenta}{statistics}="mean">
+		...
+	</\textcolor{blue}{hazardCurveField}>
+</\textcolor{red}{hazardResult}>
+\end{Verbatim}
+In this case the \Verb+statistics+ attribute is defined in the \Verb+hazardCurveField+ element and set to "mean", to indicate that the reported hazard curves are mean hazard curves.\\
+If quantile hazard curves are requested, then these are stored in separate files (a file for each quantile level requested):
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+hazardcurve-quantile-QUANTILE_VALUE_1.xml
+hazardcurve-quantile-QUANTILE_VALUE_2.xml
+...
+hazardcurve-quantile-QUANTILE_VALUE_N.xml
+\end{Verbatim}
+the format is the same, the only difference being the \Verb+statistics+ attribute set to "quantile", and a new attribute (\Verb+quantileValue+) reporting the quantile level hazard curves refer to:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+<\textcolor{red}{hazardResult}>
+	<\textcolor{green}{config}>
+		...
+	</\textcolor{green}{config}>
+	<\textcolor{blue}{hazardCurveField} \textcolor{magenta}{statistics}="quantile"
+			\textcolor{orange}{quantileValue}=QUANTILE_VALUE>
+		...
+	</\textcolor{blue}{hazardCurveField}>
+</\textcolor{red}{hazardResult}>
+\end{Verbatim}
+If hazard maps are requested (from mean/quantile hazard curves), then each map is stored in a separate file:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+hazardmap-POE_1-mean.xml
+...
+hazardmap-POE_N-mean.xml
+hazardmap-POE_1-quantile-QUANTILE_VALUE_1.xml
+..
+hazardmap-POE_1-quantile-QUANTILE_VALUE_N.xml
+...
+hazardmap-POE_N-quantile-QUANTILE_VALUE_1.xml
+...
+hazardmap-POE_N-quantile-QUANTILE_VALUE_N.xml
+\end{Verbatim}
+hazard map file names contains the probability of exceedance level the map refers to, and contains the tag \Verb+mean+ to identify a map produced from mean hazard curves, or the tag \Verb+quantile+ to identify a map produced from a quantile hazard curve. In the latter case, the quantile value is also reported. Map values are reported in a \Verb+hazardMap+ element:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+<\textcolor{red}{hazardMap} \textcolor{orange}{poE}=POE_VALUE
+		 \textcolor{violet}{IMT}=INTENSITY_MEASURE_TYPE >
+	<\textcolor{green}{HMNode}>
+		<\textcolor{blue}{HMSite}>
+			<gml:Point>
+				<gml:pos>LON LAT</gml:pos>
+			</gml:Point>
+			<vs30>VS_30</vs30>
+		</\textcolor{blue}{HMSite}>
+		<\textcolor{magenta}{IML}>VALUE</\textcolor{magenta}{IML}>
+	</\textcolor{green}{HMNode}>
+	<\textcolor{green}{HMNode}>
+		...
+	</\textcolor{green}{HMNode}>
+	...      
+	<\textcolor{green}{HMNode}>
+		...
+	</\textcolor{green}{HMNode}>
+</\textcolor{red}{hazardMap}>
+\end{Verbatim}
+which report the probability of exceedance and the intensity measure type (e.g. PGA, SA,...) the map refers to (attributes \Verb+poE+ and \Verb+IMT+ respectively). The \Verb+hazardMap+ element consists of a sequence of \Verb+HMNode+ elements, each reporting a geographical location (in the \Verb+HMSite+ element, which contains also Vs30 information) and the associated intensity measure level (defined in the \Verb+IML+ element).
+\section{Output from Event Based PSHA}
+
+\section{Output from Disaggregation}
+
+\section{Output from UHS}
+
+\section{Output from Deterministic}
