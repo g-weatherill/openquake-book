@@ -294,9 +294,9 @@ Parameters required for configuring the Classical PSHA calculator are:
 \begin{itemize}
 \item \Verb+MINIMUM_MAGNITUDE+: minimum (moment) magnitude to be used in the ERF construction.
 \item \Verb+INVESTIGATION_TIME+: time span (in years) for computing probability of exceedance.
-\item \Verb+MAXIMUM_DISTANCE+: maximum distance of sources to be considered in the calculation. Sources more than this distance away are ignored.
+\item \Verb+MAXIMUM_DISTANCE+: maximum distance (in km) of sources to be considered in the calculation. Sources more than this distance away are ignored.
 \item \Verb+WIDTH_OF_MFD_BIN+: discretization interval for  magnitude-frequency distribution.
-\item \Verb+INTENSITY_MEASURE_LEVELS+: comma separated list of intensity measure levels for which to compute probability of exceedance.
+\item \Verb+INTENSITY_MEASURE_LEVELS+: comma separated list of intensity measure levels for which to compute probability of exceedance. In the same units of the chosen intensity measure type.
 \item \Verb+COMPUTE_MEAN_HAZARD_CURVE+: if true, mean hazard curves are calculated and saved to file.
 \item \Verb+QUANTILE_LEVELS+: one or more quantile levels for computing quantile hazard curves. It can be left empty if no quantile curves are requested.
 \item \Verb+POES+: on or more probability values for computing hazard maps (from mean and quantile hazard curves).
@@ -307,7 +307,7 @@ Parameters required for configuring the Event Based PSHA calculator are:
 \begin{itemize}
 \item \Verb+MINIMUM_MAGNITUDE+: minimum (moment) magnitude to be used in the ERF construction.
 \item \Verb+INVESTIGATION_TIME+: time span (in years) for simulating stochastic event set.
-\item \Verb+MAXIMUM_DISTANCE+: maximum distance of sources to be considered in the calculation. Sources more than this distance away are ignored.
+\item \Verb+MAXIMUM_DISTANCE+: maximum distance (in km) of sources to be considered in the calculation. Sources more than this distance away are ignored.
 \item \Verb+WIDTH_OF_MFD_BIN+: discretization interval for  magnitude-frequency distribution.
 \item \Verb+NUMBER_OF_SEISMICITY_HISTORIES+: for each logic tree sample, the number of stochastic event sets to be generated.
 \item \Verb+GMF_RANDOM_SEED+: seed number for random number generator used for ground motion field calculation. It can be any integer number. In independent OpenQuake runs, by using the same seed number, the same ground motion fields can be calculated.
@@ -320,15 +320,15 @@ Parameters required for configuring the Disaggregation calculator are:
 \begin{itemize}
 \item \Verb+MINIMUM_MAGNITUDE+: minimum (moment) magnitude to be used in the ERF construction.
 \item \Verb+INVESTIGATION_TIME+: time span (in years) for computing probability of exceedance.
-\item \Verb+MAXIMUM_DISTANCE+: maximum distance of sources to be considered in the calculation. Sources more than this distance away are ignored.
+\item \Verb+MAXIMUM_DISTANCE+: maximum distance (in km) of sources to be considered in the calculation. Sources more than this distance away are ignored.
 \item \Verb+WIDTH_OF_MFD_BIN+: discretization interval for  magnitude-frequency distribution.
-\item \Verb+INTENSITY_MEASURE_LEVELS+: comma separated list of intensity measure levels for which to compute probability of exceedance.
+\item \Verb+INTENSITY_MEASURE_LEVELS+: comma separated list of intensity measure levels for which to compute probability of exceedance. In the same units of the chosen intensity measure type.
 \item \Verb+POES+: on or more probability values for computing disaggregation matrices.
 \item \Verb+LATITUDE_BIN_LIMITS+: comma separated list of latitude values, defining latitude bin edges.
 \item \Verb+LONGITUDE_BIN_LIMITS+: comma separated list of longitude values, defining longitude bin edges.
 \item \Verb+MAGNITUDE_BIN_LIMITS+: comma separated list of magnitude values, defining magnitude bin edges.
 \item \Verb+EPSILON_BIN_LIMITS+: comma separated list of epsilon values, defining epsilon bin edges.
-\item \Verb+DISTANCE_BIN_LIMITS+: comma separated list of distance values, defining distance bin edges.
+\item \Verb+DISTANCE_BIN_LIMITS+: comma separated list of distance values (in km), defining distance bin edges.
 \item \Verb+DISAGGREGATION_RESULTS+: comma separated list of disaggregation type results. Allowed values:
 \begin{itemize}
 \item \Verb+MagPMF+: magnitude probability mass function (PMF)
@@ -350,7 +350,7 @@ Parameters required for configuring UHS calculator are:
 \begin{itemize}
 \item \Verb+MINIMUM_MAGNITUDE+: minimum (moment) magnitude to be used in the ERF construction.
 \item \Verb+INVESTIGATION_TIME+: time span (in years) for computing probability of exceedance.
-\item \Verb+MAXIMUM_DISTANCE+: maximum distance of sources to be considered in the calculation. Sources more than this distance away are ignored.
+\item \Verb+MAXIMUM_DISTANCE+: maximum distance (in km) of sources to be considered in the calculation. Sources more than this distance away are ignored.
 \item \Verb+WIDTH_OF_MFD_BIN+: discretization interval for  magnitude-frequency distribution.
 \item \Verb+POES+: on or more probability values for computing UHS.
 \item \Verb+PERIODS_FOR_UHS+:  list of periods, in ascending order, to be used for spectra calculations.
