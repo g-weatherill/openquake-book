@@ -1,0 +1,116 @@
+Currently, some of the results of OpenQuake can be exported  in the associated NRML schema if the option \Verb+--output_type=xml+ is chosen. These outputs are stored in the same folder as the hazard outputs, specified in the configuration file by the following key:
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+...
+OUTPUT_DIR = /PATH/TO/OUTPUT/FOLDER
+...
+\end{Verbatim}
+
+Other results are only displayed in the command line terminal (e.g.: mean total losses due to a single event), or exported as a scalable vector graphic (.svg) format (e.g.: total loss curve).
+
+\section{Scenario Risk Calculator}
+\label{sec:Scenario}
+The main output of this calculator is the spatial distribution of the losses throughout the region of interest (loss map). These values are represented by a mean and a standard deviation, which are stored according to a NRML schema. This format is composed by a set of parameters describing the metadata, as presented below:
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+<\textcolor{red}{riskResult}>
+     <\textcolor{green}{lossMap} id="Messina1908"> endBranchLabel="01" 
+          lossCategory="economic loss" unit="EUR">
+          ...
+\end{Verbatim}
+
+The \Verb+id+ stands for a unique code that identifies the loss map. The \Verb+lossCategory+ describes the type of losses that are presented in the loss map and the attribute \Verb+unit+ states the measure used to quantify those losses. Although logic trees are only used in the hazard part to consider the epistemic uncertainty, it is in OpenQuake future developments plan to extend this feature into the risk calculations. For this reason, an attribute to identify each branch of the logic tree (\Verb+endBranch+) has been incorporated in this schema.
+After the metadata, the mean and standard deviation of the losses from each asset are stored. These results are organized by  "\Verb+LMNode+'s" (loss map nodes). Each node represents a site that can contain one or more assets, as illustrated below:
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+          ...
+          <\textcolor{blue}{LMNode} gml:id="lmn_1">
+             <site>
+                <gml:Point srsName="epsg:4326">
+                <gml:pos>14.692 37.904</gml:pos>
+                </gml:Point>
+             </site>
+             <loss assetRef="a1">
+                <mean>3562.86</mean>
+                <stdDev>441.12</stdDev>
+             </loss>
+          <\textcolor{blue}{/LMNode} 
+          ...
+          <\textcolor{blue}{LMNode} gml:id="lmn_N">
+             <site>
+                <gml:Point srsName="epsg:4326">
+                <gml:pos>15.492 38.105</gml:pos>
+                </gml:Point>
+             </site>
+             <loss assetRef="a99">
+                <mean>1210293.05788</mean>
+                <stdDev>600904.558345</stdDev>
+             </loss>
+             <loss assetRef="a100">
+                <mean>193999.499515</mean>
+                <stdDev>105916.572334</stdDev>
+             </loss>
+          <\textcolor{blue}{/LMNode} 
+          ...
+     <\textcolor{green}{/lossMap}
+<\textcolor{red}{/riskResult}>      
+\end{Verbatim}
+
+This calculator also provides the mean and standard deviation of the total losses due to the single event, which are displayed in the terminal window.
+
+\section{Classical PSHA-based Risk Calculator}
+This calculator is capable of computing a loss curve and a loss ratio curve for each asset, that are stored in a similar way. This schema comprises some parameters describing the metadata, as presented below:
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+<\textcolor{red}{riskResult}>
+     <\textcolor{green}{lossCurveList} id="Messina1908"> endBranchLabel="01" 
+          lossCategory="economic loss" unit="EUR" timeSpan="50">
+          ...
+\end{Verbatim}
+
+All of these attributes have been described in the previous section, except for the \Verb+timeSpan+, which stands for the the period over which the risk is to be investigated (in years). The set of loss/loss ratio curves are then organized by "\Verb+LCNode+'s" (loss curve nodes), comprising the results for one or many assets located at the same site.
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=false]
+          ...
+          <\textcolor{blue}{LCNode} gml:id="lcn_1">
+             <site>
+                <gml:Point srsName="epsg:4326">
+                <gml:pos>14.692 37.904</gml:pos>
+                </gml:Point>
+             </site>
+             <lossCurve assetRef="a1">
+                <loss>118 235 477 989 2055 4102 7444 11679 
+                   15631</loss>
+                <poE> 0.970 0.654 0.297 0.137 0.056 0.019 0.005 
+                   0.002 0.001</poE>
+             </lossCurve>
+          <\textcolor{blue}{/LCNode} 
+          ...
+          <\textcolor{blue}{LCNode} gml:id="lmn_N">
+             <site>
+                <gml:Point srsName="epsg:4326">
+                <gml:pos>15.492 38.105</gml:pos>
+                </gml:Point>
+             </site>
+             <lossCurve assetRef="a99">
+                <loss>99 196 398 825 1712 3418 6203 9733 
+                   13026 </loss>
+                <poE> 0.989 0.667 0.303 0.140 0.057 0.020 0.006 
+                   0.002 0.001 </poE>
+             </lossCurve>
+             <lossCurve assetRef="a100">
+                <loss>79 157 319 660 1370 2735 4963 7786 
+                   10421 </loss>
+                <poE> 0.951 0.641 0.291 0.134 0.055 0.019 0.005 
+                   0.002 0.001 </poE>
+             </lossCurve>
+          <\textcolor{blue}{/LCNode} 
+          ...
+     <\textcolor{green}{/lossMap}
+<\textcolor{red}{/riskResult}>      
+\end{Verbatim}
+
+Using the aforementioned loss curves, OpenQuake can also compute loss maps for various probabilities of exceedance. The NRML schema for these results is almost the same as the one used to store the losses from single events, described in section \ref{sec:Scenario}. The differences are two attributes that have been added to the metadata section: the  \Verb+timeSpan+, which stands for the the period over which the risk is to be investigated (in years) and the \Verb+probabilityOfExceedance+, which stands for the probability used to estimate the losses. In addition, the losses per asset are represented by a single value, and not by a mean and standard deviation as seen before.
+
+\section{Probabilistic Event-based Calculator}
+This risk calculator is capable of computing grids of loss/loss ratio curves and loss maps, which are stored in same was as described in the previous section. It can also compute total loss curves (loss curve representing the losses for the whole exposure model). which are currently being exported in a scalable vector graphic (svg) format. Figure X illustrates an example of this type of result.  

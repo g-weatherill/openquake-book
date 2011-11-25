@@ -55,8 +55,17 @@ Available Hazard Analysis
 
 Available Risk Analysis
 
+  Scenario Risk
+    Input   Exposure (set of assets)
+            Vulnerability curves (a list of vulnerability functions)
+            Seismic hazard input: sets of ground motion fields
+
+    Output  A grid of loss-ratio curves
+            A grid of loss curves
+            A map of losses at each interval
+            
   Classical PSHA-based
-    Input   Exposure (a value per asset)
+    Input   Exposure (set of assets)
             Vulnerability curves (a list of vulnerability functions)
             Seismic hazard input: hazard curves
 
@@ -65,7 +74,7 @@ Available Risk Analysis
             A map of losses at each interval
 
   Probabilistic event-based
-    Input   Exposure (a value per asset)
+    Input   Exposure (set of assets)
             Vulnerability curves (a list of vulnerability functions)
             Seismic hazard input: sets of ground motion fields
 
