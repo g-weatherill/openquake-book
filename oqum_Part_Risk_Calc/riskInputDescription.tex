@@ -43,7 +43,7 @@ Each asset is uniquely identified by its \Verb+id+, which is used by OpenQuake t
 As a part of the Modeller's toolkit development, scripts capable of converting information about the assets stored in Excel or ASCII files into NRML are currently being developed. 
 
 \section{Vulnerability model definition}
-In this section, the NRML schema for the vulnerability model is described in detail. In order to do so, a graphical representation of a vulnerability model (mean loss ratio for a set of intensity measure levels) is illustrated in Figure \ref{fig:vulModel}, and the equivalent NRML file is then presented. The aforementioned model is composed by two discrete vulnerability functions and uses spectral acceleration for a certain period. 
+In this section, the NRML schema for the vulnerability model is described in detail. In order to do so, a graphical representation of a vulnerability model (mean loss ratio for a set of intensity measure levels) is illustrated in Figure \ref{fig:vulModel}, and the equivalent NRML file is then presented. Note that although the uncertainty for each loss ratio is not represented in the aforementioned figure, it has been considered in the input NRLM file, by means of a coefficient of variation per loss ratio. This model is composed by two discrete vulnerability functions and uses spectral acceleration for a certain period. 
 
 \begin{figure}[ht]
 \centering
@@ -105,26 +105,4 @@ Finally, for each discrete vulnerability function the following parameters are r
 \item  \Verb+ coefficientVariation +: A set of coefficients of variation (one per loss ratio) that describes the uncertainty for different levels of loss. If users do not want to consider the uncertainty, this set of parameters can be set to zero, and OpenQuake assumes each loss ratio as a deterministic value. 
 \end{itemize}
 
-Several methodologies to derive vulnerability functions are currently being evaluated and will be a part of the Modellers Toolkit. In addiction, scripts to convert vulnerability curves stored in Excel or ASCII files into NRML are being developed.
-
-\section{Configuration parameters}
-For any of the risk calculations, an exposure and a vulnerability model need to be provided. Hence, in the risk section within the configuration file, each path needs to be inserted next to the respective keys. In addiction, in the Classical PSHA-based and Probabilistic Event-based Risk calculators, if loss maps are pretend to be computed, another key needs to be provided stating the set of probabilities of exceedance (one per loss map). 
- 
-\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
-...\\
-
-[\textcolor{blue}{RISK}]\\
-
-EXPOSURE = Exposure_model.xml\\
-
-VULNERABILITY = Vulnerability_model.xml\\
-
-CONDITIONAL_LOSS_POE = 0.01, 0.02, 0.05, 0.1
-
-\end{Verbatim}
-
-
-
-
-%CONDITIONAL_LOSS_POE = 0.01
-
+Several methodologies to derive vulnerability functions are currently being evaluated and will be a part of the Modelers Toolkit. In addiction, scripts to convert vulnerability curves stored in Excel or ASCII files into NRML are being developed.
