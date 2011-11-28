@@ -1,19 +1,28 @@
 \section{ Risk Configuration Parameters}
 
-For any of the risk calculations, an exposure and a vulnerability model need to be provided. Hence, in the risk section within the configuration file, each path needs to be specified next to the respective keys. In the Probabilistic Event-based Risk calculator, the correlation of the vulnerability correlation can be taken into account, by sampling the same residual in the loss ratio of assets of the same type. In order to do so, the key \Verb+ASSET_CORRELATION+ needs to be defined as perfect in the configuration file. In the other hand, if this correlation is to be ignored, the associated key can be omitted and each loss ratio will be independently sampled. 
-Finally, in the Classical PSHA-based and Probabilistic Event-based Risk calculators, if loss maps are pretend to be computed, another key (\Verb+CONDITIONAL_LOSS_POE+) needs to be provided stating the set of probabilities of exceedance (one per loss map).
- 
+Besides the hazard configuration parameters that have been described in section \ref{chap:hazconf}, other parameters need to be defined in the configuration file for the risk calculations. The following list describes each of these keys:
+
+\begin{itemize}
+\item \Verb+EXPOSURE+: specifies the path to the location of the exposure model, stored in the respective NRML format.
+\item \Verb+VULNERABILITY+: specifies the path to the location of the vulnerability model, stored in the respective NRML format. 
+\item \Verb+ASSET_CORRELATION+: in the Scenario Risk and Probabilistic Event-based Risk calculators, the correlation of the vulnerability can be taken into account, by sampling the same residual in the loss ratio of assets of the same type. In order to do so, this needs to be defined as 'perfect' in the configuration file. In the other hand, if no correlation in the vulnerability exists, this key can be omitted and each loss ratio will be independently sampled. 
+\item \Verb+CONDITIONAL_LOSS_POE +: in the Classical PSHA-based and Probabilistic Event-based Risk calculators, if loss maps are to be computed, a set of probabilities of exceedance (one per loss map), needs to be defined.
+\end{itemize}
+
+The following scheme demonstrates an example of the risk section in the configuration file:
+
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 ...\\
 
 [\textcolor{blue}{RISK}]\\
 
-EXPOSURE = Exposure_model.xml\\
+EXPOSURE = path/to/the/Exposure_model.xml\\
 
-VULNERABILITY = Vulnerability_model.xml\\
+VULNERABILITY = path/to/the/Vulnerability_model.xml\\
 
 ASSET_CORRELATION =  Perfect\\
 
 CONDITIONAL_LOSS_POE = 0.01, 0.02, 0.05, 0.1\\
 
 \end{Verbatim}
+
