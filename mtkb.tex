@@ -1,5 +1,5 @@
 % ------------------------------------------------------------------------------
-% OpenQuake Book 
+% Modellers' Toolkit Book 
 % 
 % Authors: 
 % 	H. Crowley 		- Executive Committee - GEM Foundation, Pavia, Italy
@@ -18,8 +18,8 @@
 % ------------------------------------------------------------------------------
 \uppertitleback{
    \textbf{Authors:} \\
-   Helen Crowley$^1$, Damiano Monelli$^2$, 
-   Marco Pagani$^1$, Vitor Silva$^3$, Graeme Weatherill$^3$ \\ \hfill \\
+   Graeme Weatherill$^3$, Helen Crowley$^1$, Damiano Monelli$^2$, 
+   Marco Pagani$^1$, Vitor Silva$^3$ \\ \hfill \\
    \small
    \begin{tabular}{p{4cm}p{4cm}p{4cm}}
    $^1$ GEM Foundation \hfill \newline
@@ -79,10 +79,10 @@
    \normalsize
 }  
 %
-% =============================================================== BEGIN DOCUMENT
-% -------------------------------------------------- Title and table of contents
+% ============================================================== BEGIN DOCUMENT
+% ------------------------------------------------- Title and table of contents
 \begin{document}
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Cover
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Cover
 \newgeometry{hmargin={-0.4cm,0cm},height=29.7cm}
 \thispagestyle{empty}
 \psset{unit=1cm}
@@ -113,7 +113,7 @@
 \thispagestyle{empty}
 \cleardoublepage
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Load the glossary
-\input{./oqb/part_Introduction/glossary.tex}
+\input{./Part_Introduction/glossary.tex}
 %
 % - - - - - - - - - - - - - - - - - - - - - - -  This is the internal title page
 \setcounter{page}{1}
@@ -126,110 +126,76 @@
 \pagestyle{scrheadings}
 \maketitle
 %
-\input{./oqb/part_Introduction/acknowledgements.tex}
+\input{./Part_Introduction/acknowledgements.tex}
 \cleardoublepage
 %  
 \tableofcontents
 %
 % --------------------------------------------------------- Symbols and acronyms
 % \chapter*{Symbols and Acronyms}
-%	\input{./oqb/part_Introduction/symbolsAcronyms.tex}
+%	\input{./Part_Introduction/symbolsAcronyms.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
 \thispagestyle{empty}
 \part{Introduction}
 % ------------------------------------------------------------------------------
-\chapter{Motivation and the Basics of OpenQuake}
-	\input{./oqb/part_introduction/introduction.tex}
+\chapter{Introduction}
+	\input{./mtkb/introduction.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
 \part{Hazard}
 % ------------------------------------------------------------------------------
 \chapter{Introduction}
-	\label{chap:inthaz}
-	\input{./oqb/part_hazard/introduction.tex}
+	%\input{./Part_Hazard/introduction.tex}
 % ------------------------------------------------------------------------------
 \chapter{OpenQuake Input Description}
-	\label{chap:hazinp}
-	\input{./oqb/part_hazard/unifiedSeismicSourceDescription.tex}
+	%\label{chap:hazinp}
+	%\input{./Part_Hazard/unifiedSeismicSourceDescription.tex}
 % ------------------------------------------------------------------------------
 \chapter{The Logic Tree Processor and the Earthquake Rupture Forecast 
 	calculator}
-	\label{chap:erf}
-	\input{./oqb/part_hazard/logicTreeProcessor.tex}
-	\input{./oqb/part_hazard/eqk_Rupture_Forecast_Calculator.tex}
+	%\label{chap:erf}
+	%\input{./Part_Hazard/logicTreeProcessor.tex}
+	%\input{./Part_Hazard/eqk_Rupture_Forecast_Calculator.tex}
 % ------------------------------------------------------------------------------
 \chapter{SHA Calculators}
-	\label{chap:hazcalc}
-	\input{./oqb/part_hazard/kernel/intro.tex}
-	\input{./oqb/part_hazard/kernel/classical_PSHA.tex}
-	\input{./oqb/part_hazard/kernel/event_based_PSHA.tex}
-	\input{./oqb/part_hazard/kernel/disaggregation.tex}
-% ------------------------------------------------------------------------------
+	%\label{chap:hazcalc}
+	%\input{./Part_Hazard/kernel/intro.tex}
+	%\input{./Part_Hazard/kernel/classical_PSHA.tex}
+	%\input{./Part_Hazard/kernel/event_based_PSHA.tex}
+	%\input{./Part_Hazard/kernel/disaggregation.tex}
+% -----------------------------------------------------------------------------
 %\chapter{Wesson et al. [2009] risk calculation implementation}
-%	\input{./oqb/part_Hazard/wessonMethod.tex}
-% ==============================================================================
-% ------------------------------------------------------------------------- Part
+%	\input{./Part_Hazard/wessonMethod.tex}
+% =============================================================================
+% ------------------------------------------------------------------------ Part
 \part{Risk}
-% ------------------------------------------------------------------------------
-\chapter{Introduction}
-	\label{chap:intrisk}
-	\input{./oqb/part_physical_risk/introduction.tex}
-% ------------------------------------------------------------------------------
-\chapter{OpenQuake Input Description}
-	\label{chap:riskinput}
-	\input{./oqb/part_physical_risk/Risk_Input_Description.tex}
-% ------------------------------------------------------------------------------
-\chapter{Scenario Risk Calculator}
-	\label{chap:risk_deterministic}
-	\input{./oqb/part_physical_risk/Scenario_Risk_Based.tex}
-% ------------------------------------------------------------------------------
-\chapter{Probabilistic Event-Based Risk Calculator}
-	\label{chap:risk_prob_event_based}
-	\input{./oqb/part_physical_risk/Probabilistic_Event_Based.tex}
-% ------------------------------------------------------------------------------
-\chapter{Classical PSHA-Based Risk Calculator}
-	\label{chap:risk_psha_based}
-	\input{./oqb/part_physical_risk/Classical_PSHA_Based.tex}
-% ==============================================================================
-% ------------------------------------------------------------------------- Part
-%\part{Socio-Economic Impact Assessment}
-%	\input{./oqb/part_SEIA/introduction.tex}
-% ==============================================================================
-% ------------------------------------------------------------------------- Part
-%\part{Modeller's Toolkit}
-% ------------------------------------------------------------------------------
-%\chapter{Introduction}
-%	\input{./oqb/part_Modellers_Toolkit/introduction.tex}
-% ------------------------------------------------------------------------------
-%\chapter{Input visualization and preparation}
-%	\input{./oqb/part_Modellers_Toolkit/input.tex}
-% ==============================================================================
-% ------------------------------------------------------------------------------
-% ------------------------------------------------------------------------- Part
+% =============================================================================
+% -----------------------------------------------------------------------------
+% ------------------------------------------------------------------------ Part
 %\part{Appendixes}
 %\appendix
-% ------------------------------------------------------------------------------
+% -----------------------------------------------------------------------------
 %\chapter{nrML}
-%	\input{./oqb/part_Appendix/nrML.tex}
-% ------------------------------------------------------------------------------
+%	\input{./Part_Appendix/nrML.tex}
+% -----------------------------------------------------------------------------
 %\chapter{Example of OpenQuake risk calculation configuration file}
-%	\input{./oqb/part_Appendix/appendixHazardInputExample.tex}
-% ==============================================================================
-% ----------------------------------------------------------------- Bibliography
+%	\input{./Part_Appendix/appendixHazardInputExample.tex}
+% =============================================================================
+% ---------------------------------------------------------------- Bibliography
 \small
 \bibliographystyle{apalike}
-\bibliography{./Bibliography/hazard,./Bibliography/risk,./Bibliography/sei.bib}
+\bibliography{./Bibliography/hazard.bib}
 \normalsize
-% ==============================================================================
-% ------------------------------------------------------------------------ Index
+% =============================================================================
+% ----------------------------------------------------------------------- Index
 \printglossaries
 \printindex
 \cleardoublepage
 % Final empty page
 \hfill \\ \thispagestyle{empty} \clearpage 
-% ==============================================================================
-% ------------------------------------------------------------------- Back Cover
+% =============================================================================
+% ------------------------------------------------------------------ Back Cover
 \newgeometry{hmargin={0cm,-0.4cm},height=29.7cm}
 \thispagestyle{empty}
 \psset{unit=1cm}

@@ -28,9 +28,9 @@ Figure \ref{areaSrcGridSpacing} shows the effect of the area source discretizati
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/areaSrcGrid01.eps}}
+\includegraphics[width=6cm]{./oqum/figures/areaSrcGrid01.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./oqum_Figures/areaSrcGrid005.eps}}\\
+\includegraphics[width=6cm]{./oqum/figures/areaSrcGrid005.eps}}\\
 \caption{Area source discretization. Decreasing discretization step [from (a) to (b)] improves rupture distribution on the area polygon.}
 \label{areaSrcGridSpacing}
 \end{center}
@@ -39,9 +39,9 @@ Two main options are available for modeling earthquake ruptures inside area sour
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=12cm]{./oqum_Figures/areaSrcPointRupture.eps}}
+\includegraphics[width=12cm]{./oqum/figures/areaSrcPointRupture.eps}}
 \subfigure[]{
-\includegraphics[width=12cm]{./oqum_Figures/areaSrcFiniteRuptureGivenStrike.eps}}
+\includegraphics[width=12cm]{./oqum/figures/areaSrcFiniteRuptureGivenStrike.eps}}
 \caption{Point (a) and finite ruptures (b) in area source. }
 \label{areaSrcPointVersusLine}
 \end{center}
@@ -50,13 +50,13 @@ If the line rupture option is chosen, multiple strategies are available to take 
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureGivenStrike2.eps}}
+\includegraphics[width=8cm]{./oqum/figures/areaSrcFiniteRuptureGivenStrike2.eps}}
 \subfigure[]{
-\includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureRandom.eps}}
+\includegraphics[width=8cm]{./oqum/figures/areaSrcFiniteRuptureRandom.eps}}
 \subfigure[]{
-\includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureCross.eps}}
+\includegraphics[width=8cm]{./oqum/figures/areaSrcFiniteRuptureCross.eps}}
 \subfigure[]{
-\includegraphics[width=8cm]{./oqum_Figures/areaSrcFiniteRuptureSpoked.eps}}
+\includegraphics[width=8cm]{./oqum/figures/areaSrcFiniteRuptureSpoked.eps}}
 \caption{Different options for modeling rupture orientation in area source. Along given strike (a), random strike (b), along two perpendicular directions (c), along multiple strikes in the range 0 to 360 \degree (d).}
 \label{areaSrcLineRuptures}
 \end{center}
@@ -102,11 +102,11 @@ Three options are available for floating ruptures (Figure \ref{ruptureFloating})
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMesh.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMesh.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag5.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMag5.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMag6.eps}}
 \caption{Fault rupture modeling. The fault surface is modeled by a regular mesh (a). Ruptures are modeled as portions of the fault surface mesh. Rupture dimensions (derived from magnitude using scaling relationship and aspect ratio) determine how many grid points are included in each rupture. Examples of ruptures of magnitude 5 (b) and 6 (c) are shown (assuming an aspect ration equal to 1). The red dot represent the hypocenter location.}
 \label{faultSurface}
 \end{center}
@@ -114,11 +114,11 @@ Three options are available for floating ruptures (Figure \ref{ruptureFloating})
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMag6.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6AR2.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMag6AR2.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6AR4.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMag6AR4.eps}}
 \caption{Rupture modeling with magnitude-area scaling relationship. For the same magnitude (6 in this case), different aspect ratios [1 (a), 2, (b), 4 (c)]  produce ruptures with different lengths/widths but having the same area.}
 \label{aspectRationMagArea}
 \end{center}
@@ -126,11 +126,11 @@ Three options are available for floating ruptures (Figure \ref{ruptureFloating})
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6MagLengthRel.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMag6MagLengthRel.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6AR2MagLengthRel.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMag6AR2MagLengthRel.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/simpleFaultMag6AR4MagLengthRel.eps}}
+\includegraphics[width=5cm]{./oqum/figures/simpleFaultMag6AR4MagLengthRel.eps}}
 \caption{Rupture modeling with magnitude-length scaling relationship. For the same magnitude (6 in this case), different aspect ratios [1 (a), 2, (b), 4 (c)]  produce ruptures with same lengths, but different widths, associated therefore to different areas.}
 \label{aspectRationMagLength}
 \end{center}
@@ -138,41 +138,41 @@ Three options are available for floating ruptures (Figure \ref{ruptureFloating})
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_1.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_1.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_2.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_2.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_3.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_3.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_4.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_4.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_5.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_5.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_6.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_6.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_7.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_7.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_8.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_8.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_9.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_9.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_10.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_10.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_11.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_11.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_12.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_12.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_13.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_13.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_14.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_14.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_15.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_15.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_16.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_16.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_17.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_17.eps}}
 \subfigure[]{
-\includegraphics[width=4cm]{./oqum_Figures/mag6_18.eps}}
+\includegraphics[width=4cm]{./oqum/figures/mag6_18.eps}}
 \caption{Uncertainties in scaling relationship. For the same position on the fault (fault's upper left corner), for the same magnitude (in this case 6), multiple ruptures are generated but with different areas (in this examples ruptures are generate using a magnitude area scaling relationship with standard deviation set to 0.25).}
 \label{scalingSigma}
 \end{center}
@@ -180,11 +180,11 @@ Three options are available for floating ruptures (Figure \ref{ruptureFloating})
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingMag5OffSet10km.eps}}
+\includegraphics[width=5cm]{./oqum/figures/ruptFloatingMag5OffSet10km.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingMag5OffSet5km.eps}}
+\includegraphics[width=5cm]{./oqum/figures/ruptFloatingMag5OffSet5km.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingMag5OffSet1km.eps}}
+\includegraphics[width=5cm]{./oqum/figures/ruptFloatingMag5OffSet1km.eps}}
 \caption{The rupture offset. By decreasing the rupture offset (10 km (a), 5 km (b), 1 km (c)), earthquake ruptures can better cover the fault surface.}
 \label{ruptureOffSet}
 \end{center}
@@ -192,11 +192,11 @@ Three options are available for floating ruptures (Figure \ref{ruptureFloating})
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingCentered.eps}}
+\includegraphics[width=5cm]{./oqum/figures/ruptFloatingCentered.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingFullDDW.eps}}
+\includegraphics[width=5cm]{./oqum/figures/ruptFloatingFullDDW.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/ruptFloatingMag5OffSet1km.eps}}
+\includegraphics[width=5cm]{./oqum/figures/ruptFloatingMag5OffSet1km.eps}}
 \caption{Options for rupture floating. Rupture floating only along strike but centered along dip (a) or along strike and extending ruptures fully along dip (b), or along strike and along dip (c).}
 \label{ruptureFloating}
 \end{center}
@@ -222,9 +222,9 @@ A complex fault surface is modeled through a pseudo-regular mesh (Figure \ref{co
 \begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/complexFaultMesh.eps}}
+\includegraphics[width=5cm]{./oqum/figures/complexFaultMesh.eps}}
 \subfigure[]{
-\includegraphics[width=5cm]{./oqum_Figures/complexFaultRupMag6.eps}}
+\includegraphics[width=5cm]{./oqum/figures/complexFaultRupMag6.eps}}
 \caption{Complex fault modeling. From the top and bottom fault edges, a pseudo-regular mesh is created (a). Ruptures' shape accommodate the fault surface irregularity (b).}
 \label{complexFault}
 \end{center}
