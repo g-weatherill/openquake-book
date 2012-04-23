@@ -1,0 +1,19 @@
+\section{ Risk Configuration Parameters}
+
+For any of the risk calculations, an exposure and a vulnerability model need to be provided. Hence, in the risk section within the configuration file, each path needs to be specified next to the respective keys. In the Probabilistic Event-based Risk calculator, the correlation of the vulnerability correlation can be taken into account, by sampling the same residual in the loss ratio of assets of the same type. In order to do so, the key \Verb+ASSET_CORRELATION+ needs to be defined as perfect in the configuration file. In the other hand, if this correlation is to be ignored, the associated key can be omitted and each loss ratio will be independently sampled. 
+Finally, in the Classical PSHA-based and Probabilistic Event-based Risk calculators, if loss maps are pretend to be computed, another key (\Verb+CONDITIONAL_LOSS_POE+) needs to be provided stating the set of probabilities of exceedance (one per loss map).
+ 
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+...\\
+
+[\textcolor{blue}{RISK}]\\
+
+EXPOSURE = Exposure_model.xml\\
+
+VULNERABILITY = Vulnerability_model.xml\\
+
+ASSET_CORRELATION =  Perfect\\
+
+CONDITIONAL_LOSS_POE = 0.01, 0.02, 0.05, 0.1\\
+
+\end{Verbatim}
