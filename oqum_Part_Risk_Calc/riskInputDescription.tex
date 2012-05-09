@@ -20,24 +20,7 @@ The way the information about the characteristics of the assets in an exposure m
 \item  \Verb+stco+: structural cost of the asset (e.g: replacement cost). 
 \end{itemize}
 
-While the attribute \Verb+number+ might be a rather simple parameter, the other two can be considerably ambiguous as different ways to define them might be used. With regards to the attribute \Verb+area+, one can either choose to provide the aggregated built up area of a certain building typology per location or the average built up area for a single unit. Similarly, the \Verb+stco+ can also be defined as the aggregated economic value (replacement cost for all the asset at the given location), the cost of replacing a single unit or even the replacement cost for unit of area. To establish the way these two attributes are being defined within the exposure model, two flags have been introduced in the schema model:  \Verb+areaType+ and \Verb+stcoType+. Table \ref{tab:attributesEM} summarizes the options that can be chosen for these three attributes, as well as the possible values for the aforementioned flags.
-
-\begin{table}[!t]
-\centering
-\begin{tabular}{llll} \hline
-% >>> Table header
-\textbf{Attribute} & \textbf{Set of assets} & \textbf{Per single asset } & \textbf{Per area of asset} \\
- & \textbf{\Verb+aggregated+} & \textbf{\Verb+per_asset+} & \textbf{\Verb+per_area+} \\ 
-\hline
-% <<< Table header
-\Verb+number+ & Count of all assets in a given location & - & - \\
-\Verb+area+ & Total built up area of a building typology & Average built up area for a single asset & - \\
-\Verb+stco+ & Total replacement cost of a building typology & Average replacement cost for a single asset & Average replacement cost per unit of area \\
-\hline
-\end{tabular}
-\caption{Summary of the attributes used to define the exposure model.}
-\label{tab:attributesEM}
-\end{table}
+While the attribute \Verb+number+ might be a rather simple parameter, the other two can be considerably ambiguous as different ways to define them might be used. With regards to the attribute \Verb+area+, one can either choose to provide the aggregated built up area of a certain building typology per location or the average built up area for a single unit. Similarly, the \Verb+stco+ can also be defined as the aggregated economic value (replacement cost for all the asset at the given location), the cost of replacing a single unit or even the replacement cost for unit of area. To establish the way these two attributes are being defined within the exposure model, two flags have been introduced in the schema model:  \Verb+areaType+ and \Verb+stcoType+. 
 
 Notice that since the attribute \Verb+number+ always represents the same quantity (number of assets in a given location), no flag providing further information about this attribute was introduced. Further information regarding the parameters that are currently being used to define the exposure elements can be found in the OpenQuake book. In order to clarify this methodology, several examples are presented later in this section.
 
@@ -227,7 +210,7 @@ In this section, the NRML schema for the vulnerability model is described in det
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=10cm,height=6cm]{./oqum/figures/vulnerabilityModel.eps}
+\includegraphics[width=10cm,height=6cm]{./oqum_Figures/vulnerabilityModel.eps}
 \caption{Graphical representation of a vulnerability model.}
 \label{fig:vulModel}
 \end{figure}
@@ -285,8 +268,5 @@ Finally, for each discrete vulnerability function the following parameters are r
 \item  \Verb+ coefficientVariation +: A set of coefficients of variation (one per loss ratio) that describes the uncertainty for different levels of loss. If users do not want to consider the uncertainty, this set of parameters can be set to zero, and OpenQuake assumes each loss ratio as a deterministic value. 
 \end{itemize}
 
-<<<<<<< HEAD
+
 Several methodologies to derive vulnerability functions are currently being evaluated and will be a part of the Modelers Toolkit. In addiction, scripts to convert vulnerability curves stored in Excel or ASCII files into NRML are being developed.
-=======
-Several methodologies to derive vulnerability functions are currently being evaluated and will be a part of the Modelers Toolkit. In addiction, scripts to convert vulnerability curves stored in Excel or ASCII files into NRML are being developed.
->>>>>>> 1fe7d6928468142ecfde09cbcc074b99b67f449d
