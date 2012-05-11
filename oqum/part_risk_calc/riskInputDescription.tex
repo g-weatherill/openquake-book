@@ -1,20 +1,40 @@
 \section{Exposure model definition}
-All risk calculator in OpenQuake require an exposure model that needs to be stored in NRML. The current schema format allows many typologies of asset to be considered such as population or buildings. Further information about the parameters that are currently being used to define the exposure elements can be found in the OpenQuake book. The way this information is being stored is constantly being modified, as further feedback from users and experts is received. Hence, it is important to understand which version of NRML OpenQuake is using, in order to avoid incompatibility issues. NRML is already in its third version (0.3) and documentation about each release can be found on Github. 
-In this section, each part of the NRML schema for the exposure models is presented, followed by a brief description of the different components. Users will notice that some of the attributes are marked with a "\Verb+gml+" tag, which means that these parameters must follow the Geography Markup Language grammar, developed by the Open Geospatial Consortium.\\
+All risk calculators in OpenQuake require an exposure model that needs to be stored in NRML. Common to all of the assets stored in a given exposure model, the following metadata needs to be provided, as described below: 
 
-Common to all of the assets stored in a given exposure model, the following metadata needs to be defined: 
-\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
-<\textcolor{red}{exposurePortfolio} gml:id="ep">
-    <\textcolor{green}{exposureList} gml:id="Italy2011" assetCategory="buildings" 
-    units="EUR">
-    <gml:description> Set of buildings in Italy </gml:description>
-        ...
-\end{Verbatim}
+\begin{itemize}
+\item  \Verb+id+: a unique key used to identify the exposure model within OpenQuake;
+\item  \Verb+assetCategory+: a string used to define the type of assets being stored (e.g: buildings, population);
+\item  \Verb+areaType+: flag defining the way this parameter is being provided, as explained later in this section; 
+\item  \Verb+areaUnits+: attribute defining the units used to measure the area; 
+\item  \Verb+stcoType+: flag defining the way this parameter is being provided, as explained later in this section; 
+\item  \Verb+stcoUnits+: attribute defining the units used to measure the structural cost;
+\item  \Verb+description+: brief string with further information about the exposure model;
+\item  \Verb+taxonomySource+: attribute used to define the taxonomy system being used to classify the assets;
+\end{itemize}
 
-The \Verb+id+ is a unique key that identifies the exposure model within OpenQuake. The attribute \Verb+assetCategory+ describes the type of asset in the exposure model and the attribute \Verb+units+ states the measure used to quantify the value of the asset. In addition, a field called \Verb+description+ can also be used to provide further information about the elements within the model. Then, the information about each asset can be described in the following way:
+The way the information about the characteristics of the assets in an exposure model are  stored can vary strongly depending on the authority in charge of compiling the data. As an example, if national census information is used to estimated the distribution of assets in a given region, it is likely that the number of buildings per unit of area will be used to define the dataset. In the other hand, if simplified methodologies based on population distribution are used for this purpose, then it is likely that the built up area or economic value of each building typology will be used. Thus, the following set of attributes were included in the latest version of the schema for the exposure model:
+
+\begin{itemize}
+\item  \Verb+number+: number of assets for a given location;
+\item  \Verb+area+: area of the asset typology;
+\item  \Verb+stco+: structural cost of the asset (e.g: replacement cost). 
+\end{itemize}
+
+While the attribute \Verb+number+ might be a rather simple parameter, the other two can be considerably ambiguous as different ways to define them might be used. With regards to the attribute \Verb+area+, one can either choose to provide the aggregated built up area of a certain building typology per location or the average built up area for a single unit. Similarly, the \Verb+stco+ can also be defined as the aggregated economic value (replacement cost for all the asset at the given location), the cost of replacing a single unit or even the replacement cost for unit of area. To establish the way these two attributes are being defined within the exposure model, two flags have been introduced in the schema model:  \Verb+areaType+ and \Verb+stcoType+. 
+
+Notice that since the attribute \Verb+number+ always represents the same quantity (number of assets in a given location), no flag providing further information about this attribute was introduced. Further information regarding the parameters that are currently being used to define the exposure elements can be found in the OpenQuake book. In order to clarify this methodology, several examples are presented later in this section.
+
+Finally, a pair of coordinates (longitude and latitude) needs to be provided to define the location of each asset.The way this information is being stored is constantly being modified, as further feedback from users and experts is received. Hence, it is important to understand which version of NRML OpenQuake is using, in order to avoid incompatibility issues. NRML is already in its third version (0.3) and documentation about each release can be found on Github. Several examples of exposure models containing different types of information are presented now. Users will notice that some of the attributes are marked with a "\Verb+gml+" tag, which means that these parameters must follow the Geography Markup Language grammar, developed by the Open Geospatial Consortium.\\
+
+\paragraph{Example 1}
+This example is comprised by an exposure model in which the aggregated economic value of each building typology for a set of locations is directly provided.
 
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=false]
-        ...
+<\textcolor{red}{exposurePortfolio} gml:id="ep">
+    <\textcolor{green}{exposureList} gml:id="Italy2012_1" assetCategory="buildings" 
+    stcoUnit="EUR" stcoType="aggregated">
+    <gml:description>Buildings in Italy</gml:description>
+    <taxonomySource>Pavia taxonomy</taxonomySource>
         <\textcolor{blue}{assetDefinition} gml:id="asset1">
             <site>
                <gml:Point srsName="epsg:4326">
@@ -22,24 +42,167 @@ The \Verb+id+ is a unique key that identifies the exposure model within OpenQuak
                </gml:Point>
             </site>
             <taxonomy>URM</taxonomy>
-            <assetValue> 50.000 </assetValue>
+            <stco> 500.000 </stco>
         <\textcolor{blue}{/assetDefinition} 
         ...
-        <\textcolor{blue}{assetDefinition} gml:id="asset9999">
+        <\textcolor{blue}{assetDefinition} gml:id="asset999">
             <site>
                <gml:Point srsName="epsg:4326">
 	      <gml:pos>15.23 38.95</gml:pos>
 	      </gml:Point>
 	   </site>
 	   <taxonomy>RC</taxonomy>
-	   <assetValue> 70.000 </assetValue>
+	   <stco> 700.000 </stco>
         <\textcolor{blue}{/assetDefinition}> 
     <\textcolor{green}{/exposureList}>
 <\textcolor{red}{/exposurePortfolio}>
 \end{Verbatim}
 
-Each asset is uniquely identified by its \Verb+id+, which is used by OpenQuake to relate each asset with the associated results (e.g.: loss curves). Then, a pair of coordinates (latitude and longitude) for a \Verb+site+ needs to be defined. This position (\Verb+pos+) and the associated geographical projection (\Verb+srsName+) need to be provided in the \Verb+Point+ attribute. Each asset must to be classified according to a \Verb+taxonomy+, so that OpenQuake is capable of employing the appropriate vulnerability function in the risk calculations. Finally, the value of the asset is stored in the \Verb+assetValue+ attribute. This last parameter can assume many quantities such as number of buildings, replacement cost or number of people.\\ 
+Each asset is uniquely identified by its \Verb+id+, which is used by OpenQuake to relate each asset with the associated results (e.g.: loss curves). Then, a pair of coordinates (latitude and longitude) for a \Verb+site+ is defined. This position (\Verb+pos+) and the associated geographical projection (\Verb+srsName+) need to be provided in the \Verb+Point+ attribute. Each asset must to be classified according to a \Verb+taxonomy+, so that OpenQuake is capable of employing the appropriate vulnerability function in the risk calculations. Finally, the value of the asset is stored in the \Verb+stco+ attribute. In this case, the aggregated economic value for the assets at each location if provided directly, so there is no need of defining other attributes such as \Verb+number+ or \Verb+area+. This mode of representing an exposure model is probably simplest way.\\ 
 
+\paragraph{Example 2}
+This example is comprised by an exposure model containing the number of buildings at each location, and the associated replacement cost per unit of each building typology.
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=false]
+<\textcolor{red}{exposurePortfolio} gml:id="ep">
+    <\textcolor{green}{exposureList} gml:id="Italy2012_2" assetCategory="buildings" 
+    stcoUnit="EUR" stcoType="per_asset">
+    <gml:description>Buildings in Italy</gml:description>
+    <taxonomySource>Pavia taxonomy</taxonomySource>
+        <\textcolor{blue}{assetDefinition} gml:id="asset1">
+            <site>
+               <gml:Point srsName="epsg:4326">
+               <gml:pos>15.22 38.80</gml:pos>
+               </gml:Point>
+            </site>
+            <taxonomy>URM</taxonomy>
+            <number> 10 </number>
+            <stco> 50.000 </stco>
+        <\textcolor{blue}{/assetDefinition} 
+        ...
+        <\textcolor{blue}{assetDefinition} gml:id="asset999">
+            <site>
+               <gml:Point srsName="epsg:4326">
+	      <gml:pos>15.23 38.95</gml:pos>
+	      </gml:Point>
+	   </site>
+	   <taxonomy>RC</taxonomy>
+            <number> 5 </number>
+	   <stco> 140.000 </stco>
+        <\textcolor{blue}{/assetDefinition}> 
+    <\textcolor{green}{/exposureList}>
+<\textcolor{red}{/exposurePortfolio}>
+\end{Verbatim}
+
+In this example, the economic value of each asset is not provided directly, as happened in the previous example. In order to carry out the risk calculations in which the economic value of each asset is required, OpenQuake multiplies for each asset, the number of buildings by its replacement cost. Notice that in this case, there is no need of specifying the attribute \Verb+area+. 
+
+\paragraph{Example 3}
+This example is comprised by an exposure model containing the built up area of each building typology for a set of locations, and the associated replacement cost per area.
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=false]
+<\textcolor{red}{exposurePortfolio} gml:id="ep">
+    <\textcolor{green}{exposureList} gml:id="Italy2012_3" assetCategory="buildings" 
+    stcoUnit="EUR/m2" stcoType="per_area" areaUnit="m2" areaType="aggregated">
+    <gml:description>Buildings in Italy</gml:description>
+    <taxonomySource>Pavia taxonomy</taxonomySource>
+        <\textcolor{blue}{assetDefinition} gml:id="asset1">
+            <site>
+               <gml:Point srsName="epsg:4326">
+               <gml:pos>15.22 38.80</gml:pos>
+               </gml:Point>
+            </site>
+            <taxonomy>URM</taxonomy>
+            <area> 10000 </area>
+            <stco> 400 </stco>
+        <\textcolor{blue}{/assetDefinition} 
+        ...
+        <\textcolor{blue}{assetDefinition} gml:id="asset999">
+            <site>
+               <gml:Point srsName="epsg:4326">
+	      <gml:pos>15.23 38.95</gml:pos>
+	      </gml:Point>
+	   </site>
+	   <taxonomy>RC</taxonomy>
+            <area> 20000 </area>
+            <stco> 500 </stco>
+        <\textcolor{blue}{/assetDefinition}> 
+    <\textcolor{green}{/exposureList}>
+<\textcolor{red}{/exposurePortfolio}>
+\end{Verbatim}
+
+Once again, OpenQuake needs to carry out some calculations in order to compute the economic value per asset. In this case, this value is computed by multiplying the aggregated built up area for each building typology, by the associated replacement cost per unit of area. Notice that in this case, there is no need of specifying the attribute \Verb+number+.
+
+ \paragraph{Example 4}
+This example is comprised by an exposure model containing the number of buildings for each location, the average built up area per unit and the associated replacement cost per area.
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=false]
+<\textcolor{red}{exposurePortfolio} gml:id="ep">
+    <\textcolor{green}{exposureList} gml:id="Italy2012_4" assetCategory="buildings" 
+    stcoUnit="EUR/m2" stcoType="per_area" areaUnit="m2" areaType="per_asset">
+    <gml:description>Buildings in Italy</gml:description>
+    <taxonomySource>Pavia taxonomy</taxonomySource>
+        <\textcolor{blue}{assetDefinition} gml:id="asset1">
+            <site>
+               <gml:Point srsName="epsg:4326">
+               <gml:pos>15.22 38.80</gml:pos>
+               </gml:Point>
+            </site>
+            <taxonomy>URM</taxonomy>
+            <number> 10 </number>
+            <area> 100 </area>
+            <stco> 400 </stco>
+        <\textcolor{blue}{/assetDefinition} 
+        ...
+        <\textcolor{blue}{assetDefinition} gml:id="asset999">
+            <site>
+               <gml:Point srsName="epsg:4326">
+	      <gml:pos>15.23 38.95</gml:pos>
+	      </gml:Point>
+	   </site>
+	   <taxonomy>RC</taxonomy>
+            <number> 5 </number>
+            <area> 150 </area>
+            <stco> 500 </stco>
+        <\textcolor{blue}{/assetDefinition}> 
+    <\textcolor{green}{/exposureList}>
+<\textcolor{red}{/exposurePortfolio}>
+\end{Verbatim}
+
+In this example, OpenQuake will make use of all the parameters to estimate the economic value for eat asset, by multiplying the number of buildings by its average built up area, and then by the respective replacement cost per unit of area. 
+
+ \paragraph{Example 5}
+This example is comprised by an exposure model containing population distribution.
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=false]
+<\textcolor{red}{exposurePortfolio} gml:id="ep">
+    <\textcolor{green}{exposureList} gml:id="Italy2012_5" assetCategory="population">
+    <gml:description>Population in Italy</gml:description>
+    <taxonomySource>Pavia taxonomy</taxonomySource>
+        <\textcolor{blue}{assetDefinition} gml:id="asset1">
+            <site>
+               <gml:Point srsName="epsg:4326">
+               <gml:pos>15.22 38.80</gml:pos>
+               </gml:Point>
+            </site>
+            <taxonomy>VF1</taxonomy>
+            <number> 200 </number>
+        <\textcolor{blue}{/assetDefinition} 
+        ...
+        <\textcolor{blue}{assetDefinition} gml:id="asset999">
+            <site>
+               <gml:Point srsName="epsg:4326">
+	      <gml:pos>15.23 38.95</gml:pos>
+	      </gml:Point>
+	   </site>
+	   <taxonomy>VF2</taxonomy>
+            <number> 100 </number>
+        <\textcolor{blue}{/assetDefinition}> 
+    <\textcolor{green}{/exposureList}>
+<\textcolor{red}{/exposurePortfolio}>
+\end{Verbatim}
+
+In this final example, OpenQuake will required population distribution instead of building economic value, hence, only the attribute \Verb+number+ needs to be provided. Notice that in order for OpenQuake recognized that human losses are going to be estimated rather than economic losses, the attribute  \Verb+assetCategory+ needs to be set to  \Verb+population+.  
+ 
 As a part of the Modeller's toolkit development, scripts capable of converting information about the assets stored in Excel or ASCII files into NRML are currently being developed. 
 
 \section{Vulnerability model definition}
@@ -105,4 +268,8 @@ Finally, for each discrete vulnerability function the following parameters are r
 \item  \Verb+ coefficientVariation +: A set of coefficients of variation (one per loss ratio) that describes the uncertainty for different levels of loss. If users do not want to consider the uncertainty, this set of parameters can be set to zero, and OpenQuake assumes each loss ratio as a deterministic value. 
 \end{itemize}
 
+<<<<<<< HEAD:oqum/part_risk_calc/riskInputDescription.tex
+=======
+
+>>>>>>> 322446895b13cfb61ed02ea11451ed5138fa557b:oqum_Part_Risk_Calc/riskInputDescription.tex
 Several methodologies to derive vulnerability functions are currently being evaluated and will be a part of the Modelers Toolkit. In addiction, scripts to convert vulnerability curves stored in Excel or ASCII files into NRML are being developed.
