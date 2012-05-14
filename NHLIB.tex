@@ -1,0 +1,54 @@
+\documentclass[12pt,a4paper,headings=small,version=first,dvips]{report}
+
+\begin{document}
+
+\title{NHLIB: a New Hazard LIBrary for OpenQuake}
+\maketitle
+
+\section*{Introduction}
+Explain (IT) motivations for the creation of NHLIB:\\
+- Improve PSHA calculation perfomances (reduce computation time, RAM usage)\\
+- Introduce test coverage (required for any further software development)\\
+- Facilitate integration with OpenQuake\\
+Describe general structure of the document.\\
+
+\section*{Source modeling}
+
+Describe 4 source typologies and their usage (distributed seismicity, fault, subduction). Talk about rupture generators (ruptures are generated on the fly to avoid RAM consumption)
+
+\subsection*{Area and Point source}
+- explain area and point source parameters (figures included)\\
+- show calculation examples (e.g.figure with rupture from area source with single nodal plane and hypo vs. area source with multiple(s) nodal planes and hypocenters)\\
+- show code snippet (in the python shell)\\
+
+\subsection*{Simple Fault source}
+- explain simple fault source parameters (figures included)\\
+- show calculation examples (e.g. figure with ruptures on a straight fault vs. non-straight fault, vertical vs. dipping...)\\
+- show code snippet (in the python shell)\\
+
+\subsection*{Complex Fault source}
+- explain complex fault source parameters (figures included)\\
+- show calculation examples (e.g. figure with ruptures on fault defined by single top and bottom edges, vs fault defined by multiple intermediate edges). Maybe take slab 1.0?\\
+- show code snippet (in the python shell)\\
+
+\section*{Ground Shaking Intensity modeling}
+Describe GMPE and IPE (again code snipped to show how they can be initialized in a python shell)\\
+Describe 'automatic testing', and table format\\
+Describe vectorized calculations.\\
+
+\section*{Hazard Curve calculator}
+Describe Ned's equation, mention vectorized calculations.\\
+Show example of hazard curve/map calculation with the different source typologies.
+
+\section*{PEER Tests}
+Report about implemented PEER tests. 
+
+\section*{Performances}
+Computation time for hazard Map calculation with single source.\\
+RAM usage for area source (one with multiple nodal planes and finite ruptures)\\
+Comparison with OpenSHA.
+
+\section*{Conclusions}
+Roadmap for future development.
+
+\end{document}
