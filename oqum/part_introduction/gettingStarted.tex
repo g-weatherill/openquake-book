@@ -55,8 +55,17 @@ Available Hazard Analysis
 
 Available Risk Analysis
 
+  Scenario Risk
+    Input   Exposure (set of assets)
+            Vulnerability curves (a list of vulnerability functions)
+            Seismic hazard input: sets of ground motion fields
+
+    Output  A grid of loss-ratio curves
+            A grid of loss curves
+            A map of losses at each interval
+            
   Classical PSHA-based
-    Input   Exposure (a value per asset)
+    Input   Exposure (set of assets)
             Vulnerability curves (a list of vulnerability functions)
             Seismic hazard input: hazard curves
 
@@ -65,7 +74,7 @@ Available Risk Analysis
             A map of losses at each interval
 
   Probabilistic event-based
-    Input   Exposure (a value per asset)
+    Input   Exposure (set of assets)
             Vulnerability curves (a list of vulnerability functions)
             Seismic hazard input: sets of ground motion fields
 
@@ -147,7 +156,7 @@ each location being defined by latitude and longitude. Again no restrictions are
 
 In case of risk analysis, a third option allows to perform calculations on the geographical locations defined in the exposure model. To select this option, the key \Verb+COMPUTE_HAZARD_AT_ASSETS_LOCATIONS+ must be set to \Verb+true+ in the \Verb+[RISK]+ section of the configuration file.
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
-[\textcolor{red}{RISK}]
+[\textcolor{blue}{RISK}]
 ...
 COMPUTE_HAZARD_AT_ASSETS_LOCATIONS = true
 \end{Verbatim}

@@ -28,7 +28,7 @@ In the NRML schema, a logic tree is defined in terms of three main objects:
 A schematic representation of these three objects is provided in Figure \ref{glts}. A branching level identifies the position in a tree where branching occurs while a branch set identifies a collection of branches (i.e. individual branches) whose weights sum to 1.\\
 \begin{figure}[!htbp]
 \begin{center}
-\includegraphics[width=15cm]{./oqum_Figures/GenericLogicTreeStructure.eps}
+\includegraphics[width=15cm]{./oqum/figures/GenericLogicTreeStructure.eps}
 \caption{Generic Logic Tree structure as described in terms of branching levels, branch sets, and individual branches.}
 \label{glts}
 \end{center}
@@ -189,7 +189,7 @@ The Seismic Source System is defined in a \Verb+logicTreeElement+ with the follo
 A pictorial representation of a generic Seismic Source System as defined in a logic tree structure is given in Figure \ref{sssLT}.
 \begin{figure}[!htbp]
 \begin{center}
-\includegraphics[width=15cm]{./oqum_Figures/SeismicSourceSystem.eps}
+\includegraphics[width=15cm]{./oqum/figures/SeismicSourceSystem.eps}
 \caption{Schematic representation of a Seismic Source System. The information defining a Seismic Source System can be placed in an arbitrarily complex logic tree structure, with the constrain that the first branching level is utilized only for the definition of the 'initial' seismic source models and the subsequent branching levels are used for epistemic uncertainties definition on source models' parameters}
 \label{sssLT}
 \end{center}
@@ -273,7 +273,7 @@ The Ground Motion System is defined in a \Verb+logicTree+ element with the follo
 A schematic representation of a Ground Motion System as defined in a tree structure is given in Figure \ref{gmpeLT}.
 \begin{figure}[!htbp]
 \begin{center}
-\includegraphics[width=15cm]{./oqum_Figures/GroundMotionSystem.eps}
+\includegraphics[width=15cm]{./oqum/figures/GroundMotionSystem.eps}
 \caption{Schematic representation of a Ground Motion System. The information defining a Ground Motion System is placed in a logic tree structure, where each branching level refers to a specific tectonic region type. The number of GMPEs per branching level (that is per tectonic region type) can vary. Each branch set at level $n$ is linked to all branches in the level $n-1$, so the resulting tree structure is symmetric}
 \label{gmpeLT}
 \end{center}

@@ -58,7 +58,7 @@
    updates, enhancements, or modifications. 
    \hfill \\
    The current version of the manual has been revised only by members of 
-   the GEM model facility and it must be considered a draft copy.
+   the GEM model facility and it must be considered a draft copy. 
    %
    \vspace{0.4cm} \hfill \\
    {\bf{License}} \hfill \\
@@ -100,7 +100,11 @@
 	\rput(4cm,27.5cm){\includegraphics[height=1.5cm]
 		{./Figures/openquake_logo1.eps}}
 	%
-	\rput[r](19.5cm,2cm){\sffamily\large\color{gray01}{Version 1.0}}
+<<<<<<< HEAD
+	\rput[r](19.5cm,2cm){\sffamily\large\color{gray01}{Version 0.1}}
+=======
+	\rput[r](19.5cm,2cm){\sffamily\large\color{gray01}{Version 1.1}}
+>>>>>>> 322446895b13cfb61ed02ea11451ed5138fa557b
 \end{pspicture}
 %  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Second page
 \restoregeometry
@@ -124,48 +128,57 @@
 %
 % --------------------------------------------------------- Symbols and acronyms
 \chapter*{Symbols and acronyms}
-	\input{./oqum_Part_Introduction/symbolsAcronyms.tex}
+	\input{./oqum/part_Introduction/symbolsAcronyms.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
 \part{Introduction}
 % ------------------------------------------------------------------------------
 %\chapter{OpenQuake background}
-%	\input{./oqum_Part_Introduction/introduction.tex}
+%	\input{./oqum/part_Introduction/introduction.tex}
 \chapter{Getting started}
-	\input{./oqum_Part_Introduction/gettingStarted.tex}
+	\input{./oqum/part_introduction/gettingStarted.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
 \part{Hazard}
 % ------------------------------------------------------------------------------
 \chapter{Input Data definiton}
 	\label{chap:hazinp}
-	\input{./oqum_Part_Hazard_Calc/inputDescr.tex}
+	\input{./oqum/part_hazard_calc/inputDescr.tex}
 \chapter{Configuration Parameters}
 	\label{chap:hazconf}
-	\input{./oqum_Part_Hazard_Calc/configParam.tex}
+	\input{./oqum/part_hazard_calc/configParam.tex}
 \chapter{Calculators Output}
 	\label{chap:hazout}
-	\input{./oqum_Part_Hazard_Calc/calcOutput.tex}
+	\input{./oqum/part_hazard_calc/calcOutput.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
 \part{Risk}
 % ------------------------------------------------------------------------------
-\chapter{Introduction}
-	\input{./oqum_Part_Risk_Calc/introduction.tex}
+%\chapter{Introduction}
+%	\input{./oqum/part_Risk_Calc/introduction.tex}
 % ------------------------------------------------------------------------------
-\chapter{OpenQuake input description}
+\chapter{OpenQuake risk input description}
 	\label{chap:riskinp}
-	\input{./oqum_Part_Risk_Calc/inputDescr.tex}
+	\input{./oqum/part_risk_calc/riskInputDescription.tex}
 % ------------------------------------------------------------------------------
-\chapter{OpenQuake risk calculation examples}
-	\label{chap:riskexamples}
-	\input{./oqum_Part_Risk_Calc/calcExamples.tex}
+%\chapter{OpenQuake risk calculation examples}
+%	\label{chap:riskexamples}
+%	\input{./oqum/part_Risk_Calc/riskCalcExamples.tex}
+	
+\chapter{OpenQuake risk configuration parameters}	
+	\label{chap:riskconfigpar}
+	\input{./oqum/part_risk_calc/riskConfigParam.tex}	
+
+\chapter{OpenQuake risk output description}	
+	\label{chap:riskout}
+	\input{./oqum/part_risk_calc/riskOutputDescription.tex}	
+	
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
 \part{Modeller's Toolkit}
 % ------------------------------------------------------------------------------
 \chapter{Introduction}
-	\input{./oqum_Part_Modellers_Toolkit/introduction.tex}
+	\input{./oqum/part_modellers_toolkit/introduction.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------- Part
@@ -173,16 +186,16 @@
 \appendix
 % ------------------------------------------------------------------------------
 \chapter{GMPEs in OpenQuake}
-	\input{./oqum_Part_Appendix/OQ_GMPEs.tex}
+	\input{./oqum/part_appendix/OQ_GMPEs.tex}
 % ------------------------------------------------------------------------------
 \chapter{Magnitude Scaling Relationships in OpenQuake}
-	\input{./oqum_Part_Appendix/OQ_MSR.tex}
+	\input{./oqum/part_appendix/OQ_MSR.tex}
 % ------------------------------------------------------------------------------
 %\chapter{Demos: Hazard}
-%	\input{./oqum_Part_Appendix/smokeTestHaz.tex}
+%	\input{./oqum/part_Appendix/smokeTestHaz.tex}
 % ------------------------------------------------------------------------------
 \chapter{Demos: Risk}
-	\input{./oqum_Part_Appendix/smokeTestRisk.tex}
+	\input{./oqum/part_appendix/smokeTestRisk.tex}
 % ==============================================================================
 % ----------------------------------------------------------------- Bibliography
 \bibliographystyle{apalike}
