@@ -1,0 +1,143 @@
+\chapter{Catalogue Homogenisation}
+
+Need to take catalogues from different sources and with magnitudes measured in different  scales and homogenise them such that each earthquake is associated with a single hypocentre and “target” magnitude.
+
+\section{Identifying Common Events - Duplicate Searching}
+
+At the initial stage the user may be presented with several catalogues from several different recording agencies. It is assumed at this point that the original waveforms of the events are not available; hence homogenisation cannot be undertaken from the waveform, but can only apply on a statistical basis. The first task is to identify earthquakes that are common to two or more of the catalogue (duplicate searching). This is done by proximity in both time, space and, if necessary, magnitude. A trivial case is considered in which the input data is retrieved from the ISC Bulletin, which returns the hypocentre and magnitude estimates from different agencies. In this case the measures from different agencies are already assigned an identifier, to indicate that they belong to the same event.
+
+Duplicate searching should operate such that two or more events are flagged as duplicates if they occur within a specified time, distance and magnitude window. The size of the window should be defined by the user. The crucial technical detail is to ensure associativity in the process, i.e. for a given event the identification of duplicates should not depend on the order in which they are considered. For example, here are five earthquakes considered in the time domain:
+
+\emph{Insert Figure Here}
+
+Here the events at times T2 and T3 all occur within the time window of T1; hence they are considered duplicates. The event at time T5 is not inside any time window of any other event, therefore it is not a duplicate. However, T4 is inside the time window with respect to T3, but not T1 or T2. Yet as T3 is itself a duplicate of T1 and T2, then should T4 be considered a duplicate of the same event, despite the fact that it is outside the time window of T1 and T2? For maximum associativity, then the “ANY” approach is preferred, so a measure is a duplicate if it is inside the search window of any of the previous solutions. The same issue is then encountered for distance, and can be resolved in the same way. However, it is possible that the ANY approach may result more frequently in false positives (i.e. measures incorrectly identified as being duplicates), when compared to the “ALL” approach, in which a measure is a duplicate only if it is inside the window of all other solutions.
+
+Functionalities that should be available to the user:
+
+\begin{itemize}
+
+\item Choice of time, distance and magnitude window
+
+\item Time-dependent choice of time, distance and magnitude window:
+
+   \begin{table}
+
+       \begin{tabular}{|c|c|c|c|} \hline
+
+       Period & Time-Window (seconds) & Distance-Window (km) & Magnitude-Window \\ \hline
+
+       1900 - 1959 & 1000 & 100 & Inf \\
+
+       1960 - 1980 & 100 & 50 & Inf \\
+
+       1980 - 2011 &  20 & 20 & Inf \\ \hline
+
+       \end{tabular}
+
+   \end{table}
+
+   This means the user can opt for larger windows for older events in which the time and distance errors may be larger.
+
+\end{itemize}
+
+\section{Understanding Relations between magnitude scales}
+
+Where catalogues provide estimates of the magnitude of an event in different scales it is necessary to know how the magnitude scales compare. For this, one must identify those events that are recorded in both scales and perform a regression analysis of those earthquakes that are measured in both scales. As magnitudes are usually recorded with an associated uncertainty, it is preferable to use orthogonal distance regression (or chi-square) regression, to allow for unequal uncertainty in both variables.
+
+Depending on the region and the environment it may be preferable to filter out certain events (e.g. deep events, events from particular agency etc.). The filtering should include:
+
+\begin{itemize}
+
+\item Geographical Region (i. e. within a polygon and/or distance from a point)
+
+\item Depth interval
+
+\item Agency/Catalogue
+
+\item Time period
+
+\end{itemize}
+
+\subsubsection{Multiple Solutions for an Event Returned by a Query}
+
+If the query parameters are set wide (e.g. searching for events with an mb and Ms without filtering by agency or region) then it is possible that for some events, multiple measures will satisfy the query (e.g. two estimates of Ms by different agencies). The user therefore needs to define how to treat these values. For example, a query for an event returns two values of mb and two values of Ms. The resulting number of mb-Ms combinations for input into the regression is as follows:
+
+\begin{table}
+
+   \begin{tabular}{cc} \\
+
+   MS1 & mb1 \\
+
+   MS1 & mb2 \\
+
+   MS2 & mb1 \\
+
+   MS2 & mb2 \\
+
+   \end{tabular}
+
+\end{table}
+
+In this example there are four possible combinations of Ms and mb, which could be put into the regression. The following possible options are considered:
+
+\begin{itemize}
+
+\item Utilise all four possible combinations in the regression (i.e. treat them as independent)
+
+\item Select a combination at random
+
+\item Select the combination with the most complete information (i.e. with uncertainties given on both Ms and mb)
+
+\item Select the combination with the lowest: i) uncertainty on m1, ii) uncertainty on m2, iii) total uncertainty defines as $\sigma_{Total} = \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2}}$
+
+\end{itemize}
+
+\subsubsection{Missing uncertainty data}
+
+The regression tools needed in this analysis require the input of the uncertainty for each magnitude value. This may not often be reported routinely for all magnitudes in the catalogues. Therefore, it is necessary for the user to define how to treat missing values. Some options include:
+
+\begin{itemize}
+\item Ignore data with missing uncertainty values (may result in too many events removed)
+\item Assign an uncertainty to missing values: i) user-defined value, ii) Mean, Median of observed uncertainties in data set, iii) Minimum, Maximum or observed uncertainties in data set.
+\end{itemize}
+
+\section{Selection of the hypocentre}
+
+Define a selection strategy for: a) Hypocentre and b) Magnitude
+
+The selection strategy should be based on:
+\begin{itemize}
+
+\item Agency (e.g. [XXX, YYY, ZZZ])
+\item Magnitude (e.g. [Mw, Ms, mb, ML])
+\item Agency-Magnitude Combination (e.g. [XXX-Mw, YYY-Mw, XXX-Ms, ZZZ-Mw, YYY-Ms, ... etc.])
+\item Uncertainty (on magnitude, location etc.)
+\end{itemize}
+
+\section{Magnitude conversion}
+
+For each magnitude selection strategy, it will be necessary to define the empirical model that is needed to convert from the “native” magnitude scale to the “target”. It may be necessary for the user to define additional relations if the empirical model suggested by the data is not sufficient.
+
+[Rank, Agency, Native-Magnitude, Model] combination e.g.
+
+[[1, XXX, Mw, Model-1],
+
+[2, XXX, Ms, Model-2],
+
+[3, YYY, Mw, Model-3] ...]
+
+It is possible that it may be necessary to convert from “native” to “target” via an intermediate magnitude. For example:
+
+Convert from native to “intermediate target” using one model, then from “intermediate target” to target using a different model.
+
+[\#, XXX, ML, Model 4] -> [\#, XXX, MW, Model-2]
+
+\subsubsection{Propagate uncertainty}
+
+For conversion from one magnitude scale to another it is recognised that the native magnitude should be recorded with an uncertainty $\sigma_{MAG}$. In addition the empirical relation converting the native magnitude to the target magnitude $f \left( {M_{NATIVE} } \right)$ will also have model uncertainty $\sigma_{MODEL}$. Therefore it is necessary to propagate these uncertainties in order to define the total uncertainty ($\sigma_{TOTAL}$) on the target magnitude. This is done via the following relation:
+
+\begin{equation}
+
+\sigma_{TOTAL} = \sqrt{ \sigma_{MAG}^{2} + \left( {\frac{\partial f}{\partial M}} \right)^{2}  \sigma_{MODEL}^{2} }
+
+\end{equation}

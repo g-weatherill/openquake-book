@@ -18,8 +18,7 @@
 % ------------------------------------------------------------------------------
 \uppertitleback{
    \textbf{Authors:} \\
-   Graeme Weatherill$^3$, Helen Crowley$^1$, Damiano Monelli$^2$, 
-   Marco Pagani$^1$, Vitor Silva$^3$ \\ \hfill \\
+   Graeme Weatherill$^1$, Marco Pagani$^1$, Damiano Monelli$^2$,  \\ \hfill \\
    \small
    \begin{tabular}{p{4cm}p{4cm}p{4cm}}
    $^1$ GEM Foundation \hfill \newline
@@ -32,11 +31,6 @@
    Sonneggstrasse, 5 \hfill \newline
    CH-8092 Zurich\hfill \newline
    Switzerland \hfill \newline
-   &
-   $^3$ GEM Model Facility \hfill \newline 
-   via Ferrata, 1 \hfill \newline 
-   20133 Pavia \hfill \newline
-   Italy \hfill \newline   
 	\end{tabular} \hfill \newline
    %
 	Email address (for all the authors):\hfill\\
@@ -75,7 +69,7 @@
    \hfill \\
    {\bf{Credit}} \hfill \\
    Crowley, H., D. Monelli, M. Pagani, V. Silva, G. Weatherill (2011). 
-   OpenQuake Book. The GEM Foundation, Pavia, Italy.   
+   The Hazard Modeller's Handbook. The GEM Foundation, Pavia, Italy.   
    \normalsize
 }  
 %
@@ -99,7 +93,7 @@
 		(0.0cm,25.0cm)(21cm,25.1cm)
 	% Title
 	\rput[r](19.5cm,13.5cm){\sffamily\bfseries\HUGE\color{orange01}
-		{OpenQuake Book}}
+		{The Hazard Modeller's Handbook}}
 	% Logos
 	\rput[r](19.5,27.5cm){\includegraphics[height=1cm]
 		{./Figures/GEM_logo.eps}}	
@@ -113,20 +107,20 @@
 \thispagestyle{empty}
 \cleardoublepage
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Load the glossary
-\input{./Part_Introduction/glossary.tex}
+\input{./mtkb/part_tntroduction/glossary.tex}
 %
 % - - - - - - - - - - - - - - - - - - - - - - -  This is the internal title page
 \setcounter{page}{1}
 \begin{titlepage}
-	\titlehead{\emph{``OpenQuake: Shaken not stirred''}}
-	\title{ \textcolor{blue01}{\textsf{\bfseries\Huge OpenQuake Book}}  }
-	\date{September 2011}
+	%\titlehead{\emph{``OpenQuake: Shaken not stirred''}}
+	\title{ \textcolor{blue01}{\textsf{\bfseries\Huge The Hazard Modeller's Handbook}}  }
+	\date{June 2012}
 	\publishers{GEM Foundation, Pavia}
 \end{titlepage}
 \pagestyle{scrheadings}
 \maketitle
 %
-\input{./Part_Introduction/acknowledgements.tex}
+\input{./mtkb/part_introduction/acknowledgements.tex}
 \cleardoublepage
 %  
 \tableofcontents
@@ -140,25 +134,66 @@
 \part{Introduction}
 % ------------------------------------------------------------------------------
 \chapter{Introduction}
-	\input{./mtkb/introduction.tex}
+	\input{./mtkb/part_introduction/introduction.tex}
+	
+\chapter{Setting up the Software}
+  %\input{./mtkb/part_introduction/software_setup.tex}
+  
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
-\part{Hazard}
+\part{Catalogues}
 % ------------------------------------------------------------------------------
-\chapter{Introduction}
-	%\input{./Part_Hazard/introduction.tex}
+\chapter{Catalogue Homogenisation}
+	\input{./mtkb/part_catalogues/catalogue_homogenisation.tex}
+
+% ==============================================================================
+% ------------------------------------------------------------------------- Part
+\part{Seismicity}
 % ------------------------------------------------------------------------------
-\chapter{OpenQuake Input Description}
+\chapter{Declustering}
+  \input{./mtkb/part_seismicity/declustering.tex}
+  
+\chapter{Completeness}
+  \input{./mtkb/part_seismicity/completeness.tex}
+
+\chapter{Recurrence}
+  \input{./mtkb/part_seismicity/recurrence.tex}
+
+\chapter{Maximum Magnitude}
+  \input{./mtkb/part_seismicity/maximum_magnitude.tex}
+  
+\chapter{Smoothed Seismicity}
+
+\chapter{Miscellanea: Depth Distributions, Focal Mechanisms}
+
+% ==============================================================================
+% ------------------------------------------------------------------------- Part
+\part{Faults \& Geology}	
+% ------------------------------------------------------------------------------
+
+\chapter{Fault Geometry}
+  \input{./mtkb/part_geology/geometry.tex}
+  
+\chapter{Magnitude Scaling Relations}
+  \input{./mtkb/part_geology/magnitude_scaling.tex}
+  
+\chapter{Activity Rates \& Recurrence Models}
+  \input{./mtkb/part_geology/activity_rates.tex}
+
+\chapter{Uncertainty}
+
+% ------------------------------------------------------------------------------
+%\chapter{OpenQuake Input Description}
 	%\label{chap:hazinp}
 	%\input{./Part_Hazard/unifiedSeismicSourceDescription.tex}
 % ------------------------------------------------------------------------------
-\chapter{The Logic Tree Processor and the Earthquake Rupture Forecast 
-	calculator}
+%\chapter{The Logic Tree Processor and the Earthquake Rupture Forecast 
+%	calculator}
 	%\label{chap:erf}
 	%\input{./Part_Hazard/logicTreeProcessor.tex}
 	%\input{./Part_Hazard/eqk_Rupture_Forecast_Calculator.tex}
 % ------------------------------------------------------------------------------
-\chapter{SHA Calculators}
+%\chapter{SHA Calculators}
 	%\label{chap:hazcalc}
 	%\input{./Part_Hazard/kernel/intro.tex}
 	%\input{./Part_Hazard/kernel/classical_PSHA.tex}
@@ -169,7 +204,7 @@
 %	\input{./Part_Hazard/wessonMethod.tex}
 % =============================================================================
 % ------------------------------------------------------------------------ Part
-\part{Risk}
+
 % =============================================================================
 % -----------------------------------------------------------------------------
 % ------------------------------------------------------------------------ Part

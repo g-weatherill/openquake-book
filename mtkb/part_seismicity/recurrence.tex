@@ -1,0 +1,45 @@
+\section{Gutenberg-Richter Least Squares} - Coded (Not implemented)
+
+The least squares is the simplest approach for fitting an a- and b-value for an unbounded Gutenberg & Richter (1944) model. Generally no longer used due to bias from large magnitudes.
+
+\section{Maximum Likelihood (Aki 1965, Bender 1983)} - Currently Available
+
+The classical maximum likelihood estimator for a simple unbounded Gutenberg & Richter (1985) model is that of Aki (1965), adapted for binned magnitude data by Bender (1983). Assumes a fixed MC value for the catalogue (assumes a simple power law recurrence model) and does not explicitly take into account magnitude uncertainty. We adjust for this by taking the catalogue with time-varying completeness and divide it into S sub-catalogues, where each sub-catalogue corresponds to a period with a corresponding MC. An “average” a- and b-value (with uncertainty) is returned by taking the mean of the a- and b-value of each sub-catalogue, weighted by the number of events in each sub-catalogue.
+
+\begin{equation}
+
+   \tilde{\b} = \frac{1}{S} \sum_{i = 1}^{S} w_i b_i
+
+\end{equation}
+
+An alternative estimator, proposed by Kijko & Smit (2012) utilises the weighted harmonic mean of the estimators from each subcatalogue:
+
+\begin{equation}
+
+   \tilde{\beta} = \left( {\sum_{i = 1}^{S} \frac{w_i}{\beta_i} } \right) ^{-1}
+
+\end{equation}
+
+where $\beta = b \ln \left( {10} \right)$ and $w_i =n_i / n$. Then for the catalogue composed of S subcatalogues, each of $t_i$ years, the rate of earthquakes greater than or equal to a given magnitunde $m_{min}$ ($\lambda \left( {m_{min}} \right) $) is given as:
+
+\begin{equation}
+
+   \lambda \left( {m_{min}} \right) = \frac{n}{\sum_{i = 1}^{S} t_i \exp \left[ {-\beta \left( {m_{min}^i - m{min}} \right) } \right]}
+
+\end{equation}
+
+\section{Optimisation (e.g. ZMAP)}
+
+This approach is the ZMAP adaptation of the MLE estimator, taking into account temporal variation in completeness, which is not dissimilar to the previously described methodology. Here, for each sub-catalogue, the log-likelihood that the distribution corresponds to a Poisson distribution is determined, and the total negative log-likelihood of the fit of the model to the whole catalogue taken by summing the likelihoods. A gradient-descent optimisation is applied to minimise the negative log-likelihood for the whole catalogue. Appears to only return the best estimate of a- and b-value (not the uncertainties), and does not take into account magnitude uncertainty.
+
+\section{Wiechert (1980)} - Currently Available
+
+\section{Kijko & Sellevol (1989)}
+
+\section{Penalised MLE (Johnston, 1994; CEUS, 2012)} – Reviewing code
+
+\section{Tapered Gutenberg & Richter (Kagan, 2002)} – Preliminary matlab code (cannot account for error!)
+
+\section{Generalised MLE (e.g. Utsu, 1999)}
+
+\section{Extreme Value Statistics (i.e. Epstein & Lomnitz, Gumbel Types I/III)}
