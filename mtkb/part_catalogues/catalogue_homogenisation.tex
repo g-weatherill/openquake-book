@@ -137,7 +137,5 @@ Convert from native to “intermediate target” using one model, then from “interme
 For conversion from one magnitude scale to another it is recognised that the native magnitude should be recorded with an uncertainty $\sigma_{MAG}$. In addition the empirical relation converting the native magnitude to the target magnitude $f \left( {M_{NATIVE} } \right)$ will also have model uncertainty $\sigma_{MODEL}$. Therefore it is necessary to propagate these uncertainties in order to define the total uncertainty ($\sigma_{TOTAL}$) on the target magnitude. This is done via the following relation:
 
 \begin{equation}
-
 \sigma_{TOTAL} = \sqrt{ \sigma_{MAG}^{2} + \left( {\frac{\partial f}{\partial M}} \right)^{2}  \sigma_{MODEL}^{2} }
-
 \end{equation}
