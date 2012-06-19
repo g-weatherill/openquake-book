@@ -1,18 +1,61 @@
 To identify Poissonian rate of seismicity need to remove foreshocks/aftershocks/swarms from the catalogue. Possible tools:
 
-\section{Gardner \& Knopoff (1974)} – Currently available
 
-        Version 1: Search events in magnitude-descending order. Remove events if it is in the window of the largest event – Currently available
+\section{\cite{GardnerKnopoff1974}}
 
-        Version 2: Remove every event that is inside the window of a previous event
+The most widely applied simple windowing algorithm is that of \cite{GardnerKnopoff1974}. Originally conceived for Southern California, the method simply identifies aftershocks by virtue of fixed time-distance windows proportional to the magnitude of the main shock. Whilst this premise is relatively simple, the manner in which the windows are applied can be ambiguous. Four different possibilities can be considered (\cite{LuenStark2012}):
 
-        Version 3: An event is in a cluster if, and only if, it is in the window of at least one other event in the cluster. In every cluster remove all events except the largest
+\begin{enumerate}
+ 
+\item Search events in magnitude-descending order. Remove events if it is in the window of the largest event
 
-        Version 4: In chronological order, if the $i^{th}$ event is in the window of a preceding larger shock that has not already been deleted, remove it. If a larger shock is in the window of the $i^{th}$ event, delete the $i^{th}$ event. Otherwise retain the $i^{th}$ event.
+\item Remove every event that is inside the window of a previous event, including larger events
+
+\item An event is in a cluster if, and only if, it is in the window of at least one other event in the cluster. In every cluster remove all events except the largest
+
+\item In chronological order, if the $i^{th}$ event is in the window of a preceding larger shock that has not already been deleted, remove it. If a larger shock is in the window of the $i^{th}$ event, delete the $i^{th}$ event. Otherwise retain the $i^{th}$ event.
+
+\end{enumerate}
+
+It is the first of the four options that is implemented in the current toolkit, whilst others may be considered in future.  The algorithm is capable if identifying foreshocks and aftershocks, simply by applying the windows forward and backward in time from the mainshock. No distinction is made between primary aftershocks (those resulting from the mainshock) and secondary or tertiary aftershocks (those originating due to the previous aftershocks); however, it is assumed all would occur within the window.
+
+Several modifications to the time and distance windows have been suggested, which are summarised in \cite{vanStiphout2010}. The windows originally suggested by \cite{GardnerKnopoff1974} are approximated by:
+
+\begin{equation} 
+\mbox{distance (km)} = 10^{0.1238 M + 0.983}  \quad \mbox{time} = \begin{cases} 10^{0.032 M + 2.7389} & \text{if $M \geq 6.5$} \\ 10^{0.5409 M - 0.547} & \mbox{otherwise}  \end{cases}
+\end{equation}
+
+An alternative formulation is proposed by Gr\:{u}nthal \cite{vanStiphout2010}:
+
+\begin{equation} 
+\mbox{distance (km)} = e^{1.77 + \left( {0.037 + 1.02 M} \right)^2}  \quad \mbox{time} = \begin{cases}   |e^{-3.95+ \left( {0.62 + 17.32 M} \right)^2}    & \text{if $M < 6.5$ } \\ 10^{2.8 + 0.024 M} & \text{otherwise}  \end{cases}
+\end{equation}
+A further alternative is suggested by \cite{Uhrhammer1986}
+\begin{equation}
+\mbox{distance (km)} = e^{-1.024 + 0.804 M} \quad \mbox{time} = e^{-2.87 + 1.235 M}
+\end{equation}
+
+A comparison of the expected windows is shown in Table \ref{tab:TableXDeclustWindows}.
+
+\begin{table}
+\begin{tabular}{|ccc|ccc|ccc|} \hline
+\multicolumn{3}{|c|}{\cite{GardnerKnopoff1974}} & \multicolumn{3}{|c|}{Gr\:{u}nthal} & \multicolumn{3}{|c|}{\cite{Uhrhammer1986}} \\ \hline
+M & L (km) & Time (days) & M & L (km) & Time (days) & M & L (km) & Time (days) \\ \hline 
+%Add some numbers here
+\end{tabular}
+\caption{Identification Windows for Declustering}
+\label{tab:TableXDeclustWindows}
+\end{table}
+
+The \cite{GardnerKnopoff1974} algorithm and its derivatives represent are most computationally straightforward approach to declustering. Whilst the windows themselves may be derived from judgement, the algorithm has been found to be surprisingly robust, with the resulting declustered catalogues often demonstrated to be Poissonian \cite{vanStiphout2010}. 
 
 \section{Reasenberg (1985)} – Code written, not implemented in MTK
 
-\section{Afteran (Musson, 1999)} – Currently available
+\section{AFTRAN (\cite{Musson1999PSHABalkan})} – Currently available
+
+A particular development of the standard windowing approach is introduced in the program AFTERAN \cite{Musson1999PSHABalkan}. This is a modification of the \cite{GardnerKnopoff1974} algorithm, using a moving time window rather than a fixed time window. In AFTERAN, considering each earthquake in order of descending magnitude, events within a fixed distance window are identified (the distance window being those suggested previously). These events are searched using a moving time window of 100 days. For a given mainshock, non Poissonian events are identified if they occur both within the distance window and the initial time window. The time window is then moved, beginning at the last flagged event, and the process repeated. For a given mainshock, all non-Poissonian events are identified when the algorithm finds a continuous period of 100 days in which no aftershock or foreshock is identified. 
+
+The theory of the AFTERAN algorithm is broadly consistent with that of \cite{GardnerKnopoff1974}. This algorithm, whilst a little more computationally complex, and therefore slower, than the \cite{GardnerKnopoff1974} windowing approach, remains simple to implement. 
 
 %\section{Model Independent Stochastic Declustering (Marsan \& Lengline, 2008)}
 
@@ -24,7 +67,7 @@ To identify Poissonian rate of seismicity need to remove foreshocks/aftershocks/
 
 For good practice it is helpful to determine whether the declustered catalogue is Poissonian. Several tests are outlined in Luen \& Stark (2012):
 
-\subsection{Multinomial Chi-square (classical Gardner \& Knopoff, 1974, approach)}
+\subsection{Multinomial Chi-square (classical \cite{GardnerKnopoff1974}, approach)}
 
 \subsection{Conditional Chi-square}
 

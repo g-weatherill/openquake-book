@@ -1,25 +1,61 @@
+In the earliest stages of processing an instrumental seismic catalogue to derive inputs for seismic hazard analysis, it is necessary to determine the magnitude completeness threshold of the catalogue. To outline the meaning of the term ''magnitude completeness'' and the requirements for its analysis as an input to PSHA, the terminology of \cite{Mignan2010} is adopted. This defines the magnitude of completeness as the ''lowest magnitude at which 100 \% of the events in a space-time volume are detected (\cite{RydelekSacks1989, WoessnerWiemer2005})''. Incompleteness of an earthquake catalogue will produce bias when determining models of earthquake recurrence, which may have a significant impact on the estimation of hazard at a site. Identification of the completeness magnitude of an earthquake catalogue is therefore a clear requirement for the processing of input data for seismic hazard analysis.
+
+It should be noted that this summary of methodologies for estimating completeness is directed toward techniques that can be applied to a ''typical'' instrumental seismic catalogue. We therefore make the assumption that the input data will contain basic information for each earthquake such as time, location, magnitude. We do not make the assumption that network-specific or station-specific properties (e.g., configuration, phase picks, attenuation factors) are known a priori. This limits the selection of methodologies to those classed as estimators of ''sample completeness'', which defines completeness on the basis of the statistical properties of the earthquake catalogue, rather than ''probability-based completeness'', which defines the probability of detection given knowledge of the properties of the seismic network (\cite{SchorlemmerWoessner2008}). This therefore excludes the methodology of (\cite{SchorlemmerWoessner2008}), and similar approaches such as those of \cite{Gomberg1991} and \cite{Felzer2008}
+
 The current workflows assume that completeness will be applied to the whole catalogue, ideally returning a table of time-varying completeness. The option to explore spatial variation in completeness is not explicitly supported, but could be accommodated by an appropriate configuration of the toolkit.
 
 \section{User-defined Table} - Currently Available
 
-This is simply a filtering that will remove from further consideration any events outside of the completeness bounds defined by the user. The table should be entered in the form
+This is simply a filtering that will remove from further consideration any events outside of the completeness bounds defined by the user. The table represents the time variation in $M_C$ and can be input as a separate file (in comma-separated value format) in the following format.
+\begin{verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+1990.0, 4.0
+1960.0, 5.0
+1900.0, 6.0
+1700.0, 7.0
+\end{verbatim}
 
-\section{Stepp (1971)} - Currently Available
+The left-hand column represents the earliest year at which the earthquake is complete at the corresponding magnitude in the right-hand column. \\
+\textbf{Important: The values in the completeness file must be entered from most-recent to oldest!} 
+
+\section{\cite{Stepp1971}} - Currently Available
+
+This is one of the earliest analytical approaches to estimation of completeness magnitude. It is based on estimators of the mean rate of recurrence of earthquakes within given magnitude and time ranges, identifying the completeness magnitude when the observed rate of earthquakes above MC begins to deviate from the expected rate. If a time interval ($T_i$) is taken, and the earthquake sequence assumed Poissonian, then the unbiased estimate of the mean rate of events per unit time interval of a given sample is:
+
+\begin{equation}
+   \lambda = \frac{1}{n} \sum_{i = 1}^{n} T_i
+\end{equation}
+
+with variance $\sigma_{\lambda}^{2} = \lambda / n$. Taking the unit time interval to be 1 year, the standard deviation of the estimate of the mean is:
+
+\begin{equation}
+   \sigma_{\lambda} = \sqrt{\lambda} / \sqrt{T}
+\end{equation}
+
+where $T$ is the sample length. As the Poisson assumption implies a stationary process, $\sigma_{\lambda}$ behaves as $1/\sqrt{T}$ in the sub-interval of the sample in which the mean rate of occurrence of a magnitude class is constant. Time variation of $M_C$ can usually be inferred graphically from Stepp's [1971] analysis, as is illustrated in Figure {fig: SteppFigExample1}. In this example, the deviation from the $1/sqrt{T}$ line for each magnitude class occurs at around 40 years  for $4.5 < M < 5$, 100 years for $5.0  < M < 6.0$, approximately 150 years for $6.0 < M < 6.5$ and 300 years for $M > 6.5$. Knowledge of the sources of earthquake information for a given catalogue may usually be reconciled with the completeness time intervals.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics{./mtkb/figures/C2Fig1SteppFig1.eps}
+	\caption{Example of Completeness Estimation by the \cite{Stepp1971} methodology}
+	\label{fig:SteppFigExample1}
+\end{figure}
+
+The analysis of \citet{Stepp1971} is a coarse, but relatively robust, approach to estimating the temporal variation in completeness of a catalogue. It has been widely applied since its development. The accuracy of the completeness magnitude depends on the magnitude and time intervals considered, and a degree of judgement is often needed to determine the time at which the rate deviates from the expected values. It has tended to be applied to catalogues on a large scale, and for relatively higher completeness magnitudes. 
 
 Currently implemented but has dependency on sensitivity parameter - possibly this needs a more extensive testing. Should be extended to include a plotting functionality.
 
-\section{Albarello (2001)} - Reviewing
-
-For the optimum coverage of methods for analysing completeness, which do not assume a power-law model, this is probably the highest priority.
-
-\section{Assumed-MFD: Woessner \& Wiemer (2005)} – Coded, but not available to MTK
-
-\subsection{Maximum Curvature} - Coded, but not available to MTK
-
-\subsection{Goodness of Fit} - Coded, but not available to MTK
-
-\subsection{b-value stability} - Coded, but not available to MTK
-
-\subsection{Amores\'e (2007)}
-
-\subsection{Schorlemmer \& Woessner (2008) – analogue in Felzer (2008)} – probably the most stable approach, but not easily treated due to requirements of metadata
+%\section{Albarello (2001)} - Reviewing
+%
+%For the optimum coverage of methods for analysing completeness, which do not assume a power-law model, this is probably the highest priority.
+%
+%\section{Assumed-MFD: Woessner \& Wiemer (2005)} – Coded, but not available to MTK
+%
+%\subsection{Maximum Curvature} - Coded, but not available to MTK
+%
+%\subsection{Goodness of Fit} - Coded, but not available to MTK
+%
+%\subsection{b-value stability} - Coded, but not available to MTK
+%
+%\subsection{Amores\'e (2007)}
+%
+%\subsection{Schorlemmer \& Woessner (2008) – analogue in Felzer (2008)} – probably the most stable approach, but not easily treated due to requirements of metadata
