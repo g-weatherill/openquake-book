@@ -1,0 +1,87 @@
+\section{Preparing the Environment}
+
+The Modeller's Toolkit and associated software are designed for execution from the command line. As with OpenQuake, the preferred environment is Ubuntu Linux (11.04 or later). A careful effort has been made to keep the number of additional dependencies to a minimum. No packaged version of the software has been released at the time of writing, so the user make install the dependencies manually. The online documentation for the Modeller's Toolkit can be found at\\ \href{http://docs.openquake.org/mtoolkit}{http://docs.openquake.org/mtoolkit}.
+
+The Modeller's Toolkit is written exclusively in Python
+
+\subsection{Pre-Requisites}
+
+Due to the command-line execution, the present version of the Modeller's Toolkit can only be run directly within the following environments:
+\begin{itemize}
+
+\item Ubuntu Linux later than 11.04 (Preferred distribution)
+
+\item Other Debian Linux distributions (Cannot be used with OpenQuake)
+
+\item Mac OSX (Cannot be Used with OpenQuake)
+
+\end{itemize}
+
+To run the Modeller's Toolkit on Windows it will be necessary to run Ubuntu Linux via a virtual machine.
+
+For the Modeller's Toolkit, the following dependencies need to be installed in the environment:
+
+\begin{itemize}
+
+\item lxml (\href{http://lxml.de/}{http://lxml.de/})  - Python tools for parsing xml files
+
+\item NumPy \& SciPy (\href{http://numpy.org/}{http://numpy.org/}) - Python Numerical and Scientific Computing Tools
+
+\item Shapely (\href{http://toblerity.github.com/shapely/}{http://toblerity.github.com/shapely/}) - Python Geometry Tools
+
+\item PyYaml (\href{http://pyyaml.org/wiki/PyYAML}{http://pyyaml.org/wiki/PyYAML}) - Python tools for parsing Yaml files
+
+\end{itemize}
+
+If the python package installer is installed on the system (\verb*= ~$ sudo apt-get install python-pip=) then these libraries can be installed with:
+
+\begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
+~$ sudo pip install lxml
+~$ sudo pip install numpy
+~$ sudo pip install scipy
+~$ sudo pip install shapely
+~$ sudo pip install pyyaml
+\end{verbatim}
+
+otherwise the standard package installer can be used (\verb*= ~$ sudo easy_install lxml=).
+
+\paragraph{Installation with an OpenQuake Virtual Disk Image}
+
+Possibly the most convenient way to install the Modeller's Toolkit is to utilise a virtual disk image with OpenQuake pre-installed, or to install OpenQuake on an Ubuntu virtual disk (see \href{https://github.com/gem/oq-engine/wiki/Installation}{https://github.com/gem/oq-engine/wiki/Installation}). Three of the Modeller's Toolkit dependencies (lxml, numpy/scipy, shapely) are also packaged with the openquake installation, therefore only PyYaml would need to be installed additionally (e.g. \verb*= ~$ sudo pip install pyyaml=).
+
+\subsubsection{Additional Steps for the Catalogue Homogenisation Tool}
+
+To begin using the first prototype of the Catalogue Homogenisation Tool, an additional database dependency (Pysqlite2) is required. The following steps are necessary:
+\begin{enumerate}
+
+\item Install the libsqlite-3 library (a dependency of Pysqlite2):
+
+\begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
+~$ sudo apt-get install libsqlite3-dev
+\end{verbatim}
+
+\item Download the pysqlite2 .tar file from the code repository (\href{http://code.google.com/p/pysqlite/downloads/list}{http://code.google.com/p/pysqlite/downloads/list}), then unpack and \verb*=cd= into the directory.
+
+\item Using \verb*=sudo= access, open the file \textcolor{red}{setup.cfg file} with a text editor (e.g. gedit, vim, emacs etc.). Find the following line and insert the "\#" character in order to change it to a comment (then save and exit the file):
+\begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
+define=SQLITE_OMIT_LOAD_EXTENSION
+\end{verbatim} 
+
+\item From the main pysqlite2 directory run:
+ \begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
+~$ sudo python setup.py install
+\end{verbatim}
+
+\end{itemise}
+
+\section{Get the Code}
+
+\paragraph{Modeller's Toolkit}
+
+Once the environment is set-up correctly, the code itself does not require installation. It can be downloaded from \href{https://github.com/gem/oq-hazard-modeller}{https://github.com/gem/oq-hazard-modeller}, by clicking on the "`zip"' button. Simply unzip the file into a directory of your choice and change (\verb*=cd=) into the directory itself. 
+
+\paragraph{Catalogue Homogenisation Tool}
+
+That's it!
+
+ 
