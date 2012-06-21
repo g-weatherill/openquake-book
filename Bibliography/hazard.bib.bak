@@ -583,6 +583,16 @@
   timestamp = {2011.01.26}
 }
 
+@TECHREPORT{Felzer2008,
+  author = {Felzer, K. R.},
+  title = {The Uniform {C}alifornia Earthquake Rupture Forecast, version 2 ({UCERF
+	2}) Appendix I: Calculating {C}alifornia Seismicity Rates},
+  institution = {U.S. Geological Survey Open File Report 2007-01347I},
+  year = {2008},
+  owner = {GW},
+  timestamp = {2010.11.25}
+}
+
 @ARTICLE{field2000,
   author = {Field, E. H.},
   title = {{A Modified Ground-Motion Attenuation Relationship for Southern California
@@ -660,6 +670,29 @@
   timestamp = {2011.04.18}
 }
 
+@TECHREPORT{usgsNSHM1996,
+  author = {Frankel, A. and Mueller, C. and Barnhard, T. and Perkins, D. and
+	Leyendecker, E. V. and Dickman, N. and Hanson, S. and Hopper, M.},
+  title = {National Seismic Hazard Maps: Documentation June 1996},
+  institution = {United States Geological Survey Open-File Report 96-532},
+  year = {1996},
+  owner = {GW},
+  timestamp = {2010.12.04}
+}
+
+@TECHREPORT{usgsNSHM2002,
+  author = {Frankel, A. and Petersen, M. D. and Mueller, C. S. and Haller, K.
+	M. and Wheeler, R. L. and Leyendecker, E. V. and Wesson, R. L. and
+	Harmson, S. C. and Cramer, C. H. and Perkins, D. M. and Rukstales,
+	K. S.},
+  title = {Documentation for the 2002 Updata to the National Seismic Hazard
+	Maps},
+  institution = {United States Geological Survey Open-File Report 02-420},
+  year = {2002},
+  owner = {GW},
+  timestamp = {2010.12.04}
+}
+
 @TECHREPORT{frankel2002,
   author = {Frankel, A. D. and Petersen, M. D. and Mueller, C. S. and Haller,
 	K. M. and Wheeler, R. L. and Leyendecker, E. V. and Wesson, R. L.
@@ -698,6 +731,19 @@
   address = {Pavia, Italy},
   owner = {marcop},
   timestamp = {2011.09.02}
+}
+
+@ARTICLE{Gomborg1991,
+  author = {Gomborg, J.},
+  title = {Seismicity and detection/location threshold in the southern ?????
+	basin seismic network},
+  journal = {Journal of Geophysical Research},
+  year = {1991},
+  volume = {96},
+  pages = {401 - 414},
+  number = {16},
+  owner = {GW},
+  timestamp = {2010.11.03}
 }
 
 @ARTICLE{hancock2005,
@@ -1211,6 +1257,16 @@
   pages = {31-52},
   owner = {damianomonelli},
   timestamp = {2011.10.18}
+}
+
+@PHDTHESIS{Stepp1971,
+  author = {Stepp, J. C.},
+  title = {An investigation of earthquake risk in the {P}uget {S}ound area by
+	the use of the type I distribution of largest extreme},
+  school = {Pennsylvania State University},
+  year = {1971},
+  owner = {GW},
+  timestamp = {2010.11.02}
 }
 
 @TECHREPORT{s2001,

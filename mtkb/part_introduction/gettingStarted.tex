@@ -35,13 +35,13 @@ For the Modeller's Toolkit, the following dependencies need to be installed in t
 
 If the python package installer is installed on the system (\verb*= ~$ sudo apt-get install python-pip=) then these libraries can be installed with:
 
-\begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
-~$ sudo pip install lxml
-~$ sudo pip install numpy
-~$ sudo pip install scipy
-~$ sudo pip install shapely
-~$ sudo pip install pyyaml
-\end{verbatim}
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+\~\$ sudo pip install lxml
+\~\$ sudo pip install numpy
+\~\$ sudo pip install scipy
+\~\$ sudo pip install shapely
+\~\$ sudo pip install pyyaml
+\end{Verbatim}
 
 otherwise the standard package installer can be used (\verb*= ~$ sudo easy_install lxml=).
 
@@ -49,30 +49,30 @@ otherwise the standard package installer can be used (\verb*= ~$ sudo easy_insta
 
 Possibly the most convenient way to install the Modeller's Toolkit is to utilise a virtual disk image with OpenQuake pre-installed, or to install OpenQuake on an Ubuntu virtual disk (see \href{https://github.com/gem/oq-engine/wiki/Installation}{https://github.com/gem/oq-engine/wiki/Installation}). Three of the Modeller's Toolkit dependencies (lxml, numpy/scipy, shapely) are also packaged with the openquake installation, therefore only PyYaml would need to be installed additionally (e.g. \verb*= ~$ sudo pip install pyyaml=).
 
-\subsubsection{Additional Steps for the Catalogue Homogenisation Tool}
+\subsection{Additional Steps for the Catalogue Homogenisation Tool}
 
 To begin using the first prototype of the Catalogue Homogenisation Tool, an additional database dependency (Pysqlite2) is required. The following steps are necessary:
 \begin{enumerate}
 
 \item Install the libsqlite-3 library (a dependency of Pysqlite2):
 
-\begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
-~$ sudo apt-get install libsqlite3-dev
-\end{verbatim}
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+\~\$ sudo apt-get install libsqlite3-dev
+\end{Verbatim}
 
 \item Download the pysqlite2 .tar file from the code repository (\href{http://code.google.com/p/pysqlite/downloads/list}{http://code.google.com/p/pysqlite/downloads/list}), then unpack and \verb*=cd= into the directory.
 
 \item Using \verb*=sudo= access, open the file \textcolor{red}{setup.cfg file} with a text editor (e.g. gedit, vim, emacs etc.). Find the following line and insert the "\#" character in order to change it to a comment (then save and exit the file):
-\begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
 define=SQLITE_OMIT_LOAD_EXTENSION
-\end{verbatim} 
+\end{Verbatim} 
 
 \item From the main pysqlite2 directory run:
- \begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
-~$ sudo python setup.py install
-\end{verbatim}
+ \begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+\~\$ sudo python setup.py install
+\end{Verbatim}
 
-\end{itemise}
+\end{enumerate}
 
 \section{Get the Code}
 

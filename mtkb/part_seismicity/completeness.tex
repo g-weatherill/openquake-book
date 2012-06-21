@@ -7,12 +7,12 @@ The current workflows assume that completeness will be applied to the whole cata
 \section{User-defined Table} - Currently Available
 
 This is simply a filtering that will remove from further consideration any events outside of the completeness bounds defined by the user. The table represents the time variation in $M_C$ and can be input as a separate file (in comma-separated value format) in the following format.
-\begin[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]{verbatim}
-1990.0, 4.0
-1960.0, 5.0
-1900.0, 6.0
-1700.0, 7.0
-\end{verbatim}
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+1990.0, 4.0\\
+1960.0, 5.0\\
+1900.0, 6.0\\
+1700.0, 7.0\\
+\end{Verbatim}
 
 The left-hand column represents the earliest year at which the earthquake is complete at the corresponding magnitude in the right-hand column. \\
 \textbf{Important: The values in the completeness file must be entered from most-recent to oldest!} 
@@ -42,8 +42,24 @@ where $T$ is the sample length. As the Poisson assumption implies a stationary p
 
 The analysis of \citet{Stepp1971} is a coarse, but relatively robust, approach to estimating the temporal variation in completeness of a catalogue. It has been widely applied since its development. The accuracy of the completeness magnitude depends on the magnitude and time intervals considered, and a degree of judgement is often needed to determine the time at which the rate deviates from the expected values. It has tended to be applied to catalogues on a large scale, and for relatively higher completeness magnitudes. 
 
-Currently implemented but has dependency on sensitivity parameter - possibly this needs a more extensive testing. Should be extended to include a plotting functionality.
+In the current version of the Modeller's Toolkit only the \cite{Stepp1971} methodology for analysis of catalogue completeness is implemented. 
 
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+Stepp: \{\\
+  \# Time Window of each step (in years)\\
+  time_window: 5,\\
+\\
+  \# Magnitude window of each step (in Mw units)\\
+  magnitude_windows: 0.2,\\
+  \\
+  \# Sensitivity parameter (see documentation)\\
+  sensitivity: 0.1,\\
+  \\
+  \# Increment Lock (fixes that the completeness magnitude\\
+  \# will always increase further back in time)\\
+  increment_lock: True \\
+\} 
+\end{Verbatim}
 %\section{Albarello (2001)} - Reviewing
 %
 %For the optimum coverage of methods for analysing completeness, which do not assume a power-law model, this is probably the highest priority.

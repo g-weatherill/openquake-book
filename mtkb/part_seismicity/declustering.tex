@@ -49,6 +49,19 @@ M & L (km) & Time (days) & M & L (km) & Time (days) & M & L (km) & Time (days) \
 
 The \cite{GardnerKnopoff1974} algorithm and its derivatives represent are most computationally straightforward approach to declustering. Whilst the windows themselves may be derived from judgement, the algorithm has been found to be surprisingly robust, with the resulting declustered catalogues often demonstrated to be Poissonian \cite{vanStiphout2010}. 
 
+The \cite{GardnerKnopoff1974} algorithm in the Modeller's Toolkit is configured according to the following command:
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+GardnerKnopoff: \{ \\
+  \# Possible values: GardnerKnopoff, Uhrhammer, Gruenthal\\
+  time_dist_windows: GardnerKnopoff,\\
+\\
+  \# float >= 0 proportion of aftershock time windows\\ 
+  \# to use to search for foreshock.\\
+  foreshock_time_window: 0\\
+\}
+\end{Verbatim}
+
 \section{Reasenberg (1985)} – Code written, not implemented in MTK
 
 \section{AFTRAN (\cite{Musson1999PSHABalkan})} – Currently available
@@ -57,11 +70,27 @@ A particular development of the standard windowing approach is introduced in the
 
 The theory of the AFTERAN algorithm is broadly consistent with that of \cite{GardnerKnopoff1974}. This algorithm, whilst a little more computationally complex, and therefore slower, than the \cite{GardnerKnopoff1974} windowing approach, remains simple to implement. 
 
+The AFTERAN algorithm in the Modeller's Toolkit is configured according to the following command:
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, fontsize=\scriptsize]
+Afteran: \{\\
+    \# Possible values: GardnerKnopoff, Uhrhammer, Gruenthal.\\
+    time_dist_windows: Uhrhammer,\\
+    \\
+    \# float >= 0 \\
+    \# Length (in days) of moving time window\\
+    time_window: 60.0\\
+\}
+\end{Verbatim}
+
 %\section{Model Independent Stochastic Declustering (Marsan \& Lengline, 2008)}
 
 %\section{Efficient cluster-link approach (Tibi et al., 2011)}
 
 %\section{Waveform similarity (Barani et al., 2007 – not statistical) – Not worth pursuing?}
+
+
+
 
 \section{Testing if the Declustered Catalogue is Poissonian}
 
